@@ -8,11 +8,17 @@ public class SelectableUI : MonoBehaviour
 {
     //ボタンUIのリスト
     [SerializeField] 
+    private List<GameObject> _buttonUIs = new List<GameObject>();
+
+    //ボタンUIのリストのプロパティ
+    public List<GameObject> ButtonUIs { get => _buttonUIs; }
+
+    //ボタンUIのRectTransformのリスト
     private List<RectTransform> _buttons = new List<RectTransform>();
 
     //拡大率
     [SerializeField]
-    private float scaleRate;
+    private float scaleRate = 1.2f;
 
     //ボタンのデフォルトのサイズ
     private Vector2 _defaultSize;
@@ -23,7 +29,8 @@ public class SelectableUI : MonoBehaviour
 
     private void Start()
     {
-        _defaultSize = _buttons[0].sizeDelta;
+        _buttons = _buttonUIs.Select(button => button.GetComponent<RectTransform>()).ToList();
+        _defaultSize = _buttons[0].localScale;
         UIUpdate();
     }
 
@@ -66,7 +73,7 @@ public class SelectableUI : MonoBehaviour
     {
         foreach (var button in _buttons)
         {
-            button.sizeDelta = _defaultSize;
+            button.localScale = _defaultSize;
         }
     }
 
@@ -76,6 +83,6 @@ public class SelectableUI : MonoBehaviour
     private void UIUpdate()
     {
         UIInit();
-        _buttons[_index].sizeDelta = _defaultSize * scaleRate;
+        _buttons[_index].localScale = _defaultSize * scaleRate;
     }
 }
