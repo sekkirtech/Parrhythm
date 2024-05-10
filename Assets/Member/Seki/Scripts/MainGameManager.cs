@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MainGameManager : MonoBehaviour
 {
     //プレイヤー格納
@@ -20,6 +21,7 @@ public class MainGameManager : MonoBehaviour
 
     void Update()
     {
+        //タイム計測、
         if (GameStart) BattleTime += Time.deltaTime;
     }
 
@@ -35,6 +37,7 @@ public class MainGameManager : MonoBehaviour
          */
     }
 
+    //敵のHPが０になったときに呼び出す
     public void PlayerWin()
     {
         GameStart = false;

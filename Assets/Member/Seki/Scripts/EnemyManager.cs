@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     //プレイヤー格納
-    [SerializeField] PlayerManager PlayerId;
+    [SerializeField] PlayerManager PlayerObj;
     //敵のHP
     [SerializeField]int EnemyHP = 3;
     //プレファブ
@@ -21,21 +21,30 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
+        //初期化
+        EnemySlain=false;
+
         //nullチェック
-        if(PlayerId == null)
+        if(PlayerObj == null)
         {
-            Debug.Log("Playerのスクリプトがないからアタッチ");
-            GameObject playerseki = GameObject.Find("Enemy");
-            PlayerId = playerseki.GetComponent<PlayerManager>();
+            Debug.Log("Playerのスクリプトがないからアタッチします");
+            GameObject playerseki = GameObject.Find("Player");
+            PlayerObj = playerseki.GetComponent<PlayerManager>();
         }
-        for (int i = 0; i < AttackObj.Length; i++)
+        for (int i = 0; i < 3; i++)
         {
-            if (AttackObj[i] == null) Debug.LogError(i + "番が存在しません");
+            //プレハブ名が未確定のためエラーで表記
+            //if (AttackObj[i] == null) Debug.LogError("攻撃オブジェクトの" + i + "番がありません");
         }
     }
 
     void Update()
     {
-        
+        //HPが０以下でリザルト（マイナス行くかもなので）
+        if (EnemyHP > 0)
+        {
+            EnemySlain = true;
+            MainGameObj.PlayerWin();
+        }
     }
 }

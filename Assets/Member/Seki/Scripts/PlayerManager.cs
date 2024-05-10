@@ -45,8 +45,11 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+
+        //デバッグ用
+        if (Input.GetKeyDown(KeyCode.Space)) Debug.Log("ガード");
         //ガード中
-        if(Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             Girdnow=true;
             //タイム計測
@@ -74,6 +77,7 @@ public class PlayerManager : MonoBehaviour
             ParryHits = false;
             Debug.Log("パリィ成功");
         }
+
         //HPが0でリザルトへ
         if (PlayerHp == 0)
         {
@@ -90,15 +94,18 @@ public class PlayerManager : MonoBehaviour
     {
         if (!Girdnow)
         {
+            Debug.Log("ダメージを受けた！");
             PlayerHp--;
             yield break;
         }
         if (ParryReception)
         {
+            Debug.Log("パリィ可能！");
             ParryHits=true;
             ParryAttack = true;
             yield return new WaitForSeconds(0.25f);
             ParryAttack=false;
+            Debug.Log("パリイ終了");
         }
     }
 }
