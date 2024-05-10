@@ -5,6 +5,15 @@ using UnityEngine;
 public class TestScripts : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
+    [SerializeField] AudioClip haku;
+    [SerializeField] AudioClip hakufin;
+    [SerializeField] AudioSource AudioSource1;
+
+    private float time = 0.0f;
+
+    int hakucount = 0;
+    int MAXCount = 3;
+    bool b = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +26,20 @@ public class TestScripts : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("çUåÇ");
-            StartCoroutine(playerManager.EnemmyAttack());
+            StartCoroutine(Hakuco());
         }
+    }
+    IEnumerator Hakuco()
+    {
+        AudioSource1.clip = haku;
+        for (int i = 0; i < MAXCount; i++)
+        {
+            AudioSource1.Play();
+            Debug.Log(i);
+            yield return new WaitForSeconds(0.5f);
+        }
+        StartCoroutine(playerManager.EnemmyAttack());
+        AudioSource1.clip = hakufin;
+        AudioSource1.Play();
     }
 }

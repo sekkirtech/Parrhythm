@@ -103,7 +103,7 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("パリィ可能！");
             ParryHits=true;
             ParryAttack = true;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.5f);
             ParryAttack=false;
             Debug.Log("パリイ終了");
         }
