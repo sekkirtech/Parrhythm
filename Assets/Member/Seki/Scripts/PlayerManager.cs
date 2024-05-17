@@ -67,7 +67,7 @@ public class PlayerManager : MonoBehaviour
             //タイム計測
             GirdTime += Time.deltaTime;
             //0.25秒以内でパリィ可、超えたら不可に
-            if (GirdTime > 0.25)
+            if (GirdTime > 0.5)
             {
                 ParryReception = false;
             }
