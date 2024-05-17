@@ -841,6 +841,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 835264486}
   EnemyObj: {fileID: 280199740}
+  SpriteList:
+  - {fileID: 1520178512}
+  - {fileID: 1674186572}
+  - {fileID: 1966897650}
+  - {fileID: 822221536}
+  - {fileID: 2009461683}
+  - {fileID: 1697160695}
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -913,7 +920,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Parry!!!
+  m_text: "\u25A1PUSH!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2132,7 +2139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PUSH!!!
+  m_text: L2 or R2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2165,7 +2172,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

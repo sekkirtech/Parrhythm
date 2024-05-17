@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,6 +24,9 @@ public class PlayerManager : MonoBehaviour
     float GirdTime = 0.0f;
     //パリィ成功時用連打対策
     bool ParryHits = false;
+    //α版用
+    private TextMeshProUGUI HPtext;
+    private float HanteiTime = 0.0f;
 
 
     
@@ -33,6 +37,13 @@ public class PlayerManager : MonoBehaviour
         ParryReception = false;
         LongPushnow = false;
         GirdTime = 0.0f;
+        MainGameObj.SpriteList[1].gameObject.SetActive(false);
+        MainGameObj.SpriteList[2].gameObject.SetActive(false);
+        MainGameObj.SpriteList[3].gameObject.SetActive(false);
+        //HP表示（長いので要改善）
+        GameObject child = MainGameObj.SpriteList[4];
+        child = child.transform.GetChild(0).gameObject;
+        HPtext = child.GetComponent<TextMeshProUGUI>();
 
         //nullチェック
         if (EnemyObj == null)
@@ -51,6 +62,7 @@ public class PlayerManager : MonoBehaviour
         //ガード中
         if (Input.GetKey(KeyCode.Space))
         {
+            MainGameObj.SpriteList[1].gameObject.SetActive(true);
             Girdnow=true;
             //タイム計測
             GirdTime += Time.deltaTime;
@@ -67,16 +79,37 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Girdnow = false;
+            MainGameObj.SpriteList[1].gameObject.SetActive(false);
             //押してなければ初期化
-            GirdTime=0.0f;
+            GirdTime =0.0f;
         }
 
         //パリィ可能時間内にP(□)でパリィ成功
         if(Input.GetKeyDown(KeyCode.P)&&ParryAttack&&ParryHits)
         {
             ParryHits = false;
+            MainGameObj.SpriteList[3].gameObject.SetActive(true);
+            HanteiTime = 0.0f;
+            EnemyObj.EnemyDamage();
             Debug.Log("パリィ成功");
         }
+
+        if (MainGameObj.SpriteList[3].gameObject.activeSelf)
+        {
+            HanteiTime += Time.deltaTime;
+            if(HanteiTime>1.0f) MainGameObj.SpriteList[3].gameObject.SetActive(false);
+        }
+
+        //HP更新
+        if(HPtext != null)
+        {
+            HPtext.text = "PlayerHP:" + PlayerHp;
+        }
+        else
+        {
+            Debug.Log("プレイヤーテキストエラー");
+        }
+
 
         //HPが0でリザルトへ
         if (PlayerHp == 0)
@@ -103,9 +136,11 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("パリィ可能！");
             ParryHits=true;
             ParryAttack = true;
+            MainGameObj.SpriteList[2].gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             ParryAttack=false;
             Debug.Log("パリイ終了");
+            MainGameObj.SpriteList[2].gameObject.SetActive(false);
         }
     }
 }
