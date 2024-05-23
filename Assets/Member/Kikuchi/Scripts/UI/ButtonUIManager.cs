@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SelectableUI : MonoBehaviour
+public class ButtonUIManager : MonoBehaviour
 {
     //ボタンUIのリスト
     [SerializeField] 
