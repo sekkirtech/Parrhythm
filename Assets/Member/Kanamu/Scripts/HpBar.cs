@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHPBar : MonoBehaviour
+public class HpBar : MonoBehaviour
 {
     //ç≈ëÂHPÇ∆åªç›ÇÃHPÅB
     int maxHp = 100;

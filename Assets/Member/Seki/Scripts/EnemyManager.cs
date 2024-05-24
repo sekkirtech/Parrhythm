@@ -8,28 +8,32 @@ public class EnemyManager : MonoBehaviour
     //プレイヤー格納
     [SerializeField] PlayerManager PlayerObj;
     //敵のHP
-    [SerializeField]int EnemyHP = 3;
+    [SerializeField]public int EnemyMaxHP = 3;
+    public int EnemyHP = 0;
     //プレファブ
     [SerializeField] GameObject[] AttackObj;
     //情報格納用マネージャー
     [SerializeField] MainGameManager MainGameObj;
-    //敵が攻撃した回数（パリィ率表記用）
-    int AttackCount = 0;
     //BGM用Source
     //[SerializeField] AudioClip[] BGMClip;
     //討伐されてるか
     bool EnemySlain=false;
     //α版用
     private TextMeshProUGUI HPtext;
+    //HPバーscript格納
+    HpBar Bar;
 
     void Start()
     {
         //初期化
         EnemySlain=false;
-        //HP表示（長いので要改善）
-        GameObject child = MainGameObj.SpriteList[5];
-        child = child.transform.GetChild(0).gameObject;
-        HPtext = child.GetComponent<TextMeshProUGUI>();
+        //HP表示
+        //GameObject child = MainGameObj.SpriteList[5];
+        //child = child.transform.GetChild(0).gameObject;
+        //HPtext = child.GetComponent<TextMeshProUGUI>();
+        Bar=GameObject.Find("Slider").GetComponent<HpBar>();
+        Bar.Init(EnemyMaxHP);
+        EnemyHP = EnemyMaxHP;
 
         //nullチェック
         if (PlayerObj == null)
@@ -48,26 +52,27 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         //HPが０以下でリザルト（マイナス行くかもなので）
-        if (EnemyHP > 0)
+        if (EnemyHP <= 0&&!EnemySlain)
         {
             EnemySlain = true;
-            MainGameObj.PlayerWin();
+            MainGameObj.PlayerWin(EnemyHP,EnemyMaxHP);
         }
 
-        //HP更新
+/*        //HP更新
         if (HPtext != null)
         {
-            HPtext.text = "EnemyHP:" + EnemyHP;
+            HPtext.text = "EnemyHP:" + EnemyMaxHP;
         }
         else
         {
             Debug.Log("プレイヤーテキストエラー");
-        }
+        }*/
     }
 
     public void EnemyDamage()
     {
         //アニメーション挿入
         EnemyHP--;
+        Bar.SetHp(1);
     }
 }
