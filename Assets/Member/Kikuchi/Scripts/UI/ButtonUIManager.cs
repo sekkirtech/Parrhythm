@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 public class ButtonUIManager : MonoBehaviour
 {
@@ -17,7 +18,9 @@ public class ButtonUIManager : MonoBehaviour
 
     // 拡大率
     [SerializeField]
-    private float scaleRate = 1.2f;
+    private float _scaleRate = 1.2f;
+    [SerializeField]
+    private float _scaleTime = 0.25f;
 
     // ボタンのデフォルトのサイズ
     private Vector2 _defaultSize;
@@ -49,6 +52,7 @@ public class ButtonUIManager : MonoBehaviour
         _defaultSize = _buttons[0].localScale;
         UIUpdate();
 
+        // コントローラーの入力に対してイベントの登録
         ControllerManager.Instance.RStickObservable
             .Subscribe(CheckStickVertical)
             .AddTo(_disposables);
@@ -65,30 +69,12 @@ public class ButtonUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// デバッグ用の更新処理
-    /// </summary>
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            OnNext();
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            OnPrev();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _buttons[_index].GetComponent<ButtonUIUtil>().OnNext();
-        }
-    }
-
-    /// <summary>
     /// オブジェクト破棄時に購読を解除
     /// </summary>
     private void OnDestroy()
     {
         _disposables.Dispose();
+        _buttons.ForEach(button => button.DOKill());
     }
 
     /// <summary>
@@ -97,8 +83,8 @@ public class ButtonUIManager : MonoBehaviour
     /// <param name="vec2">入力ベクトル</param>
     private void CheckStickVertical(Vector2 vec2)
     {
-        if (vec2.x < 0) OnPrev();
-        else OnNext();
+        if (vec2.x < 0 && _index > 0) OnPrev();
+        else if (vec2.x > 0 && _index < _buttons.Count - 1) OnNext();
     }
 
     /// <summary>
@@ -138,6 +124,7 @@ public class ButtonUIManager : MonoBehaviour
     {
         foreach (var button in _buttons)
         {
+            button.DOKill();
             button.localScale = new Vector3(_defaultSize.x, _defaultSize.y, 1);
         }
     }
@@ -148,6 +135,8 @@ public class ButtonUIManager : MonoBehaviour
     private void UIUpdate()
     {
         UIInit();
-        _buttons[_index].localScale = new Vector3(_defaultSize.x * scaleRate, _defaultSize.y * scaleRate, 1);
+        _buttons[_index].localScale = new Vector3(_defaultSize.x * _scaleRate, _defaultSize.y * _scaleRate, 1);
+        _buttons[_index].DOScale(new Vector3(_defaultSize.x, _defaultSize.y, 1), _scaleTime)
+            .SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
     }
 }

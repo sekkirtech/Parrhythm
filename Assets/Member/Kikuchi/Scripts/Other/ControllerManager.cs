@@ -56,6 +56,9 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
     private Subject<Unit> selectButtonSubject = new Subject<Unit>();
     public IObservable<Unit> SelectButtonObservable => selectButtonSubject;
 
+    private Subject<Unit> anyButtonSubject = new Subject<Unit>();
+    public IObservable<Unit> AnyButtonObservable => anyButtonSubject;
+
     // ボタンの離されたイベント
     private Subject<Unit> l2ButtonUpSubject = new Subject<Unit>();
     public IObservable<Unit> L2ButtonUpObservable => l2ButtonUpSubject;
@@ -67,17 +70,8 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
     public IObservable<Unit> WestButtonUpObservable => westButtonUpSubject;
 
     // デッドゾーンの閾値
-    public float deadZone = 0.1f;
-
-    // 前回の入力状態を保持するフィールド
-    private Vector2 previousLStickInput = Vector2.zero;
-    private Vector2 previousRStickInput = Vector2.zero;
-    private Vector2 previousDPadInput = Vector2.zero;
-
-    // デッドゾーンを超えたかを保持するフラグ
-    private bool lStickActive = false;
-    private bool rStickActive = false;
-    private bool dPadActive = false;
+    [SerializeField]
+    private float deadZone = 0.5f;
 
     /// <summary>
     /// コントローラーの入力受取を有効にする
@@ -92,10 +86,6 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
     private void Start()
     {
         SetControllerSubject();
-
-        DPadObservable.Subscribe(x => Debug.Log("DPad: " + x));
-        LStickObservable.Subscribe(x => Debug.Log("LStick: " + x));
-        RStickObservable.Subscribe(x => Debug.Log("RStick: " + x));
     }
 
     /// <summary>
@@ -123,6 +113,8 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
 
         CtrlInput.Controller.Start.performed += ctx => startButtonSubject.OnNext(Unit.Default);
         CtrlInput.Controller.Select.performed += ctx => selectButtonSubject.OnNext(Unit.Default);
+
+        CtrlInput.Controller.AnyButton.performed += ctx => anyButtonSubject.OnNext(Unit.Default);
     }
 
     /// <summary>
@@ -132,7 +124,7 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
     /// <param name="sub">通知するSubject。</param>
     private void CheckDeadZone(Vector2 vec2, Subject<Vector2> sub)
     {
-        if (vec2.magnitude >= 0.5f)
+        if (vec2.magnitude >= deadZone)
         {
             sub.OnNext(vec2);
         }

@@ -46,7 +46,7 @@ public class ResultSceneView : MonoBehaviour
         _percentage.text = CalcPercentage(
             isWin ? PlayerPrefs.GetInt("EnemyAttackCount", 100) : PlayerPrefs.GetInt("MaxHP", 100),
             isWin ? PlayerPrefs.GetInt("ParryCount", 1) : PlayerPrefs.GetInt("CurrentHP", 1)
-        ).ToString() + "%";
+        ).ToString("F2") + "%";
     }
     /// <summary>
     /// パーセンテージを計算します。
@@ -57,7 +57,6 @@ public class ResultSceneView : MonoBehaviour
     private float CalcPercentage(int max, int current)
     {
         float percentage = (float)current / max * 100;
-        Debug.Log(percentage);
         return percentage;
     }
 }

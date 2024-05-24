@@ -1,5 +1,5 @@
 {
-    "name": "Controller",
+    "name": "ControllerInput",
     "maps": [
         {
             "name": "Controller",
@@ -126,6 +126,15 @@
                     "name": "touchPad",
                     "type": "Button",
                     "id": "29597bbb-a410-4292-aff5-74fa306b1bd8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AnyButton",
+                    "type": "Button",
+                    "id": "52a7c021-2761-4714-a384-3c0282aeb043",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -284,6 +293,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "touchPad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d64af35c-ae3c-4f27-88d2-d0783af9668f",
+                    "path": "<Gamepad>/<Button>",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
