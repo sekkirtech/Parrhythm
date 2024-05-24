@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -22,8 +23,6 @@ public class PlayerManager : MonoBehaviour
     bool ParryReception = false;
     //パリィ可能フラグ
     bool ParryAttack = false;
-    //長押し時用フラグ
-    bool LongPushnow = false;
     //ガード時間計測用
     float GirdTime = 0.0f;
     //パリィ成功時用連打対策
@@ -41,13 +40,11 @@ public class PlayerManager : MonoBehaviour
     private Image myimage;
 
 
-
     void Start()
     {
         //初期化
         Girdnow = false;
         ParryReception = false;
-        LongPushnow = false;
         GirdTime = 0.0f;
         MainGameObj.SpriteList[1].gameObject.SetActive(false);
         MainGameObj.SpriteList[2].gameObject.SetActive(false);
@@ -158,11 +155,15 @@ public class PlayerManager : MonoBehaviour
             }
             if (ParryReception)
             {
+                var gpad = Gamepad.current;
                 Debug.Log("パリィ可能！");
                 ParryHits = true;
                 ParryAttack = true;
                 MainGameObj.SpriteList[2].gameObject.SetActive(true);
-                yield return new WaitForSeconds(0.5f);
+                gpad.SetMotorSpeeds(1.0f, 1.0f);
+            yield return new WaitForSeconds(0.15f);
+            gpad.SetMotorSpeeds(0.0f, 0.0f);
+            yield return new WaitForSeconds(0.35f);
                 ParryAttack = false;
                 Debug.Log("パリイ終了");
                 MainGameObj.SpriteList[2].gameObject.SetActive(false);

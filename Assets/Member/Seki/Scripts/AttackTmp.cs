@@ -15,11 +15,11 @@ public class AttackTmp : MonoBehaviour
 
     //アニメーション演出用Audio設定
 
-    private float time = 0.0f;
+    //private float time = 0.0f;
 
-    int hakucount = 0;
+    //int hakucount = 0;
     int MAXCount = 3;
-    bool b=true;
+    //bool b=true;
     //以下テスト用　120BPM
     private void Start()
     {

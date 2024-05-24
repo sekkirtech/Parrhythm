@@ -15,7 +15,7 @@ public class TestScripts : MonoBehaviour
 
     //int hakucount = 0;
     int MAXCount = 3;
-    bool b = true;
+    
     // Start is called before the first frame update
     void Start()
     {
