@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SelectableUI : MonoBehaviour
+public class ButtonUIManager : MonoBehaviour
 {
     //ボタンUIのリスト
     [SerializeField] 
@@ -54,7 +54,7 @@ public class SelectableUI : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _buttons[_index].GetComponent<UIUtility>().OnNext();
+            _buttons[_index].GetComponent<ButtonUIUtil>().OnNext();
         }
         //////////////////////////
     }
