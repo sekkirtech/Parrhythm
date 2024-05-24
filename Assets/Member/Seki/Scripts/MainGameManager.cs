@@ -13,6 +13,9 @@ public class MainGameManager : MonoBehaviour
     float BattleTime = 0.0f;
     //ゲームが開始してるか
     bool GameStart=false;
+    //α視覚用obj
+    [SerializeField] public GameObject[] SpriteList;
+    
 
     void Start()
     {
@@ -35,6 +38,7 @@ public class MainGameManager : MonoBehaviour
         戦闘時間を格納
         リザルトエネミーバージョンへ遷移
          */
+        //FadeManager.Instance.LoadScene("", 1.0f);
     }
 
     //敵のHPが０になったときに呼び出す
@@ -44,8 +48,8 @@ public class MainGameManager : MonoBehaviour
         /*
          ステージセレクト用に残した破壊不能objに
         戦闘時間パリィの成功率を格納
-        リザルトプレイヤーバージョンへ遷移
          */
+        //FadeManager.Instance.LoadScene("", 1.0f);
     }
 
 
