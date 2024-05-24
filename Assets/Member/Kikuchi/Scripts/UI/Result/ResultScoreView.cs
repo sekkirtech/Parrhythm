@@ -17,45 +17,48 @@ public class ResultSceneView : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _percentage;
 
+    /// <summary>
+    /// 初期化時にテキストを設定します。
+    /// </summary>
     private void Start()
     {
         SetExpoText();
         SetScoreText();
     }
 
+    /// <summary>
+    /// 勝敗に応じたテキストを設定します。
+    /// </summary>
     private void SetExpoText()
     {
-        if (PlayerPrefs.GetInt("IsWin", 0)  == 0)
-        {
-            _timeText.text = "Time";
-            _percentageText.text = "HP";
-        }
-        else
-        {
-            _timeText.text = "Time";
-            _percentageText.text = "Parry";
-        }
+        bool isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
+        _timeText.text = "Time";
+        _percentageText.text = isWin ? "Parry" : "HP";
     }
 
+    /// <summary>
+    /// スコアテキストを設定します。
+    /// </summary>
     private void SetScoreText()
     {
-
+        bool isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
         _time.text = PlayerPrefs.GetFloat("Time", 0).ToString("F0");
-        if(PlayerPrefs.GetInt("IsWin", 0) == 0)
-        {
-            _percentage.text = CalcPercentage(PlayerPrefs.GetInt("MaxHP", 100), PlayerPrefs.GetInt("CurrentHP", 1)).ToString() + "%";
-        }
-        else
-        {
-            _percentage.text = CalcPercentage(PlayerPrefs.GetInt("EnemyAttackCount", 100), PlayerPrefs.GetInt("ParryCount", 1)).ToString() + "%";
-        }
+        _percentage.text = CalcPercentage(
+            isWin ? PlayerPrefs.GetInt("EnemyAttackCount", 100) : PlayerPrefs.GetInt("MaxHP", 100),
+            isWin ? PlayerPrefs.GetInt("ParryCount", 1) : PlayerPrefs.GetInt("CurrentHP", 1)
+        ).ToString() + "%";
     }
 
+    /// <summary>
+    /// パーセンテージを計算します。
+    /// </summary>
+    /// <param name="max">最大値。</param>
+    /// <param name="current">現在値。</param>
+    /// <returns>計算されたパーセンテージ。</returns>
     private float CalcPercentage(int max, int current)
     {
-        float x = (float)current / (float)max;
-        Debug.Log(x);
-        return x * 100;
-
+        float percentage = (float)current / max * 100;
+        Debug.Log(percentage);
+        return percentage;
     }
 }
