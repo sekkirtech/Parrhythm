@@ -6,36 +6,27 @@ using UnityEngine.UI;
 public class PlayerHPBar : MonoBehaviour
 {
     //最大HPと現在のHP。
-    int maxHp = 155;
+    int maxHp = 100;
     int currentHp;
     //Sliderを入れる
-    public Slider slider;
+    [SerializeField]
+    private  Slider slider;
 
-    void Start()
+ 
+    //始まった時
+    public void Init(int MaxHp)
     {
-        //Sliderを満タンにする。
-        slider.value = 1;
-        //現在のHPを最大HPと同じに。
+        maxHp = MaxHp; 
         currentHp = maxHp;
-        Debug.Log("Start currentHp : " + currentHp);
-    }
+        slider.maxValue = maxHp;
+        slider.value = maxHp;
 
-    private void OnTriggerEnter(Collider collider)
+    }
+    //敵のHpが減った時
+    public void SetHp(int hp)
     {
-
-        if (collider.gameObject.tag == "Enemy")
-        {
-            //ダメージのテスト
-            //ダメージは1～100の中でランダムに決める。
-            int damage = Random.Range(1, 100);
-            Debug.Log("damage : " + damage);
-
-            //現在のHPからダメージを引く
-            currentHp = currentHp - damage;
-            Debug.Log("After currentHp : " + currentHp);
-
-            slider.value = (float)currentHp / (float)maxHp; ;
-            Debug.Log("slider.value : " + slider.value);
-        }
+        currentHp -= hp;
+        slider.value = currentHp;  
     }
+
 }
