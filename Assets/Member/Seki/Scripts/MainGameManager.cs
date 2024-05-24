@@ -26,6 +26,7 @@ public class MainGameManager : MonoBehaviour
         BattleTime = 0.0f;
         AttackCount = 0;
         ParryCount = 0;
+        GameStart = true;
     }
 
     void Update()
@@ -39,7 +40,7 @@ public class MainGameManager : MonoBehaviour
     {
         GameStart = false;
         //“GcHP
-        PlayerPrefs.SetInt("StageNum", EnemyHP);
+        PlayerPrefs.SetInt("CurrentHP", EnemyHP);
         //“GÅ‘åHP
         PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
         //í“¬ŠÔ

@@ -19,7 +19,7 @@ public class StageSelectButton : ButtonUIUtil
     override public void OnNext()
     {
         PlayerPrefs.SetInt("StageNum", _stageNum);
-        FadeManager.Instance.LoadScene("MainScene", 0.5f);
+        FadeManager.Instance.LoadScene("MainScene", 1.0f);
         Debug.Log("StageNum:" + _stageNum);
         //ƒV[ƒ“‘JˆÚˆ—
         //SceneManager.LoadScene("GameScene");

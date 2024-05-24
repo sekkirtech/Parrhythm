@@ -42,13 +42,12 @@ public class ResultSceneView : MonoBehaviour
     private void SetScoreText()
     {
         bool isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
-        _time.text = PlayerPrefs.GetFloat("Time", 0).ToString("F0");
+        _time.text = PlayerPrefs.GetFloat("Time", 0).ToString("F2");
         _percentage.text = CalcPercentage(
             isWin ? PlayerPrefs.GetInt("EnemyAttackCount", 100) : PlayerPrefs.GetInt("MaxHP", 100),
             isWin ? PlayerPrefs.GetInt("ParryCount", 1) : PlayerPrefs.GetInt("CurrentHP", 1)
         ).ToString() + "%";
     }
-
     /// <summary>
     /// パーセンテージを計算します。
     /// </summary>

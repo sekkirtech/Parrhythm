@@ -9,6 +9,6 @@ public class ResultButton : ButtonUIUtil
 
     public override void OnNext()
     {
-        FadeManager.Instance.LoadScene(_sceneName, 0.5f);
+        FadeManager.Instance.LoadScene(_sceneName, 1.0f);
     }
 }

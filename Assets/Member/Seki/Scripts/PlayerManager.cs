@@ -38,6 +38,8 @@ public class PlayerManager : MonoBehaviour
     //HPダメージ画像格納
     [SerializeField] Sprite DamageHp;
     private Image myimage;
+    //コントローラー格納
+    Gamepad MyPad;
 
     private CompositeDisposable disposables_=new CompositeDisposable();
 
@@ -52,6 +54,7 @@ public class PlayerManager : MonoBehaviour
         MainGameObj.SpriteList[2].gameObject.SetActive(false);
         MainGameObj.SpriteList[3].gameObject.SetActive(false);
         playerlose = false;
+        MyPad = Gamepad.current;
         //HP表示（長いので要改善）
         GameObject child = MainGameObj.SpriteList[4];
         child = child.transform.GetChild(0).gameObject;
@@ -157,7 +160,6 @@ public class PlayerManager : MonoBehaviour
             }
             if (ParryReception)
             {
-                var gpad = Gamepad.current;
                 Debug.Log("パリィ可能！");
                 //連打防止用フラグ
                 ParryHits = true;
@@ -165,9 +167,9 @@ public class PlayerManager : MonoBehaviour
                 ParryAttack = true;
                 MainGameObj.SpriteList[2].gameObject.SetActive(true);
                 //可能になったらパッド振動
-                gpad.SetMotorSpeeds(1.0f, 1.0f);
+                MyPad.SetMotorSpeeds(1.0f, 1.0f);
             yield return new WaitForSeconds(0.15f);
-            gpad.SetMotorSpeeds(0.0f, 0.0f);
+            MyPad.SetMotorSpeeds(0.0f, 0.0f);
             yield return new WaitForSeconds(0.35f);
                 ParryAttack = false;
                 Debug.Log("パリイ終了");
