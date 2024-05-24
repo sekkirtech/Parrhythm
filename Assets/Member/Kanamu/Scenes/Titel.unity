@@ -607,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57de63065aec68c4da12828ef443d574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadZone: 0.1
 --- !u!4 &1035600638
 Transform:
   m_ObjectHideFlags: 0
@@ -856,8 +857,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press X To Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c16639d247da50941a1543125c1120bb, type: 2}
+  m_sharedMaterial: {fileID: 4212519252815091292, guid: c16639d247da50941a1543125c1120bb,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -881,8 +883,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
