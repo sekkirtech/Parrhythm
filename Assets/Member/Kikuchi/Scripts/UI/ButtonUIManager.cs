@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SelectableUI : MonoBehaviour
+public class ButtonUIManager : MonoBehaviour
 {
     //ボタンUIのリスト
     [SerializeField] 
@@ -29,6 +29,13 @@ public class SelectableUI : MonoBehaviour
 
     private void Start()
     {
+        if(_buttonUIs.Count == 0)
+        {
+            foreach (Transform child in transform)
+            {
+                _buttonUIs.Add(child.gameObject);
+            }
+        }
         _buttons = _buttonUIs.Select(button => button.GetComponent<RectTransform>()).ToList();
         _defaultSize = _buttons[0].localScale;
         UIUpdate();
@@ -44,6 +51,10 @@ public class SelectableUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             OnPrev();
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _buttons[_index].GetComponent<ButtonUIUtil>().OnNext();
         }
         //////////////////////////
     }
