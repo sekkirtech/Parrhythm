@@ -9,8 +9,8 @@ public class StageSelectButton : UIUtility
     private int _stageNum = 0;
     override public void OnNext()
     {
-        DataManager.Instance.StageNum = _stageNum;
-        Debug.Log("StageNum:" + DataManager.Instance.StageNum);
+        PlayerPrefs.SetInt("StageNum", _stageNum);
+        Debug.Log("StageNum:" + _stageNum);
         //ƒV[ƒ“‘JˆÚˆ—
         //SceneManager.LoadScene("GameScene");
     }
