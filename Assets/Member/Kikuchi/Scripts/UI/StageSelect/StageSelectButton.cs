@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StageSelectButton : ButtonUIUtil
@@ -7,6 +8,13 @@ public class StageSelectButton : ButtonUIUtil
 
     [SerializeField]
     private int _stageNum = 0;
+    [SerializeField]
+    private TextMeshProUGUI _textMeshPro;
+
+    private void Start()
+    {
+        _textMeshPro.text = "Stage" + (_stageNum + 1).ToString();
+    }
 
     override public void OnNext()
     {

@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Member/Kanamu/Scenes/StertTest.unity
     guid: 37f149c81560f0f449e35bd019566428
+  - enabled: 1
+    path: Assets/Member/Kikuchi/Scenes/ResultScene.unity
+    guid: 3d93a57ac9831594f8307f5e179c46be
+  - enabled: 1
+    path: Assets/Member/Kikuchi/Scenes/StageSelect.unity
+    guid: 3fa6ddba9e9ad2746b00fb716202f36b
   m_configObjects: {}
