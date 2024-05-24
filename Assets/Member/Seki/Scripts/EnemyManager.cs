@@ -28,9 +28,6 @@ public class EnemyManager : MonoBehaviour
         //初期化
         EnemySlain=false;
         //HP表示
-        //GameObject child = MainGameObj.SpriteList[5];
-        //child = child.transform.GetChild(0).gameObject;
-        //HPtext = child.GetComponent<TextMeshProUGUI>();
         Bar=GameObject.Find("Slider").GetComponent<HpBar>();
         Bar.Init(EnemyMaxHP);
         EnemyHP = EnemyMaxHP;
@@ -55,18 +52,9 @@ public class EnemyManager : MonoBehaviour
         if (EnemyHP <= 0&&!EnemySlain)
         {
             EnemySlain = true;
-            MainGameObj.PlayerWin(EnemyHP,EnemyMaxHP);
+            PlayerPrefs.SetInt("IsWin", 1);
+            MainGameObj.toResult(EnemyHP,EnemyMaxHP);
         }
-
-/*        //HP更新
-        if (HPtext != null)
-        {
-            HPtext.text = "EnemyHP:" + EnemyMaxHP;
-        }
-        else
-        {
-            Debug.Log("プレイヤーテキストエラー");
-        }*/
     }
 
     public void EnemyDamage()
