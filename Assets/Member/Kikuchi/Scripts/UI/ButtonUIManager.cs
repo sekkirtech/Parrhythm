@@ -54,7 +54,7 @@ public class ButtonUIManager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _buttons[_index].GetComponent<UIUtility>().OnNext();
+            _buttons[_index].GetComponent<ButtonUIUtil>().OnNext();
         }
         //////////////////////////
     }
