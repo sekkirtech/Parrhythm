@@ -52,7 +52,7 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         //HPが０以下でリザルト（マイナス行くかもなので）
-        if (EnemyHP >= 0)
+        if (EnemyHP <= 0&&!EnemySlain)
         {
             EnemySlain = true;
             MainGameObj.PlayerWin(EnemyHP,EnemyMaxHP);

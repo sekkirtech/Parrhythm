@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UniRx;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] MainGameManager MainGameObj;
     //ガード中フラグ
     bool Girdnow = false;
+    //連打防止フラグ
+    bool playerlose=false;
     //パリィ受付フラグ
     bool ParryReception = false;
     //パリィ可能フラグ
@@ -31,6 +34,11 @@ public class PlayerManager : MonoBehaviour
     //コントローラー用bool
     private bool GirdButton = false;
     private bool ParryAttackButton = false;
+    //HP画像格納
+    [SerializeField] GameObject[] HpSprite;
+    //HPダメージ画像格納
+    [SerializeField] Sprite DamageHp;
+    private Image myimage;
 
 
 
@@ -44,6 +52,7 @@ public class PlayerManager : MonoBehaviour
         MainGameObj.SpriteList[1].gameObject.SetActive(false);
         MainGameObj.SpriteList[2].gameObject.SetActive(false);
         MainGameObj.SpriteList[3].gameObject.SetActive(false);
+        playerlose = false;
         //HP表示（長いので要改善）
         GameObject child = MainGameObj.SpriteList[4];
         child = child.transform.GetChild(0).gameObject;
@@ -124,8 +133,9 @@ public class PlayerManager : MonoBehaviour
 
 
             //HPが0でリザルトへ
-            if (PlayerHp >= 0)
+            if (PlayerHp <= 0&&!playerlose)
             {
+            playerlose = true;
                 MainGameObj.EnemyWin(EnemyObj.EnemyHP,EnemyObj.EnemyMaxHP);
             }
 
@@ -142,6 +152,8 @@ public class PlayerManager : MonoBehaviour
             {
                 Debug.Log("ダメージを受けた！");
                 PlayerHp--;
+            myimage = HpSprite[PlayerHp].GetComponent<Image>();
+            myimage.sprite=DamageHp;
                 yield break;
             }
             if (ParryReception)
