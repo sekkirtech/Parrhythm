@@ -53,6 +53,15 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
     private Subject<Unit> selectButtonSubject = new Subject<Unit>();
     public IObservable<Unit> SelectButtonObservable => selectButtonSubject;
 
+    //ŠÖ’Ç‰Á0524
+    private Subject<Unit> l2ButtonUpSubject = new Subject<Unit>();
+    public IObservable<Unit> L2ButtonUpObservable=> l2ButtonUpSubject;
+
+    private Subject<Unit> r2ButtonUpSubject = new Subject<Unit>();
+    public IObservable<Unit> R2ButtonUpObservable => r2ButtonUpSubject;
+
+    private Subject<Unit> westButtonUpSubject = new Subject<Unit>();
+    public IObservable<Unit> WestButtonUpObservable => westButtonUpSubject;
 
 
     protected override void Awake()
@@ -83,6 +92,12 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
         CtrlInput.Controller.South.performed += ctx => southButtonSubject.OnNext(Unit.Default);
         CtrlInput.Controller.West.performed += ctx => westButtonSubject.OnNext(Unit.Default);
         CtrlInput.Controller.North.performed += ctx => northButtonSubject.OnNext(Unit.Default);
+
+        //ŠÖ’Ç‰Á0524
+        CtrlInput.Controller.L2.canceled += ctx => l2ButtonUpSubject.OnNext(Unit.Default);
+        CtrlInput.Controller.R2.canceled += ctx => r2ButtonUpSubject.OnNext(Unit.Default);
+        CtrlInput.Controller.West.canceled += ctx => westButtonUpSubject.OnNext(Unit.Default);
+        CtrlInput.Controller.West.canceled += ctx => westButtonUpSubject.OnNext(Unit.Default);
 
         CtrlInput.Controller.L1.performed += ctx => l1ButtonSubject.OnNext(Unit.Default);
         CtrlInput.Controller.L2.performed += ctx => l2ButtonSubject.OnNext(Unit.Default);
