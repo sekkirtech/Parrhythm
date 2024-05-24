@@ -34,41 +34,9 @@ public class MainGameManager : MonoBehaviour
         if (GameStart) BattleTime += Time.deltaTime;
     }
 
-    //ƒvƒŒƒCƒ„[‚ÌHP‚ª0‚É‚È‚Á‚½‚çŒÄ‚Ño‚·
-    public void EnemyWin(int EnemyHP,int EnemyMaxHP)
+    //Ÿ”s‚ªŒˆ‚µ‚½‚Æ‚«‚ÉŒÄ‚Ño‚·
+    public void toResult(int EnemyHP,int EnemyMaxHP)
     {
-        Debug.Log("•‰‚¯");
-        Debug.Log(EnemyHP);
-        Debug.Log(EnemyMaxHP);
-        GameStart = false;
-        /*
-        “GHP‚Ìc‚è“
-        í“¬ŠÔ‚ğŠi”[
-        ƒŠƒUƒ‹ƒgƒGƒlƒ~[ƒo[ƒWƒ‡ƒ“‚Ö‘JˆÚ
-         */
-        //“GcHP
-        PlayerPrefs.SetInt("StageNum",EnemyHP);
-        //“GÅ‘åHP
-        PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
-        //í“¬ŠÔ
-        PlayerPrefs.SetFloat("Time",BattleTime);
-        //Ÿ”s
-        PlayerPrefs.SetInt("IsWin", 0);
-        //“GUŒ‚‰ñ”
-        PlayerPrefs.SetInt("EnemyAttackCount",AttackCount);
-        //ƒpƒŠƒB¬Œ÷‰ñ”
-        PlayerPrefs.SetInt("ParryCount", ParryCount);
-
-        //‘JˆÚ
-        FadeManager.Instance.LoadScene("ResultScene", 1.0f);
-    }
-
-    //“G‚ÌHP‚ª‚O‚É‚È‚Á‚½‚Æ‚«‚ÉŒÄ‚Ño‚·
-    public void PlayerWin(int EnemyHP,int EnemyMaxHP)
-    {
-        Debug.Log("“¢”°");
-        Debug.Log(EnemyHP);
-        Debug.Log(EnemyMaxHP);
         GameStart = false;
         //“GcHP
         PlayerPrefs.SetInt("StageNum", EnemyHP);
@@ -76,8 +44,6 @@ public class MainGameManager : MonoBehaviour
         PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
         //í“¬ŠÔ
         PlayerPrefs.SetFloat("Time", BattleTime);
-        //Ÿ”s
-        PlayerPrefs.SetInt("IsWin", 0);
         //“GUŒ‚‰ñ”
         PlayerPrefs.SetInt("EnemyAttackCount", AttackCount);
         //ƒpƒŠƒB¬Œ÷‰ñ”
@@ -86,7 +52,4 @@ public class MainGameManager : MonoBehaviour
 
         FadeManager.Instance.LoadScene("ResultScene", 1.0f);
     }
-
-
-
 }
