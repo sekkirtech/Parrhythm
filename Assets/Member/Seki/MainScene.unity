@@ -545,8 +545,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 835264486}
-  EnemyMaxHP: 3
-  EnemyHP: 0
   AttackObj: []
   MainGameObj: {fileID: 724742208}
 --- !u!65 &280199741
@@ -1066,6 +1064,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90ecf2ae8b522c4e97e488d91fa2f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerHp: 3
+  EnemyMaxHP: 3
+  EnemyHP: 0
   PlayerObj: {fileID: 835264486}
   EnemyObj: {fileID: 280199740}
   SpriteList:
@@ -1077,6 +1078,15 @@ MonoBehaviour:
   - {fileID: 1697160695}
   AttackCount: 0
   ParryCount: 0
+  Girdnow: 0
+  HpSprite:
+  - {fileID: 912659433}
+  - {fileID: 535654640}
+  - {fileID: 1588078396}
+  DamageHp: {fileID: 21300000, guid: b36e1e00db64222449eb9cc7112c0c73, type: 3}
+  ParryReception: 0
+  ParryHits: 0
+  ParryAttack: 0
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -1121,6 +1131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57de63065aec68c4da12828ef443d574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadZone: 0.1
 --- !u!4 &733444795
 Transform:
   m_ObjectHideFlags: 0
@@ -1379,12 +1390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyObj: {fileID: 280199740}
-  MainGameObj: {fileID: 724742208}
-  HpSprite:
-  - {fileID: 912659433}
-  - {fileID: 535654640}
-  - {fileID: 1588078396}
-  DamageHp: {fileID: 21300000, guid: b36e1e00db64222449eb9cc7112c0c73, type: 3}
 --- !u!135 &835264487
 SphereCollider:
   m_ObjectHideFlags: 0

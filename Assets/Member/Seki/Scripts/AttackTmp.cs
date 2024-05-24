@@ -23,20 +23,30 @@ public class AttackTmp : MonoBehaviour
     //以下テスト用　120BPM
     private void Start()
     {
-       // StartCoroutine(Hakuco());
+       StartCoroutine(TempoCol());
     }
 
-    IEnumerator Hakuco()
+    IEnumerator TempoCol()
     {
-        AudioSource1.clip=haku;
-        for(int i = 0; i < MAXCount+1; i++)
+        AudioSource1.clip = haku;
+        for (int i = 0; i < MAXCount; i++)
         {
-            yield return new WaitForSeconds(0.5f);
             AudioSource1.Play();
             Debug.Log(i);
+            if (i == 2)
+            {
+               MainGameManager.Instance.SpriteList[0].SetActive(true);
+            }
+            yield return new WaitForSeconds(0.5f);
         }
-        AudioSource1.clip=hakufin; 
+        StartCoroutine(MainGameManager.Instance.EnemmyAttack());
+        AudioSource1.clip = hakufin;
         AudioSource1.Play();
+        //maingamemanager.SpriteList[0].SetActive(false);
+    }
+    private void Update()
+    {
+        
     }
 
 

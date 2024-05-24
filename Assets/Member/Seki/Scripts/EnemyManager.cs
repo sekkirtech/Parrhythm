@@ -7,9 +7,6 @@ public class EnemyManager : MonoBehaviour
 {
     //プレイヤー格納
     [SerializeField] PlayerManager PlayerObj;
-    //敵のHP
-    [SerializeField]public int EnemyMaxHP = 3;
-    public int EnemyHP = 0;
     //プレファブ
     [SerializeField] GameObject[] AttackObj;
     //情報格納用マネージャー
@@ -29,8 +26,8 @@ public class EnemyManager : MonoBehaviour
         EnemySlain=false;
         //HP表示
         Bar=GameObject.Find("Slider").GetComponent<HpBar>();
-        Bar.Init(EnemyMaxHP);
-        EnemyHP = EnemyMaxHP;
+        Bar.Init(MainGameManager.Instance.EnemyMaxHP);
+        MainGameManager.Instance.EnemyHP = MainGameManager.Instance.EnemyMaxHP;
 
         //nullチェック
         if (PlayerObj == null)
@@ -49,18 +46,18 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         //HPが０以下でリザルト（マイナス行くかもなので）
-        if (EnemyHP <= 0&&!EnemySlain)
+        if (MainGameManager.Instance.EnemyHP <= 0&&!EnemySlain)
         {
             EnemySlain = true;
             PlayerPrefs.SetInt("IsWin", 1);
-            MainGameObj.toResult(EnemyHP,EnemyMaxHP);
+            MainGameObj.toResult(MainGameManager.Instance.EnemyHP,MainGameManager.Instance.EnemyMaxHP);
         }
     }
 
     public void EnemyDamage()
     {
         //アニメーション挿入
-        EnemyHP--;
+        MainGameManager.Instance.EnemyHP--;
         Bar.SetHp(1);
     }
 }
