@@ -10,10 +10,10 @@ public class TestScripts : MonoBehaviour
     [SerializeField] AudioClip hakufin;
     [SerializeField] AudioSource AudioSource1;
 
-    private float time = 0.0f;
+    //private float time = 0.0f;
     private bool x = true;
 
-    int hakucount = 0;
+    //int hakucount = 0;
     int MAXCount = 3;
     bool b = true;
     // Start is called before the first frame update

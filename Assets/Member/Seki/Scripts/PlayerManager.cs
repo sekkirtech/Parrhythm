@@ -101,15 +101,17 @@ public class PlayerManager : MonoBehaviour
                 MainGameObj.SpriteList[3].gameObject.SetActive(true);
                 HanteiTime = 0.0f;
                 EnemyObj.EnemyDamage();
+                MainGameObj.ParryCount++;
                 Debug.Log("パリィ成功");
             }
 
+            //パリィ成功画面の削除
             if (MainGameObj.SpriteList[3].gameObject.activeSelf)
             {
                 HanteiTime += Time.deltaTime;
                 if (HanteiTime > 1.0f) MainGameObj.SpriteList[3].gameObject.SetActive(false);
             }
-
+/*
             //HP更新
             if (HPtext != null)
             {
@@ -118,13 +120,13 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 Debug.Log("プレイヤーテキストエラー");
-            }
+            }*/
 
 
             //HPが0でリザルトへ
-            if (PlayerHp == 0)
+            if (PlayerHp >= 0)
             {
-                MainGameObj.EnemyWin();
+                MainGameObj.EnemyWin(EnemyObj.EnemyHP,EnemyObj.EnemyMaxHP);
             }
 
         }
@@ -135,6 +137,7 @@ public class PlayerManager : MonoBehaviour
         /// </summary>
         public IEnumerator EnemmyAttack()
         {
+            MainGameObj.AttackCount++;
             if (!Girdnow)
             {
                 Debug.Log("ダメージを受けた！");

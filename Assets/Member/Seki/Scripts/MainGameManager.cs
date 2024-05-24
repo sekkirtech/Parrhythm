@@ -15,11 +15,17 @@ public class MainGameManager : MonoBehaviour
     bool GameStart=false;
     //α視覚用obj
     [SerializeField] public GameObject[] SpriteList;
-    
+    //敵が攻撃した回数（パリィ率表記用）
+    public int AttackCount = 0;
+    //パリィ成功回数
+    public int ParryCount = 0;
+
 
     void Start()
     {
         BattleTime = 0.0f;
+        AttackCount = 0;
+        ParryCount = 0;
     }
 
     void Update()
@@ -29,27 +35,56 @@ public class MainGameManager : MonoBehaviour
     }
 
     //プレイヤーのHPが0になったら呼び出す
-    public void EnemyWin()
+    public void EnemyWin(int EnemyHP,int EnemyMaxHP)
     {
+        Debug.Log("負け");
+        Debug.Log(EnemyHP);
+        Debug.Log(EnemyMaxHP);
         GameStart = false;
         /*
-         ステージセレクト用に残した破壊不能objに
         敵HPの残り％
         戦闘時間を格納
         リザルトエネミーバージョンへ遷移
          */
-        //FadeManager.Instance.LoadScene("", 1.0f);
+        //敵残HP
+        PlayerPrefs.SetInt("StageNum",EnemyHP);
+        //敵最大HP
+        PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
+        //戦闘時間
+        PlayerPrefs.SetFloat("Time",BattleTime);
+        //勝敗
+        PlayerPrefs.SetInt("IsWin", 0);
+        //敵攻撃回数
+        PlayerPrefs.SetInt("EnemyAttackCount",AttackCount);
+        //パリィ成功回数
+        PlayerPrefs.SetInt("ParryCount", ParryCount);
+
+        //遷移
+        FadeManager.Instance.LoadScene("ResultScene", 1.0f);
     }
 
     //敵のHPが０になったときに呼び出す
-    public void PlayerWin()
+    public void PlayerWin(int EnemyHP,int EnemyMaxHP)
     {
+        Debug.Log("討伐");
+        Debug.Log(EnemyHP);
+        Debug.Log(EnemyMaxHP);
         GameStart = false;
-        /*
-         ステージセレクト用に残した破壊不能objに
-        戦闘時間パリィの成功率を格納
-         */
-        //FadeManager.Instance.LoadScene("", 1.0f);
+        //敵残HP
+        PlayerPrefs.SetInt("StageNum", EnemyHP);
+        //敵最大HP
+        PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
+        //戦闘時間
+        PlayerPrefs.SetFloat("Time", BattleTime);
+        //勝敗
+        PlayerPrefs.SetInt("IsWin", 0);
+        //敵攻撃回数
+        PlayerPrefs.SetInt("EnemyAttackCount", AttackCount);
+        //パリィ成功回数
+        PlayerPrefs.SetInt("ParryCount", ParryCount);
+
+
+        FadeManager.Instance.LoadScene("ResultScene", 1.0f);
     }
 
 
