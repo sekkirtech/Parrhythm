@@ -152,6 +152,15 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""52a7c021-2761-4714-a384-3c0282aeb043"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -308,6 +317,17 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
                     ""action"": ""touchPad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d64af35c-ae3c-4f27-88d2-d0783af9668f"",
+                    ""path"": ""<Gamepad>/<Button>"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -330,6 +350,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
         m_Controller_R1 = m_Controller.FindAction("R1", throwIfNotFound: true);
         m_Controller_R2 = m_Controller.FindAction("R2", throwIfNotFound: true);
         m_Controller_touchPad = m_Controller.FindAction("touchPad", throwIfNotFound: true);
+        m_Controller_AnyButton = m_Controller.FindAction("AnyButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +426,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controller_R1;
     private readonly InputAction m_Controller_R2;
     private readonly InputAction m_Controller_touchPad;
+    private readonly InputAction m_Controller_AnyButton;
     public struct ControllerActions
     {
         private @ControllerInput m_Wrapper;
@@ -423,6 +445,7 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
         public InputAction @R1 => m_Wrapper.m_Controller_R1;
         public InputAction @R2 => m_Wrapper.m_Controller_R2;
         public InputAction @touchPad => m_Wrapper.m_Controller_touchPad;
+        public InputAction @AnyButton => m_Wrapper.m_Controller_AnyButton;
         public InputActionMap Get() { return m_Wrapper.m_Controller; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -474,6 +497,9 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
             @touchPad.started += instance.OnTouchPad;
             @touchPad.performed += instance.OnTouchPad;
             @touchPad.canceled += instance.OnTouchPad;
+            @AnyButton.started += instance.OnAnyButton;
+            @AnyButton.performed += instance.OnAnyButton;
+            @AnyButton.canceled += instance.OnAnyButton;
         }
 
         private void UnregisterCallbacks(IControllerActions instance)
@@ -520,6 +546,9 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
             @touchPad.started -= instance.OnTouchPad;
             @touchPad.performed -= instance.OnTouchPad;
             @touchPad.canceled -= instance.OnTouchPad;
+            @AnyButton.started -= instance.OnAnyButton;
+            @AnyButton.performed -= instance.OnAnyButton;
+            @AnyButton.canceled -= instance.OnAnyButton;
         }
 
         public void RemoveCallbacks(IControllerActions instance)
@@ -553,5 +582,6 @@ public partial class @ControllerInput: IInputActionCollection2, IDisposable
         void OnR1(InputAction.CallbackContext context);
         void OnR2(InputAction.CallbackContext context);
         void OnTouchPad(InputAction.CallbackContext context);
+        void OnAnyButton(InputAction.CallbackContext context);
     }
 }

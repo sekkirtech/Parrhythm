@@ -46,7 +46,7 @@ public class TestScripts : MonoBehaviour
             }
             yield return new WaitForSeconds(0.5f);
         }
-        StartCoroutine(MainGameManager.Instance.EnemmyAttack());
+        StartCoroutine(playerManager.EnemmyAttack());
         AudioSource1.clip = hakufin;
         AudioSource1.Play();
         maingamemanager.SpriteList[0].SetActive(false);

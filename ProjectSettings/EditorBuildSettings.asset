@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Member/Kikuchi/Scenes/StageSelect.unity
     guid: 3fa6ddba9e9ad2746b00fb716202f36b
+  - enabled: 1
+    path: Assets/Member/Seki/MainScene.unity
+    guid: 2d706e20195895d4695025a4d5191f5b
   m_configObjects: {}

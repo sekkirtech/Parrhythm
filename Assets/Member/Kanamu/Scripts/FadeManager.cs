@@ -80,6 +80,7 @@ public class FadeManager : MonoBehaviour
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
 	private IEnumerator TransScene (string scene, float interval)
 	{
+		if(isFading) yield break; // 菊池追記　連打防止
 		//だんだん暗く .
 		this.isFading = true;
 		float time = 0;
