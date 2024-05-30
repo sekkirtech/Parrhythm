@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Member/Seki/MainScene.unity
     guid: 2d706e20195895d4695025a4d5191f5b
+  - enabled: 1
+    path: Assets/Member/Kanamu/Scenes/Titel.unity
+    guid: d6d9a730a2edd79408127392f6c0e0ba
   m_configObjects: {}
