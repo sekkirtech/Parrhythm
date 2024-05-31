@@ -38,6 +38,8 @@ public class MainGameManager : MonoBehaviour
     public bool ParryAttack = false;
     //コントローラー格納
     Gamepad MyPad;
+    [SerializeField] AudioClip Damage;
+    private AudioSource AudioSource;
 
 
     void Start()
@@ -48,6 +50,7 @@ public class MainGameManager : MonoBehaviour
         GameStart = true;
         ParryReception = false;
         MyPad = Gamepad.current;
+        AudioSource=gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -86,6 +89,8 @@ public class MainGameManager : MonoBehaviour
         if (!Girdnow)
         {
             Debug.Log("ダメージを受けた！");
+            AudioSource.clip = Damage;
+            AudioSource.Play();
             PlayerHp--;
             //HP画像差し替え
             myimage = HpSprite[PlayerHp].GetComponent<Image>();

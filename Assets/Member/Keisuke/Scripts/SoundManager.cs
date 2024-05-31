@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] AudioSource bgmAudioSource;
+    [SerializeField] public AudioSource bgmAudioSource; //関　止める機構が無いため干渉可能に
     [SerializeField] List<AudioSource> seAudioSources; // 複数のSE再生用のオーディオソース
 
     [SerializeField] List<BGMSoundData> bgmSoundDatas;

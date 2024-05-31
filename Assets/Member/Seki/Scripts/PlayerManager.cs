@@ -23,6 +23,10 @@ public class PlayerManager : MonoBehaviour
     private bool GirdButton = false;
     private bool ParryAttackButton = false;
 
+    [SerializeField] AudioClip Gird;
+    [SerializeField] AudioClip Parrywin;
+    private AudioSource AudioSource;
+
     private CompositeDisposable disposables_=new CompositeDisposable();
 
 
@@ -52,6 +56,7 @@ public class PlayerManager : MonoBehaviour
         ControllerManager.Instance.R2ButtonUpObservable.Subscribe(x => GirdButton = false).AddTo(disposables_);
         ControllerManager.Instance.WestButtonObservable.Subscribe(x => ParryAttackButton = true).AddTo(disposables_);
         ControllerManager.Instance.WestButtonUpObservable.Subscribe(x=>ParryAttackButton = false).AddTo(disposables_);
+        AudioSource=gameObject.AddComponent<AudioSource>();
     }
 
 
@@ -96,6 +101,8 @@ public class PlayerManager : MonoBehaviour
                 EnemyObj.EnemyDamage();
                 MainGameObj.ParryCount++;
                 Debug.Log("ÉpÉäÉBê¨å˜");
+                AudioSource.clip = Parrywin;
+                AudioSource.Play();
             }
             }
 

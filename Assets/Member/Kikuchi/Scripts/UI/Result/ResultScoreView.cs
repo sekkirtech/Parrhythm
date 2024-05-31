@@ -24,6 +24,7 @@ public class ResultSceneView : MonoBehaviour
     {
         SetExpoText();
         SetScoreText();
+        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);//ä÷í«ãLÅ@BGMí«â¡
     }
 
     /// <summary>
