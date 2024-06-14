@@ -26,6 +26,8 @@ public class MainGameManager : MonoBehaviour
     public int ParryCount = 0;
     //ガード中フラグ
     public bool Girdnow = false;
+    //スタミナガード可不可フラグ
+    public bool SutaminaGird = true;
     //HP画像格納
     [SerializeField] GameObject[] HpSprite;
     //HPダメージ画像格納
