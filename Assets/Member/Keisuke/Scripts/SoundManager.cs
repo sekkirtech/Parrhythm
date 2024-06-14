@@ -67,7 +67,7 @@ public class SoundManager : MonoBehaviour
         {
             float currentTime = Time.time;
             float timeSinceLastPlay = currentTime - lastPlayedTime[se];
-            if (timeSinceLastPlay < 0.8f) // 高速再生を防ぐための時間間隔
+            if (timeSinceLastPlay < 0.2f) // 高速再生を防ぐための時間間隔
             {
                 return false;
             }

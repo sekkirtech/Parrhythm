@@ -93,6 +93,7 @@ public class ButtonUIManager : MonoBehaviour
     private void OnSelect()
     {
         _buttons[_index].GetComponent<ButtonUIUtil>().OnNext();
+        SoundManager.Instance.PlaySE(SESoundData.SE.other);
     }
 
     /// <summary>
@@ -100,6 +101,7 @@ public class ButtonUIManager : MonoBehaviour
     /// </summary>
     private void OnNext()
     {
+        SoundManager.Instance.PlaySE(SESoundData.SE.other2);
         if (_lastCallTime + _cursorWaitTime > Time.time) return;
         if (_index < _buttons.Count - 1) _index++;
         UIUpdate();
@@ -111,6 +113,7 @@ public class ButtonUIManager : MonoBehaviour
     /// </summary>
     private void OnPrev()
     {
+        SoundManager.Instance.PlaySE(SESoundData.SE.other2);
         if (_lastCallTime + _cursorWaitTime > Time.time) return;
         if (_index > 0) _index--;
         UIUpdate();
