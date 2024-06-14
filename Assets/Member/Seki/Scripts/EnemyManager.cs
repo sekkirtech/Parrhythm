@@ -1,54 +1,54 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    //ƒvƒŒƒCƒ„[Ši”[
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ ¼ç´
     [SerializeField] PlayerManager PlayerObj;
-    //“G‚ÌHP
+    //æ•µã®HP
     [SerializeField]public int EnemyMaxHP = 3;
     public int EnemyHP = 0;
-    //ƒvƒŒƒtƒ@ƒu
+    //ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–
     [SerializeField] GameObject[] AttackObj;
-    //î•ñŠi”[—pƒ}ƒl[ƒWƒƒ[
+    //æƒ…å ±æ ¼ç´ç”¨ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
     [SerializeField] MainGameManager MainGameObj;
-    //BGM—pSource
+    //BGMç”¨Source
     //[SerializeField] AudioClip[] BGMClip;
-    //“¢”°‚³‚ê‚Ä‚é‚©
+    //è¨ä¼ã•ã‚Œã¦ã‚‹ã‹
     bool EnemySlain=false;
-    //ƒ¿”Å—p
+    //Î±ç‰ˆç”¨
     private TextMeshProUGUI HPtext;
-    //HPƒo[scriptŠi”[
+    //HPãƒãƒ¼scriptæ ¼ç´
     HpBar Bar;
 
     void Start()
     {
-        //‰Šú‰»
+        //åˆæœŸåŒ–
         EnemySlain=false;
-        //HP•\¦
+        //HPè¡¨ç¤º
         Bar=GameObject.Find("Slider").GetComponent<HpBar>();
         Bar.Init(EnemyMaxHP);
         EnemyHP = EnemyMaxHP;
 
-        //nullƒ`ƒFƒbƒN
+        //nullãƒã‚§ãƒƒã‚¯
         if (PlayerObj == null)
         {
-            Debug.Log("Player‚ÌƒXƒNƒŠƒvƒg‚ª‚È‚¢‚©‚çƒAƒ^ƒbƒ`‚µ‚Ü‚·");
+            Debug.Log("Playerã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒãªã„ã‹ã‚‰ã‚¢ã‚¿ãƒƒãƒã—ã¾ã™");
             GameObject playerseki = GameObject.Find("Player");
             PlayerObj = playerseki.GetComponent<PlayerManager>();
         }
         for (int i = 0; i < 3; i++)
         {
-            //ƒvƒŒƒnƒu–¼‚ª–¢Šm’è‚Ì‚½‚ßƒGƒ‰[‚Å•\‹L
-            //if (AttackObj[i] == null) Debug.LogError("UŒ‚ƒIƒuƒWƒFƒNƒg‚Ì" + i + "”Ô‚ª‚ ‚è‚Ü‚¹‚ñ");
+            //ãƒ—ãƒ¬ãƒãƒ–åãŒæœªç¢ºå®šã®ãŸã‚ã‚¨ãƒ©ãƒ¼ã§è¡¨è¨˜
+            //if (AttackObj[i] == null) Debug.LogError("æ”»æ’ƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®" + i + "ç•ªãŒã‚ã‚Šã¾ã›ã‚“");
         }
     }
 
     void Update()
     {
-        //HP‚ª‚OˆÈ‰º‚ÅƒŠƒUƒ‹ƒgiƒ}ƒCƒiƒXs‚­‚©‚à‚È‚Ì‚Åj
+        //HPãŒï¼ä»¥ä¸‹ã§ãƒªã‚¶ãƒ«ãƒˆï¼ˆãƒã‚¤ãƒŠã‚¹è¡Œãã‹ã‚‚ãªã®ã§ï¼‰
         if (EnemyHP <= 0&&!EnemySlain)
         {
             EnemySlain = true;
@@ -59,7 +59,7 @@ public class EnemyManager : MonoBehaviour
 
     public void EnemyDamage()
     {
-        //ƒAƒjƒ[ƒVƒ‡ƒ“‘}“ü
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æŒ¿å…¥
         EnemyHP--;
         Bar.SetHp(1);
     }

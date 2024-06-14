@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,18 +9,18 @@ public class AttackTmp : MonoBehaviour
     [SerializeField] AudioSource AudioSource1;
 
 
-    //ƒqƒbƒg‚·‚é””A¶¬‚Ì”+UŒ‚‚Ü‚Å‚Ì””
+    //ãƒ’ãƒƒãƒˆã™ã‚‹æ‹æ•°ã€ç”Ÿæˆæ™‚ã®æ‹+æ”»æ’ƒã¾ã§ã®æ‹æ•°
 
-    //ƒAƒNƒeƒBƒuƒAƒjƒ[ƒVƒ‡ƒ“‰Šú‰»
+    //ã‚¢ã‚¯ãƒ†ã‚£ãƒ–æ™‚ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆæœŸåŒ–
 
-    //ƒAƒjƒ[ƒVƒ‡ƒ“‰‰o—pAudioİ’è
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ¼”å‡ºç”¨Audioè¨­å®š
 
     //private float time = 0.0f;
 
     //int hakucount = 0;
     int MAXCount = 3;
     //bool b=true;
-    //ˆÈ‰ºƒeƒXƒg—p@120BPM
+    //ä»¥ä¸‹ãƒ†ã‚¹ãƒˆç”¨ã€€120BPM
     private void Start()
     {
        // StartCoroutine(Hakuco());
@@ -38,6 +38,4 @@ public class AttackTmp : MonoBehaviour
         AudioSource1.clip=hakufin; 
         AudioSource1.Play();
     }
-
-
 }

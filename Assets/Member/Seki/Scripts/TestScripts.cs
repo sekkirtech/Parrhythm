@@ -26,30 +26,23 @@ public class TestScripts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Return)&&x)
+        if(Input.GetKeyDown(KeyCode.Alpha1)&&maingamemanager.BeatFlag)
         {
-            Debug.Log("çUåÇ");
-            x = false;
-            StartCoroutine(Hakuco());
+            Debug.Log("1îèçUåÇ");
+            maingamemanager.BeatFlag = false;
+            StartCoroutine(maingamemanager.EnemmyAttack(1));
         }
-    }
-    IEnumerator Hakuco()
-    {
-        AudioSource1.clip = haku;
-        for (int i = 0; i < MAXCount; i++)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && maingamemanager.BeatFlag)
         {
-            AudioSource1.Play();
-            Debug.Log(i);
-            if (i == 2)
-            {
-                maingamemanager.SpriteList[0].SetActive(true);
-            }
-            yield return new WaitForSeconds(0.5f);
+            Debug.Log("2îèçUåÇ");
+            maingamemanager.BeatFlag = false;
+            StartCoroutine(maingamemanager.EnemmyAttack(2));
         }
-        StartCoroutine(maingamemanager.EnemmyAttack());
-        AudioSource1.clip = hakufin;
-        AudioSource1.Play();
-        maingamemanager.SpriteList[0].SetActive(false);
-        x=true;
+        if (Input.GetKeyDown(KeyCode.Alpha3) && maingamemanager.BeatFlag)
+        {
+            Debug.Log("3îèçUåÇ");
+            maingamemanager.BeatFlag = false;
+            StartCoroutine(maingamemanager.EnemmyAttack(3));
+        }
     }
 }

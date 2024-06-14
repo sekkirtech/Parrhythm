@@ -1,5 +1,6 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,38 +8,45 @@ using UnityEngine.UI;
 
 public class MainGameManager : MonoBehaviour
 {
-    //ƒvƒŒƒCƒ„[‚ÌHP
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HP
     public int PlayerHp = 3;
-    //ƒvƒŒƒCƒ„[Ši”[
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ ¼ç´
     [SerializeField] PlayerManager PlayerObj;
-    //“GŠi”[
+    //æ•µæ ¼ç´
     [SerializeField] EnemyManager EnemyObj;
-    //Œo‰ßŠÔ‘ª’è
+    //çµŒéæ™‚é–“æ¸¬å®š
     float BattleTime = 0.0f;
-    //ƒQ[ƒ€‚ªŠJn‚µ‚Ä‚é‚©
+    //ã‚²ãƒ¼ãƒ ãŒé–‹å§‹ã—ã¦ã‚‹ã‹
     bool GameStart=false;
-    //ƒ¿‹Šo—pobj
+    //Î±è¦–è¦šç”¨obj
     [SerializeField] public GameObject[] SpriteList;
-    //“G‚ªUŒ‚‚µ‚½‰ñ”iƒpƒŠƒB—¦•\‹L—pj
+    //æ•µãŒæ”»æ’ƒã—ãŸå›æ•°ï¼ˆãƒ‘ãƒªã‚£ç‡è¡¨è¨˜ç”¨ï¼‰
     public int AttackCount = 0;
-    //ƒpƒŠƒB¬Œ÷‰ñ”
+    //ãƒ‘ãƒªã‚£æˆåŠŸå›æ•°
     public int ParryCount = 0;
-    //ƒK[ƒh’†ƒtƒ‰ƒO
+    //ã‚¬ãƒ¼ãƒ‰ä¸­ãƒ•ãƒ©ã‚°
     public bool Girdnow = false;
-    //HP‰æ‘œŠi”[
+    //HPç”»åƒæ ¼ç´
     [SerializeField] GameObject[] HpSprite;
-    //HPƒ_ƒ[ƒW‰æ‘œŠi”[
+    //HPãƒ€ãƒ¡ãƒ¼ã‚¸ç”»åƒæ ¼ç´
     [SerializeField] Sprite DamageHp;
     private Image myimage;
-    //ƒpƒŠƒBó•tƒtƒ‰ƒO
+    //ãƒ‘ãƒªã‚£å—ä»˜ãƒ•ãƒ©ã‚°
     public bool ParryReception = false;
-    //ƒpƒŠƒB¬Œ÷—p˜A‘Å‘Îô
+    //ãƒ‘ãƒªã‚£æˆåŠŸæ™‚ç”¨é€£æ‰“å¯¾ç­–
     public bool ParryHits = false;
-    //ƒpƒŠƒB‰Â”\ƒtƒ‰ƒO
+    //ãƒ‘ãƒªã‚£å¯èƒ½ãƒ•ãƒ©ã‚°
     public bool ParryAttack = false;
-    //ƒRƒ“ƒgƒ[ƒ‰[Ši”[
+    //ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼æ ¼ç´
     Gamepad MyPad;
 
+    //æ‹ç”¨AudioSource
+    [SerializeField] AudioSource BeatAudioSource;
+    [SerializeField] AudioClip Beat;
+    [SerializeField] AudioClip BeatFin;
+
+    //Beatãƒ•ãƒ©ã‚°
+    public bool BeatFlag=true;
 
     void Start()
     {
@@ -52,62 +60,79 @@ public class MainGameManager : MonoBehaviour
 
     void Update()
     {
-        //ƒ^ƒCƒ€Œv‘ªA
+        //ã‚¿ã‚¤ãƒ è¨ˆæ¸¬ã€
         if (GameStart) BattleTime += Time.deltaTime;
     }
 
-    //Ÿ”s‚ªŒˆ‚µ‚½‚Æ‚«‚ÉŒÄ‚Ño‚·
+    //å‹æ•—ãŒæ±ºã—ãŸã¨ãã«å‘¼ã³å‡ºã™
     public void toResult(int EnemyHP,int EnemyMaxHP)
     {
         GameStart = false;
-        //“GcHP
+        //æ•µæ®‹HP
         PlayerPrefs.SetInt("CurrentHP", EnemyHP);
-        //“GÅ‘åHP
+        //æ•µæœ€å¤§HP
         PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
-        //í“¬ŠÔ
+        //æˆ¦é—˜æ™‚é–“
         PlayerPrefs.SetFloat("Time", BattleTime);
-        //“GUŒ‚‰ñ”
+        //æ•µæ”»æ’ƒå›æ•°
         PlayerPrefs.SetInt("EnemyAttackCount", AttackCount);
-        //ƒpƒŠƒB¬Œ÷‰ñ”
+        //ãƒ‘ãƒªã‚£æˆåŠŸå›æ•°
         PlayerPrefs.SetInt("ParryCount", ParryCount);
 
 
         FadeManager.Instance.LoadScene("ResultScene", 1.0f);
     }
 
-    /// <summary>
-    /// “G‚ÌUŒ‚‚ª“–‚½‚é‚Æ‚«‚É“GƒIƒuƒWƒFƒNƒg‚©‚çŒÄ‚Ño‚µ
-    /// ƒK[ƒh‚ğ‚µ‚Ä‚È‚©‚Á‚½‚çƒ_ƒ[ƒW
-    /// ƒpƒŠƒBó•tŠÔ“à‚È‚ç0.25•b‚¾‚¯ƒpƒŠƒB‰Â”\‚É‚·‚é
-    /// </summary>
-    public IEnumerator EnemmyAttack()
+/// <summary>
+/// æ•µãŒæ”»æ’ƒé–‹å§‹æ™‚ã«å‘¼ã³å‡ºã—ã€ãƒ‘ãƒªã‚£å¯èƒ½ã‹ã©ã†ã‹åˆ¤å®š
+/// ã‚ã¨ãƒ†ã‚¹ãƒˆç”¨æ‹å†ç”Ÿ
+/// </summary>
+/// <param name="MAXCount">Beatã®æ•°</param>
+/// <returns></returns>
+    public IEnumerator EnemmyAttack(int MAXCount)
     {
+        BeatAudioSource.clip = Beat;
+        for (int i = 0; i < MAXCount; i++)
+        {
+            BeatAudioSource.Play();
+            Debug.Log(i);
+            if (i == (MAXCount-1))
+            {
+                SpriteList[0].SetActive(true);
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        BeatAudioSource.clip = BeatFin;
+        BeatAudioSource.Play();
+
         AttackCount++;
         if (!Girdnow)
         {
-            Debug.Log("ƒ_ƒ[ƒW‚ğó‚¯‚½I");
+            Debug.Log("ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸï¼");
             PlayerHp--;
-            //HP‰æ‘œ·‚µ‘Ö‚¦
+            //HPç”»åƒå·®ã—æ›¿ãˆ
             myimage = HpSprite[PlayerHp].GetComponent<Image>();
             myimage.sprite = DamageHp;
-            yield break;
         }
         if (ParryReception)
         {
-            Debug.Log("ƒpƒŠƒB‰Â”\I");
-            //˜A‘Å–h~—pƒtƒ‰ƒO
+            Debug.Log("ãƒ‘ãƒªã‚£å¯èƒ½ï¼");
+            //é€£æ‰“é˜²æ­¢ç”¨ãƒ•ãƒ©ã‚°
             ParryHits = true;
-            //ƒpƒŠƒB‰Â”\‚©
+            //ãƒ‘ãƒªã‚£å¯èƒ½ã‹
             ParryAttack = true;
             SpriteList[2].gameObject.SetActive(true);
-            //‰Â”\‚É‚È‚Á‚½‚çƒpƒbƒhU“®
+            //å¯èƒ½ã«ãªã£ãŸã‚‰ãƒ‘ãƒƒãƒ‰æŒ¯å‹•
             MyPad.SetMotorSpeeds(1.0f, 1.0f);
             yield return new WaitForSeconds(0.15f);
             MyPad.SetMotorSpeeds(0.0f, 0.0f);
             yield return new WaitForSeconds(0.35f);
             ParryAttack = false;
-            Debug.Log("ƒpƒŠƒCI—¹");
+            Debug.Log("ãƒ‘ãƒªã‚¤çµ‚äº†");
             SpriteList[2].gameObject.SetActive(false);
         }
+        SpriteList[0].SetActive(false);
+        BeatFlag = true;
     }
 }
