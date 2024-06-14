@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -9,17 +9,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    //“GƒIƒuƒWƒFƒNƒg
+    //æ•µã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     [SerializeField] EnemyManager EnemyObj;
-    //î•ñŠi”[—pƒ}ƒl[ƒWƒƒ[
+    //æƒ…å ±æ ¼ç´ç”¨ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
     [SerializeField] MainGameManager MainGameObj;
-    //˜A‘Å–h~ƒtƒ‰ƒO
+    //é€£æ‰“é˜²æ­¢ãƒ•ãƒ©ã‚°
     bool playerlose=false;
-    //ƒK[ƒhŠÔŒv‘ª—p
+    //ã‚¬ãƒ¼ãƒ‰æ™‚é–“è¨ˆæ¸¬ç”¨
     float GirdTime = 0.0f;
-    //ƒ¿”Å—p
+    //Î±ç‰ˆç”¨
     private float HanteiTime = 0.0f;
-    //ƒRƒ“ƒgƒ[ƒ‰[—pbool
+    //ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ç”¨bool
     private bool GirdButton = false;
     private bool ParryAttackButton = false;
 
@@ -28,24 +28,24 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        //‰Šú‰»
+        //åˆæœŸåŒ–
         GirdTime = 0.0f;
         MainGameObj.SpriteList[1].gameObject.SetActive(false);
         MainGameObj.SpriteList[2].gameObject.SetActive(false);
         MainGameObj.SpriteList[3].gameObject.SetActive(false);
         playerlose = false;
-        //HP•\¦i’·‚¢‚Ì‚Å—v‰ü‘Pj
+        //HPè¡¨ç¤ºï¼ˆé•·ã„ã®ã§è¦æ”¹å–„ï¼‰
         GameObject child = MainGameObj.SpriteList[4];
         child = child.transform.GetChild(0).gameObject;
 
-        //nullƒ`ƒFƒbƒN
+        //nullãƒã‚§ãƒƒã‚¯
         if (EnemyObj == null)
         {
-            Debug.Log("Enemy‚ª‚È‚¢‚Ì‚ÅƒAƒ^ƒbƒ`‚µ‚Ü‚·");
+            Debug.Log("EnemyãŒãªã„ã®ã§ã‚¢ã‚¿ãƒƒãƒã—ã¾ã™");
             GameObject enemyseki = GameObject.Find("Player");
             EnemyObj = enemyseki.GetComponent<EnemyManager>();
         }
-        //ƒRƒ“ƒgƒ[ƒ‰[ˆ—“o˜^
+        //ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼å‡¦ç†ç™»éŒ²
         ControllerManager.Instance.L2ButtonObservable.Subscribe(x => GirdButton = true).AddTo(disposables_);
         ControllerManager.Instance.R2ButtonObservable.Subscribe(x => GirdButton = true).AddTo(disposables_);
         ControllerManager.Instance.L2ButtonUpObservable.Subscribe(x => GirdButton = false).AddTo(disposables_);
@@ -57,15 +57,15 @@ public class PlayerManager : MonoBehaviour
 
         void Update()
         {
-            //ƒK[ƒh’†
+            //ã‚¬ãƒ¼ãƒ‰ä¸­
             if (Input.GetKey(KeyCode.Space)||GirdButton)
             {
-                Debug.Log("ƒK[ƒh");
+                Debug.Log("ã‚¬ãƒ¼ãƒ‰");
                 MainGameObj.SpriteList[1].gameObject.SetActive(true);
                 MainGameObj.Girdnow = true;
-                //ƒ^ƒCƒ€Œv‘ª
+                //ã‚¿ã‚¤ãƒ è¨ˆæ¸¬
                 GirdTime += Time.deltaTime;
-                //0.25•bˆÈ“à‚ÅƒpƒŠƒB‰ÂA’´‚¦‚½‚ç•s‰Â‚É
+                //0.25ç§’ä»¥å†…ã§ãƒ‘ãƒªã‚£å¯ã€è¶…ãˆãŸã‚‰ä¸å¯ã«
                 if (GirdTime > 0.5)
                 {
                     MainGameObj.ParryReception = false;
@@ -79,11 +79,11 @@ public class PlayerManager : MonoBehaviour
             {
                 MainGameObj.Girdnow = false;
                 MainGameObj.SpriteList[1].gameObject.SetActive(false);
-                //‰Ÿ‚µ‚Ä‚È‚¯‚ê‚Î‰Šú‰»
+                //æŠ¼ã—ã¦ãªã‘ã‚Œã°åˆæœŸåŒ–
                 GirdTime = 0.0f;
             }
 
-            //ƒpƒŠƒB‰Â”\ŠÔ“à‚ÉP( )‚ÅƒpƒŠƒB¬Œ÷
+            //ãƒ‘ãƒªã‚£å¯èƒ½æ™‚é–“å†…ã«P(â–¡)ã§ãƒ‘ãƒªã‚£æˆåŠŸ
             if ( Input.GetKeyDown(KeyCode.P) || ParryAttackButton)
             {
             Debug.Log("ParryAttack"+MainGameObj.ParryAttack);
@@ -95,11 +95,11 @@ public class PlayerManager : MonoBehaviour
                 HanteiTime = 0.0f;
                 EnemyObj.EnemyDamage();
                 MainGameObj.ParryCount++;
-                Debug.Log("ƒpƒŠƒB¬Œ÷");
+                Debug.Log("ãƒ‘ãƒªã‚£æˆåŠŸ");
             }
             }
 
-            //ƒpƒŠƒB¬Œ÷‰æ–Ê‚Ìíœ
+            //ãƒ‘ãƒªã‚£æˆåŠŸç”»é¢ã®å‰Šé™¤
             if (MainGameObj.SpriteList[3].gameObject.activeSelf)
             {
                 HanteiTime += Time.deltaTime;
@@ -107,7 +107,7 @@ public class PlayerManager : MonoBehaviour
             }
 
 
-            //HP‚ª0‚ÅƒŠƒUƒ‹ƒg‚Ö
+            //HPãŒ0ã§ãƒªã‚¶ãƒ«ãƒˆã¸
             if (MainGameObj.PlayerHp <= 0&&!playerlose)
             {
             playerlose = true;
@@ -116,7 +116,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-    //Subscribeíœ
+    //Subscribeå‰Šé™¤
     private void OnDestroy()
     {
         disposables_.Dispose();
