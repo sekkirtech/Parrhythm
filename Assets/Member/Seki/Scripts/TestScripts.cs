@@ -10,17 +10,13 @@ public class TestScripts : MonoBehaviour
     [SerializeField] AudioClip hakufin;
     [SerializeField] AudioSource AudioSource1;
 
-    //private float time = 0.0f;
-    private bool x = true;
 
     //int hakucount = 0;
-    int MAXCount = 3;
     
     // Start is called before the first frame update
     void Start()
     {
         maingamemanager.SpriteList[0].gameObject.SetActive(false);
-        x =true;
     }
 
     // Update is called once per frame
