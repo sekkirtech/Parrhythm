@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -40,6 +41,9 @@ public class MainGameManager : MonoBehaviour
     public bool ParryAttack = false;
     //コントローラー格納
     Gamepad MyPad;
+    [SerializeField,Header("スタミナ")] GuardController guardController;
+    [SerializeField, Header("ガードコスト")] float GuardCost = 25.0f;
+
 
     //拍用AudioSource
     [SerializeField] AudioSource BeatAudioSource;
@@ -110,11 +114,14 @@ public class MainGameManager : MonoBehaviour
         AttackCount++;
         if (!Girdnow)
         {
-            Debug.Log("ダメージを受けた！");
-            PlayerHp--;
-            //HP画像差し替え
-            myimage = HpSprite[PlayerHp].GetComponent<Image>();
-            myimage.sprite = DamageHp;
+            PlayerDamage();
+        }
+        if (!guardController.UseGuard(GuardCost))
+        {
+            PlayerDamage();
+            BeatFlag=true;
+            SpriteList[0].SetActive(false);
+            yield break;
         }
         if (ParryReception)
         {
@@ -135,5 +142,14 @@ public class MainGameManager : MonoBehaviour
         }
         SpriteList[0].SetActive(false);
         BeatFlag = true;
+    }
+
+    void PlayerDamage()
+    {
+        Debug.Log("ダメージを受けた！");
+        PlayerHp--;
+        //HP画像差し替え
+        myimage = HpSprite[PlayerHp].GetComponent<Image>();
+        myimage.sprite = DamageHp;
     }
 }
