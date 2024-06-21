@@ -34,9 +34,6 @@ public class PlayerManager : MonoBehaviour
         MainGameObj.SpriteList[2].gameObject.SetActive(false);
         MainGameObj.SpriteList[3].gameObject.SetActive(false);
         playerlose = false;
-        //HP表示（長いので要改善）
-        GameObject child = MainGameObj.SpriteList[4];
-        child = child.transform.GetChild(0).gameObject;
 
         //nullチェック
         if (EnemyObj == null)

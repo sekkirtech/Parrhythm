@@ -28,7 +28,6 @@ public class EnemyManager : MonoBehaviour
         //初期化
         EnemySlain=false;
         //HP表示
-        Bar=GameObject.Find("Slider").GetComponent<HpBar>();
         Bar.Init(EnemyMaxHP);
         EnemyHP = EnemyMaxHP;
 
