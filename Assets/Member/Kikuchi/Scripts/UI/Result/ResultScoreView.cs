@@ -4,47 +4,53 @@ using TMPro;
 using UnityEngine;
 using UniRx;
 
+/// <summary>
+/// 結果シーンのビューを管理するクラス
+/// </summary>
 public class ResultSceneView : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _scoreText; // 今後Image予定
+    private TextMeshProUGUI _scoreText; // スコアテキスト
     [SerializeField]
-    private TextMeshProUGUI _timeText;
+    private TextMeshProUGUI _timeText; // タイムテキスト
     [SerializeField]
-    private TextMeshProUGUI _time;
+    private TextMeshProUGUI _time; // タイム値テキスト
     [SerializeField]
-    private TextMeshProUGUI _percentageText;
+    private TextMeshProUGUI _percentageText; // パーセンテージテキスト
     [SerializeField]
-    private TextMeshProUGUI _percentage;
+    private TextMeshProUGUI _percentage; // パーセンテージ値テキスト
     [SerializeField]
-    private TextMeshProUGUI _clearRankText;
+    private TextMeshProUGUI _clearRankText; // クリアランクテキスト
 
     [SerializeField]
-    private float _sScore = 100;
+    private float _sScore = 100; // Sランクのスコア閾値
     [SerializeField]
-    private float _aScore = 75;
+    private float _aScore = 75; // Aランクのスコア閾値
     [SerializeField]
-    private float _bScore = 50;
+    private float _bScore = 50; // Bランクのスコア閾値
 
     [SerializeField]
-    private float _sTime = 30;
+    private float _sTime = 30; // Sランクのタイム閾値
     [SerializeField]
-    private float _aTime = 90;
+    private float _aTime = 90; // Aランクのタイム閾値
     [SerializeField]
-    private float _bTime = 120;
+    private float _bTime = 120; // Bランクのタイム閾値
 
     [SerializeField]
-    private Color _sColor = Color.yellow;
+    private Color _sColor = Color.yellow; // Sランクの色
     [SerializeField]
-    private Color _aColor = Color.green;
+    private Color _aColor = Color.green; // Aランクの色
     [SerializeField]
-    private Color _bColor = Color.blue;
+    private Color _bColor = Color.blue; // Bランクの色
     [SerializeField]
-    private Color _cColor = Color.red;
+    private Color _cColor = Color.red; // Cランクの色
     [SerializeField]
-    private Color _dColor = Color.gray;
+    private Color _dColor = Color.gray; // Dランクの色
 
-    enum ClearRank
+    /// <summary>
+    /// クリアランクの定義
+    /// </summary>
+    private enum ClearRank
     {
         S,
         A,
@@ -58,14 +64,15 @@ public class ResultSceneView : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        SetExpoText();
-        SetScoreText();
+        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
+        SetLabelTexts();
+        SetScoreAndPercentageTexts();
     }
 
     /// <summary>
     /// 勝敗に応じたテキストを設定します。
     /// </summary>
-    private void SetExpoText()
+    private void SetLabelTexts()
     {
         bool isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
         _timeText.text = "Time";
@@ -73,32 +80,36 @@ public class ResultSceneView : MonoBehaviour
     }
 
     /// <summary>
-    /// スコアテキストを設定します。
+    /// スコアとパーセンテージテキストを設定します。
     /// </summary>
-    private void SetScoreText()
+    private void SetScoreAndPercentageTexts()
     {
         bool isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
         _time.text = PlayerPrefs.GetFloat("Time", 0).ToString("F2");
-        var percentage = CalcPercentage(
+        var percentage = CalculatePercentage(
                     isWin ? PlayerPrefs.GetInt("EnemyAttackCount", 100) : PlayerPrefs.GetInt("MaxHP", 100),
                     isWin ? PlayerPrefs.GetInt("ParryCount", 1) : PlayerPrefs.GetInt("CurrentHP", 1)
                     );
         _percentage.text = percentage.ToString("F2") + "%";
-        SetClearRank(GetClearRank(isWin, percentage, PlayerPrefs.GetFloat("Time", 0)));
+        SetClearRank(CalculateClearRank(isWin, percentage, PlayerPrefs.GetFloat("Time", 0)));
     }
+
     /// <summary>
     /// パーセンテージを計算します。
     /// </summary>
     /// <param name="max">最大値。</param>
     /// <param name="current">現在値。</param>
     /// <returns>計算されたパーセンテージ。</returns>
-    private float CalcPercentage(int max, int current)
+    private float CalculatePercentage(int max, int current)
     {
-        float percentage = (float)current / max * 100;
-        return percentage;
+        return (float)current / max * 100;
     }
 
-    private void SetClearRank(ClearRank clearRank) 
+    /// <summary>
+    /// クリアランクを設定します。
+    /// </summary>
+    /// <param name="clearRank">クリアランク。</param>
+    private void SetClearRank(ClearRank clearRank)
     {
         switch (clearRank)
         {
@@ -125,13 +136,29 @@ public class ResultSceneView : MonoBehaviour
         }
     }
 
-    private ClearRank GetClearRank(bool isWin, float percentage, float time) => isWin switch
+    /// <summary>
+    /// クリアランクを計算します。
+    /// </summary>
+    /// <param name="isWin">勝敗のフラグ。</param>
+    /// <param name="percentage">パーセンテージ。</param>
+    /// <param name="time">時間。</param>
+    /// <returns>計算されたクリアランク。</returns>
+    private ClearRank CalculateClearRank(bool isWin, float percentage, float time)
     {
-        true => CalcClearRank(percentage, time),
-        false => ClearRank.D,
-    };
+        return isWin switch
+        {
+            true => DetermineClearRank(percentage, time),
+            false => ClearRank.D,
+        };
+    }
 
-    private ClearRank CalcClearRank(float percentage, float time)
+    /// <summary>
+    /// クリアランクを判定します。
+    /// </summary>
+    /// <param name="percentage">パーセンテージ。</param>
+    /// <param name="time">時間。</param>
+    /// <returns>判定されたクリアランク。</returns>
+    private ClearRank DetermineClearRank(float percentage, float time)
     {
         if (percentage >= _sScore && time <= _sTime)
             return ClearRank.S;
@@ -142,6 +169,4 @@ public class ResultSceneView : MonoBehaviour
         else
             return ClearRank.C;
     }
-
-
 }
