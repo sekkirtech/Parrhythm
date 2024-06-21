@@ -96,6 +96,24 @@ public class MainGameManager : MonoBehaviour
 /// <returns></returns>
     public IEnumerator EnemmyAttack(int MAXCount)
     {
+        BeatFlag = false;
+        switch (MAXCount)
+        {
+            case 1:
+                Debug.Log("ビーム攻撃");
+                //アニメーション処理
+                break;
+            case 2:
+                Debug.Log("ロケット攻撃");
+                //アニメーション処理
+                break;
+            case 3:
+                Debug.Log("パンチ！");
+                //アニメーション処理
+                break;
+        }
+        Debug.Log("break抜けた");
+
         BeatAudioSource.clip = Beat;
         for (int i = 0; i < MAXCount; i++)
         {

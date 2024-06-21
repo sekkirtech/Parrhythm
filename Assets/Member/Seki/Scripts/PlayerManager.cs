@@ -30,6 +30,7 @@ public class PlayerManager : MonoBehaviour
     {
         //初期化
         GirdTime = 0.0f;
+        MainGameObj.SpriteList[0].gameObject.SetActive(false);
         MainGameObj.SpriteList[1].gameObject.SetActive(false);
         MainGameObj.SpriteList[2].gameObject.SetActive(false);
         MainGameObj.SpriteList[3].gameObject.SetActive(false);
