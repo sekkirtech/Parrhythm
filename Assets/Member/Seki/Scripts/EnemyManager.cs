@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour
     //α版用
     private TextMeshProUGUI HPtext;
     //HPバーscript格納
-    HpBar Bar;
+    [SerializeField] HpBar Bar;
 
     void Start()
     {
