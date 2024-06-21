@@ -819,6 +819,7 @@ MonoBehaviour:
   EnemyHP: 0
   AttackObj: []
   MainGameObj: {fileID: 724742208}
+  Bar: {fileID: 2083337365}
 --- !u!65 &280199741
 BoxCollider:
   m_ObjectHideFlags: 0
