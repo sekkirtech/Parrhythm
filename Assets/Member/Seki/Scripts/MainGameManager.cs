@@ -112,10 +112,12 @@ public class MainGameManager : MonoBehaviour
         BeatAudioSource.Play();
 
         AttackCount++;
+        //ガード判定
         if (!Girdnow)
         {
             PlayerDamage();
         }
+        //スタミナ判定
         if (!guardController.UseGuard(GuardCost))
         {
             PlayerDamage();
