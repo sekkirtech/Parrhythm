@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] List<BGMSoundData> bgmSoundDatas;
     [SerializeField] List<SESoundData> seSoundDatas;
-
 
     public float masterVolume = 1;
     public float bgmMasterVolume = 1;
@@ -47,6 +47,22 @@ public class SoundManager : MonoBehaviour
         bgmAudioSource.Play();
     }
 
+    public void StopBGM()
+    {
+        bgmAudioSource.Stop();
+    }
+
+    public void StopBGMAfterSeconds(float seconds)
+    {
+        StartCoroutine(StopBGMAfterSecondsCoroutine(seconds));
+    }
+
+    private IEnumerator StopBGMAfterSecondsCoroutine(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        StopBGM();
+    }
+
     public void PlaySE(SESoundData.SE se)
     {
         SESoundData data = seSoundDatas.Find(data => data.se == se);
@@ -59,6 +75,51 @@ public class SoundManager : MonoBehaviour
         seAudioSource.volume = data.volume * seMasterVolume * masterVolume;
         seAudioSource.PlayOneShot(data.audioClip);
         lastPlayedTime[se] = Time.time;
+    }
+
+    public void StopSE(SESoundData.SE se)
+    {
+        foreach (AudioSource audioSource in seAudioSources)
+        {
+            if (audioSource.isPlaying && audioSource.clip == seSoundDatas.Find(data => data.se == se).audioClip)
+            {
+                audioSource.Stop();
+                break; // 最初に見つけた対象のSEを停止してループを抜ける
+            }
+        }
+    }
+
+    public void StopSEAfterSeconds(SESoundData.SE se, float seconds)
+    {
+        StartCoroutine(StopSEAfterSecondsCoroutine(se, seconds));
+    }
+
+    private IEnumerator StopSEAfterSecondsCoroutine(SESoundData.SE se, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        StopSE(se);
+    }
+
+    public void StopAllSE()
+    {
+        foreach (AudioSource audioSource in seAudioSources)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
+    public void StopAllSEAfterSeconds(float seconds)
+    {
+        StartCoroutine(StopAllSEAfterSecondsCoroutine(seconds));
+    }
+
+    private IEnumerator StopAllSEAfterSecondsCoroutine(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        StopAllSE();
     }
 
     private bool CanPlaySE(SESoundData.SE se)
@@ -92,14 +153,13 @@ public class SoundManager : MonoBehaviour
     }
 }
 
-
 [System.Serializable]
 public class BGMSoundData
 {
     public enum BGM
     {
         //ラベル
-        Title, 
+        Title,
     }
 
     public BGM bgm;
