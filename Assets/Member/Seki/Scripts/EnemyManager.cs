@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         //初期化
-        EnemySlain=false;
+        EnemySlain=true;
         //HP表示
         Bar.Init(EnemyMaxHP);
         EnemyHP = EnemyMaxHP;
@@ -48,9 +48,9 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         //HPが０以下でリザルト（マイナス行くかもなので）
-        if (EnemyHP <= 0&&!EnemySlain)
+        if (EnemyHP <= 0&&EnemySlain)
         {
-            EnemySlain = true;
+            EnemySlain = false;
             PlayerPrefs.SetInt("IsWin", 1);
             MainGameObj.toResult(EnemyHP,EnemyMaxHP);
         }
