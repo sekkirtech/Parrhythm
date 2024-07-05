@@ -44,13 +44,18 @@ public class NotesGenerator : MonoBehaviour
     /// </summary>
     void MusicReading()
     {
-        int num = PlayerPrefs.GetInt("StageNum", 0);
+        //ステージ番号取得
+        int StageNum = PlayerPrefs.GetInt("StageNum", 0);
 
-        string inputString = scoreData.GetListInScore(num).GetScorePath();
+        //jsonファイルが格納されてる場所のパス取得
+        string inputString = scoreData.GetListInScore(StageNum).GetScorePath();
+        //jsonファイル取得
         InputJson inputJson = JsonUtility.FromJson<InputJson>(inputString);
 
+        //サイズ格納
         NotesNum = new int[inputJson.notes.Length];
         AttackType = new int[inputJson.notes.Length];
+        //情報格納
         BPM = inputJson.BPM;
         LPB = inputJson.notes[0].LPB;
 

@@ -22,6 +22,12 @@ public class PlayerManager : MonoBehaviour
     //コントローラー用bool
     private bool GirdButton = false;
     private bool ParryAttackButton = false;
+    //Animator
+    [SerializeField] public Animator PlayerAnim;
+    //AnimationFlag
+    public bool CancedGuardAnim=false;
+
+
 
     private CompositeDisposable disposables_=new CompositeDisposable();
 
@@ -53,66 +59,79 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-        void Update()
+    void Update()
+    {
+        //ガード中
+        if (Input.GetKey(KeyCode.Space) || GirdButton)
         {
-            //ガード中
-            if (Input.GetKey(KeyCode.Space)||GirdButton)
+            Debug.Log("ガード");
+            if (!MainGameObj.Girdnow)
             {
-                Debug.Log("ガード");
-                MainGameObj.SpriteList[1].gameObject.SetActive(true);
-                MainGameObj.Girdnow = true;
-                //タイム計測
-                GirdTime += Time.deltaTime;
-                //0.25秒以内でパリィ可、超えたら不可に
-                if (GirdTime > 0.5)
-                {
-                    MainGameObj.ParryReception = false;
-                }
-                else
-                {
-                    MainGameObj.ParryReception = true;
-                }
+                PlayerAnim.SetBool("GuardActive", true);
+            }
+            CancedGuardAnim = true;
+            MainGameObj.SpriteList[1].gameObject.SetActive(true);
+            MainGameObj.Girdnow = true;
+            //タイム計測
+            GirdTime += Time.deltaTime;
+            //0.25秒以内でパリィ可、超えたら不可に
+            if (GirdTime > 0.5)
+            {
+                MainGameObj.ParryReception = false;
             }
             else
             {
-                MainGameObj.Girdnow = false;
-                MainGameObj.SpriteList[1].gameObject.SetActive(false);
-                //押してなければ初期化
-                GirdTime = 0.0f;
+                MainGameObj.ParryReception = true;
             }
-
-            //パリィ可能時間内にP(□)でパリィ成功
-            if ( Input.GetKeyDown(KeyCode.P) || ParryAttackButton)
+        }
+        else
+        {
+            if(CancedGuardAnim)
             {
-            Debug.Log("ParryAttack"+MainGameObj.ParryAttack);
-            Debug.Log("ParryHits"+MainGameObj.ParryHits);
+                CancedGuardAnim = false;
+                PlayerAnim.SetBool("GuardCancel", true);
+            }
+            MainGameObj.Girdnow = false;
+            MainGameObj.SpriteList[1].gameObject.SetActive(false);
+            //押してなければ初期化
+            GirdTime = 0.0f;
+        }
+
+        //パリィ可能時間内にP(□)でパリィ成功
+        if (Input.GetKeyDown(KeyCode.P) || ParryAttackButton)
+        {
+            Debug.Log("ParryAttack" + MainGameObj.ParryAttack);
+            Debug.Log("ParryHits" + MainGameObj.ParryHits);
             if (MainGameObj.ParryAttack && MainGameObj.ParryHits)
             {
                 MainGameObj.ParryHits = false;
                 MainGameObj.SpriteList[3].gameObject.SetActive(true);
                 HanteiTime = 0.0f;
+                PlayerAnim.SetBool("GuardActive", false);
+                PlayerAnim.SetBool("GuardCancel", false);
+                PlayerAnim.SetBool("Counter", true);
                 EnemyObj.EnemyDamage();
                 MainGameObj.ParryCount++;
                 Debug.Log("パリィ成功");
             }
-            }
+        }
 
-            //パリィ成功画面の削除
-            if (MainGameObj.SpriteList[3].gameObject.activeSelf)
-            {
-                HanteiTime += Time.deltaTime;
-                if (HanteiTime > 1.0f) MainGameObj.SpriteList[3].gameObject.SetActive(false);
-            }
+        //パリィ成功画面の削除
+        if (MainGameObj.SpriteList[3].gameObject.activeSelf)
+        {
+            HanteiTime += Time.deltaTime;
+            if (HanteiTime > 1.0f) MainGameObj.SpriteList[3].gameObject.SetActive(false);
+        }
 
 
-            //HPが0でリザルトへ
-            if (MainGameObj.PlayerHp <= 0&&!playerlose)
-            {
+        //HPが0でリザルトへ
+        if (MainGameObj.PlayerHp <= 0 && !playerlose)
+        {
             playerlose = true;
             PlayerPrefs.SetInt("IsWin", 0);
-                MainGameObj.toResult(EnemyObj.EnemyHP,EnemyObj.EnemyMaxHP);
-            }
+            MainGameObj.toResult(EnemyObj.EnemyHP, EnemyObj.EnemyMaxHP);
         }
+    }
 
     //Subscribe削除
     private void OnDestroy()
