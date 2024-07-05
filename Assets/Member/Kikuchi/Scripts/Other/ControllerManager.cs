@@ -59,6 +59,9 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
     private Subject<Unit> anyButtonSubject = new Subject<Unit>();
     public IObservable<Unit> AnyButtonObservable => anyButtonSubject;
 
+    private Subject<Unit> touchPadSubject = new Subject<Unit>();
+    public IObservable<Unit> TouchPadObservable => touchPadSubject;
+
     // ボタンの離されたイベント
     private Subject<Unit> l2ButtonUpSubject = new Subject<Unit>();
     public IObservable<Unit> L2ButtonUpObservable => l2ButtonUpSubject;
@@ -110,6 +113,8 @@ public class ControllerManager : SingletonMonoBehaviour<ControllerManager>
         CtrlInput.Controller.L2.performed += ctx => l2ButtonSubject.OnNext(Unit.Default);
         CtrlInput.Controller.R1.performed += ctx => r1ButtonSubject.OnNext(Unit.Default);
         CtrlInput.Controller.R2.performed += ctx => r2ButtonSubject.OnNext(Unit.Default);
+
+        CtrlInput.Controller.touchPad.performed += ctx => touchPadSubject.OnNext(Unit.Default);
 
         CtrlInput.Controller.Start.performed += ctx => startButtonSubject.OnNext(Unit.Default);
         CtrlInput.Controller.Select.performed += ctx => selectButtonSubject.OnNext(Unit.Default);
