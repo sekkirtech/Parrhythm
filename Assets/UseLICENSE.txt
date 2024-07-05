@@ -1,3 +1,5 @@
+
+
 NoteEditor
 
 The MIT License (MIT)
