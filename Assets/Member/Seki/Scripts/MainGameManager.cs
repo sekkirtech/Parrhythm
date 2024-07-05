@@ -134,6 +134,9 @@ public class MainGameManager : MonoBehaviour
         if (!Girdnow)
         {
             PlayerDamage();
+            BeatFlag = true;
+            SpriteList[0].SetActive(false);
+            yield break;
         }
         //スタミナ判定
         if (!guardController.UseGuard(GuardCost))
