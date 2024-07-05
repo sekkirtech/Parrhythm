@@ -406,8 +406,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2063825000}
   m_HandleRect: {fileID: 2063824999}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.063916065
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -484,8 +484,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -3911.38}
-  m_SizeDelta: {x: 1080, y: 7822.76}
+  m_AnchoredPosition: {x: 540, y: 0}
+  m_SizeDelta: {x: 1080, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &290579127
 MonoBehaviour:
@@ -507,267 +507,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'NoteEditor
-
-
-
-    The MIT License (MIT)
-
-
-
-    Copyright (c) 2015 setchi
-
-
-
-    Permission
-    is hereby granted, free of charge, to any person obtaining a copy
-
-    of this
-    software and associated documentation files (the "Software"), to deal
-
-    in
-    the Software without restriction, including without limitation the rights
-
-    to
-    use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-
-    copies
-    of the Software, and to permit persons to whom the Software is
-
-    furnished
-    to do so, subject to the following conditions:
-
-
-
-    The above copyright notice
-    and this permission notice shall be included in all
-
-    copies or substantial
-    portions of the Software.
-
-
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
-    OF ANY KIND, EXPRESS OR
-
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-    OF MERCHANTABILITY,
-
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE
-
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-    DAMAGES OR OTHER
-
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-    ARISING FROM,
-
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-    DEALINGS IN THE
-
-    SOFTWARE.
-
-
-
-
-
-    -------------------------------------------------------------------------------------
-
-
-
-
-
-    UniTask
-
-
-
-    The
-    MIT License (MIT)
-
-
-
-    Copyright (c) 2019 Yoshifumi Kawai / Cysharp, Inc.
-
-
-
-    Permission
-    is hereby granted, free of charge, to any person obtaining a copy
-
-    of this
-    software and associated documentation files (the "Software"), to deal
-
-    in
-    the Software without restriction, including without limitation the rights
-
-    to
-    use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-
-    copies
-    of the Software, and to permit persons to whom the Software is
-
-    furnished
-    to do so, subject to the following conditions:
-
-
-
-    The above copyright notice
-    and this permission notice shall be included in all
-
-    copies or substantial
-    portions of the Software.
-
-
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
-    OF ANY KIND, EXPRESS OR
-
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-    OF MERCHANTABILITY,
-
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE
-
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-    DAMAGES OR OTHER
-
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-    ARISING FROM,
-
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-    DEALINGS IN THE
-
-    SOFTWARE.
-
-
-
-
-
-    -------------------------------------------------------------------------------------
-
-
-
-
-
-    UniRx
-
-
-
-    The
-    MIT License (MIT)
-
-
-
-    Copyright (c) 2018 Yoshifumi Kawai
-
-
-
-    Permission
-    is hereby granted, free of charge, to any person obtaining a copy
-
-    of this
-    software and associated documentation files (the "Software"), to deal
-
-    in
-    the Software without restriction, including without limitation the rights
-
-    to
-    use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-
-    copies
-    of the Software, and to permit persons to whom the Software is
-
-    furnished
-    to do so, subject to the following conditions:
-
-
-
-    The above copyright notice
-    and this permission notice shall be included in all
-
-    copies or substantial
-    portions of the Software.
-
-
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY
-    OF ANY KIND, EXPRESS OR
-
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-    OF MERCHANTABILITY,
-
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE
-
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-    DAMAGES OR OTHER
-
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-    ARISING FROM,
-
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-    DEALINGS IN THE
-
-    SOFTWARE.
-
-
-
-
-
-    -------------------------------------------------------------------------------------
-
-
-
-    DOTween
-
-
-
-    the
-    MIT License (MIT)
-
-
-
-    Copyright (c) 2014 Daniele Giardini - Demigiant
-
-
-
-    You
-    are permitted to use the Standard Version and create and use Modified Versions
-
-    for
-    any purpose without restriction, provided that you do not Distribute the Modified
-    Version.
-
-
-
-    You may Distribute verbatim copies of the Source form of the
-    Standard Version of this Package in any medium without restriction, either gratis
-    or for a Distributor Fee, provided that you duplicate all of the original copyright
-    notices and associated disclaimers and also include the original readme.txt file.
-    At your discretion, such verbatim copies may or may not include a Compiled form
-    of the Package.
-
-
-
-    Any use, modification, and distribution of the Standard
-    or Modified Versions is governed by this Artistic License. By using, modifying
-    or distributing the Package, you accept this license. Do not use, modify, or
-    distribute the Package, if you do not accept this license.
-
-
-
-    This license
-    does not grant you the right to use any trademark, service mark, tradename, or
-    logo of the Copyright Holder.
-
-
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT
-    WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-    NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
-    OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-    IN THE SOFTWARE.'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1671,6 +1411,56 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &963863010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 963863011}
+  - component: {fileID: 963863012}
+  m_Layer: 5
+  m_Name: LoadText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &963863011
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963863010}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1911646386}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 100, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &963863012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963863010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e0b04522b1f224e9a10880d24fa66a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  file: {fileID: 4900000, guid: d482001037380ac448913165878ca14e, type: 3}
+  text: {fileID: 290579127}
 --- !u!1 &1035600636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2192,13 +1982,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 963863011}
   - {fileID: 290579126}
   m_Father: {fileID: 463450750}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 7822.76}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1911646387
 MonoBehaviour:
@@ -2407,7 +2198,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1141227555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.9360839}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
