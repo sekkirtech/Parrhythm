@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0d2c425e69477a4598bee74bddcca8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bee82f62ee03825458687ba08a4d742d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1510,6 +1510,7 @@ MonoBehaviour:
   PlayerHp: 3
   PlayerObj: {fileID: 1372795743}
   EnemyObj: {fileID: 809606418}
+  BattleTime: 0
   SpriteList:
   - {fileID: 1520178512}
   - {fileID: 1674186572}
@@ -1523,7 +1524,7 @@ MonoBehaviour:
   - {fileID: 912659433}
   - {fileID: 535654640}
   - {fileID: 1588078396}
-  DamageHp: {fileID: 21300000, guid: b36e1e00db64222449eb9cc7112c0c73, type: 3}
+  DamageHp: {fileID: 21300000, guid: 44c2fd6e423f8a4498468db8c749fccd, type: 3}
   ParryReception: 0
   ParryHits: 0
   ParryAttack: 0
@@ -1974,7 +1975,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0d2c425e69477a4598bee74bddcca8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bee82f62ee03825458687ba08a4d742d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2760,7 +2761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1373152869}
-  - component: {fileID: 1373152868}
+  - component: {fileID: 1373152870}
   m_Layer: 0
   m_Name: NoteManager
   m_TagString: Untagged
@@ -2768,21 +2769,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1373152868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1373152867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ff8ab2074c82984b9071858e79f2997, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreData: {fileID: 11400000, guid: 7bc639b47f7f68e4aabfa7c3003328cd, type: 2}
-  NotesNum: 
-  AttackType: 
 --- !u!4 &1373152869
 Transform:
   m_ObjectHideFlags: 0
@@ -2798,6 +2784,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1373152870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373152867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efa15ba673e97048a30e0fb4a9711a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreData: {fileID: 11400000, guid: 7bc639b47f7f68e4aabfa7c3003328cd, type: 2}
+  NotesNum: 
+  AttackType: 
+  BPM: 0
+  LPB: 0
+  mainGameManager: {fileID: 724742208}
 --- !u!1 &1394621164
 GameObject:
   m_ObjectHideFlags: 0
@@ -3178,7 +3182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0d2c425e69477a4598bee74bddcca8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bee82f62ee03825458687ba08a4d742d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -15,7 +15,7 @@ public class MainGameManager : MonoBehaviour
     //敵格納
     [SerializeField] EnemyManager EnemyObj;
     //経過時間測定
-    float BattleTime = 0.0f;
+    public float BattleTime = 0.0f;
     //ゲームが開始してるか
     bool GameStart=false;
     //α視覚用obj

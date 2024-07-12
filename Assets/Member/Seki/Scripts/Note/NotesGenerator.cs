@@ -29,10 +29,10 @@ public class NotesGenerator : MonoBehaviour
          public int LPB;
      }
 
-     [SerializeField] private int[] NotesNum;//UŒ‚ƒ^ƒCƒ~ƒ“ƒOŠi”[
-     [SerializeField]private int[] AttackType;//UŒ‚è’iŠi”[
-     private int BPM;
-     private int LPB;
+     [SerializeField] public int[] NotesNum;//UŒ‚ƒ^ƒCƒ~ƒ“ƒOŠi”[
+     [SerializeField] public int[] AttackType;//UŒ‚è’iŠi”[
+     public int BPM;
+     public int LPB;//ˆê”ŒŠÔ‚É‰½•ªŠ„‚³‚ê‚Ä‚¢‚é‚©
 
      void Awake()
      {
