@@ -6,7 +6,7 @@ using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+//using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 
 public class PlayerManager : MonoBehaviour

@@ -26,15 +26,16 @@ public class ScoreBox : ScriptableObject
 [System.Serializable]
 public class ScoreInfoList
 {
-    [SerializeField, Header("jsonファイルのパス")] public string ScorePath;
+    [SerializeField, Header("jsonファイルのパス")] public TextAsset ScorePath;
     [SerializeField, Header("wavファイル")] public AudioClip MusicClip;
 
-
+    //音源取得
     public AudioClip GetClip()
     {
         return MusicClip;
     }
-    public string GetScorePath()
+    //譜面取得
+    public TextAsset GetScore()
     {
         return ScorePath;
     }

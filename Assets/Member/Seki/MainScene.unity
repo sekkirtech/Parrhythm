@@ -2767,7 +2767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1373152868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2780,7 +2780,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff8ab2074c82984b9071858e79f2997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreData: {fileID: 11400000, guid: 5ed615ce3042b834bb858706b1dbf1b5, type: 2}
+  scoreData: {fileID: 11400000, guid: 7bc639b47f7f68e4aabfa7c3003328cd, type: 2}
+  NotesNum: 
+  AttackType: 
 --- !u!4 &1373152869
 Transform:
   m_ObjectHideFlags: 0
