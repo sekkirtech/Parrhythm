@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class TitelButton : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _buttonTextRTF;// 菊池追記　ボタンのテキスト
+    private Image _buttonTextRTF;// 菊池追記　ボタンのテキスト
     [SerializeField]
     private GameObject _licensePanel;// 菊池追記　ライセンスパネル
     [SerializeField]
