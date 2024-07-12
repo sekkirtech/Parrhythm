@@ -6,6 +6,8 @@ using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+
 
 public class PlayerManager : MonoBehaviour
 {
@@ -67,10 +69,20 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("ガード");
             if (!MainGameObj.Girdnow)
             {
-                PlayerAnim.SetBool("GuardActive", true);
+                //キャンセルアニメーション加速
+                PlayerAnim.SetFloat("GuardCancelSpeed", 5f);
+
+                //アニメーションスピード初期化
+                PlayerAnim.SetFloat("GuardActiveSpeed", 1f);
+                PlayerAnim.SetFloat("GuardIdleSpeed", 1f);
+
+                //再生アニメーション整理
+                PlayerAnim.SetTrigger("GuardActive");
+                PlayerAnim.SetTrigger("GuardIdle");
+                PlayerAnim.SetBool("GuardCancel", false);
             }
             CancedGuardAnim = true;
-            MainGameObj.SpriteList[1].gameObject.SetActive(true);
+            //MainGameObj.SpriteList[1].gameObject.SetActive(true);
             MainGameObj.Girdnow = true;
             //タイム計測
             GirdTime += Time.deltaTime;
@@ -86,13 +98,24 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            if(CancedGuardAnim)
+            if(MainGameObj.Girdnow)
             {
+                MainGameObj.Girdnow=false;
                 CancedGuardAnim = false;
+
+                //アニメーションスピード加速
+                PlayerAnim.SetFloat("GuardActiveSpeed", 5f);
+                PlayerAnim.SetFloat("GuardIdleSpeed", 5f);
+
+                //アニメーションスピード初期化
+                PlayerAnim.SetFloat("GuardCancelSpeed", 1f);
+
+                //アニメーション再生
+                PlayerAnim.SetBool("GuardIdle", false);
+                PlayerAnim.SetBool("Counted", false);
                 PlayerAnim.SetBool("GuardCancel", true);
+                //MainGameObj.SpriteList[1].gameObject.SetActive(false);
             }
-            MainGameObj.Girdnow = false;
-            MainGameObj.SpriteList[1].gameObject.SetActive(false);
             //押してなければ初期化
             GirdTime = 0.0f;
         }
@@ -107,9 +130,15 @@ public class PlayerManager : MonoBehaviour
                 MainGameObj.ParryHits = false;
                 MainGameObj.SpriteList[3].gameObject.SetActive(true);
                 HanteiTime = 0.0f;
-                PlayerAnim.SetBool("GuardActive", false);
+                //アニメーションスピード加速
+                PlayerAnim.SetFloat("GuardIdleSpeed", 5f);
+                PlayerAnim.SetFloat("GuardActiveSpeed", 5f);
+
+                //Animation再生
                 PlayerAnim.SetBool("GuardCancel", false);
-                PlayerAnim.SetBool("Counter", true);
+                PlayerAnim.SetTrigger("GuardIdle");
+                PlayerAnim.SetTrigger("Counter");
+                PlayerAnim.SetBool("Counted", true);
                 EnemyObj.EnemyDamage();
                 MainGameObj.ParryCount++;
                 Debug.Log("パリィ成功");
