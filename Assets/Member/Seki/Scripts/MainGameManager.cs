@@ -50,6 +50,12 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] AudioClip Beat;
     [SerializeField] AudioClip BeatFin;
 
+
+    //仮エネミーアニメーション
+    [SerializeField] EnemyHandAnimation enemyHandAnimation;
+    private bool handType=false;
+
+
     //Beatフラグ
     public bool BeatFlag=true;
 
@@ -121,7 +127,16 @@ public class MainGameManager : MonoBehaviour
             Debug.Log(i);
             if (i == (MAXCount-1))
             {
-                SpriteList[0].SetActive(true);
+                if (handType)
+                {
+                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Right, 0.5f);
+                    handType = false;
+                }
+                else
+                {
+                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Left, 0.5f);
+                    handType = true;
+                }
             }
             yield return new WaitForSeconds(0.5f);
         }
@@ -135,7 +150,7 @@ public class MainGameManager : MonoBehaviour
         {
             PlayerDamage();
             BeatFlag = true;
-            SpriteList[0].SetActive(false);
+            //SpriteList[0].SetActive(false);
             yield break;
         }
         //スタミナ判定
@@ -143,7 +158,7 @@ public class MainGameManager : MonoBehaviour
         {
             PlayerDamage();
             BeatFlag=true;
-            SpriteList[0].SetActive(false);
+            //SpriteList[0].SetActive(false);
             yield break;
         }
         if (ParryReception)
@@ -163,7 +178,7 @@ public class MainGameManager : MonoBehaviour
             Debug.Log("パリイ終了");
             SpriteList[2].gameObject.SetActive(false);
         }
-        SpriteList[0].SetActive(false);
+        //SpriteList[0].SetActive(false);
         BeatFlag = true;
     }
 
@@ -171,6 +186,9 @@ public class MainGameManager : MonoBehaviour
     {
         Debug.Log("ダメージを受けた！");
         PlayerHp--;
+        //Animation
+        PlayerObj.PlayerAnim.SetTrigger("Damage");
+
         //HP画像差し替え
         myimage = HpSprite[PlayerHp].GetComponent<Image>();
         myimage.sprite = DamageHp;
