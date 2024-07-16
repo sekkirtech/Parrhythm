@@ -29,6 +29,7 @@ public class EnemyNoteManager : MonoBehaviour
     [SerializeField] ScoreBox scoreData;
 
     [SerializeField] float AttackTime;
+    [SerializeField] AudioSource audioSource;
 
     [Serializable]
     public class InputJson
@@ -110,21 +111,21 @@ public class EnemyNoteManager : MonoBehaviour
             //ノーツ0の生成
             if (AttackType[beatCount] == 0)
             {
-                Debug.LogError("Type:0が発生しました");
+                audioSource.Play();
             }
 
             //ノーツ1の生成
             if (AttackType[beatCount] == 1)
             {
-                StartCoroutine(mainGameManager.EnemmyAttack(1,0.5f));
+                StartCoroutine(mainGameManager.EnemmyAttack(1,(float)60/(float)BPM));
             }
             if (AttackType[beatCount] == 2)
             {
-                StartCoroutine(mainGameManager.EnemmyAttack(2, 0.5f));
+                StartCoroutine(mainGameManager.EnemmyAttack(2, (float)60 / (float)BPM));
             }
             if (AttackType[beatCount] == 3)
             {
-                StartCoroutine(mainGameManager.EnemmyAttack(3, 0.5f));
+                StartCoroutine(mainGameManager.EnemmyAttack(3, (float)60 / (float)BPM));
             }
 
             beatCount++; //(5)

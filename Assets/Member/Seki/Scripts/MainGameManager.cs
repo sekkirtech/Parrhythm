@@ -146,7 +146,7 @@ public class MainGameManager : MonoBehaviour
         BeatAudioSource.clip = BeatFin;
         BeatAudioSource.Play();
 
-        //AttackCount++;
+        AttackCount++;
         //ガード判定
         if (!Girdnow)
         {
