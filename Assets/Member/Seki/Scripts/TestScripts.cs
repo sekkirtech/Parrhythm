@@ -18,15 +18,15 @@ public class TestScripts : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1)&&maingamemanager.BeatFlag)
         {
-            StartCoroutine(maingamemanager.EnemmyAttack(1));
+            StartCoroutine(maingamemanager.EnemmyAttack(1,1));
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && maingamemanager.BeatFlag)
         {
-            StartCoroutine(maingamemanager.EnemmyAttack(2));
+            StartCoroutine(maingamemanager.EnemmyAttack(2,1));
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && maingamemanager.BeatFlag)
         {
-            StartCoroutine(maingamemanager.EnemmyAttack(3));
+            StartCoroutine(maingamemanager.EnemmyAttack(3,1));
         }
     }
 }

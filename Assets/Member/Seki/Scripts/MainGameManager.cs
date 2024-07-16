@@ -17,7 +17,7 @@ public class MainGameManager : MonoBehaviour
     //経過時間測定
     public float BattleTime = 0.0f;
     //ゲームが開始してるか
-    bool GameStart=false;
+    public bool GameStart=false;
     //α視覚用obj
     [SerializeField] public GameObject[] SpriteList;
     //敵が攻撃した回数（パリィ率表記用）
@@ -100,51 +100,53 @@ public class MainGameManager : MonoBehaviour
 /// </summary>
 /// <param name="MAXCount">Beatの数</param>
 /// <returns></returns>
-    public IEnumerator EnemmyAttack(int MAXCount)
+    public IEnumerator EnemmyAttack(int MAXCount,float lpbbeat)
     {
         BeatFlag = false;
         switch (MAXCount)
         {
             case 1:
-                Debug.Log("ビーム攻撃");
+                Debug.Log("ビーム攻撃1");
                 //アニメーション処理
                 break;
             case 2:
-                Debug.Log("ロケット攻撃");
+                Debug.Log("ロケット攻撃2");
                 //アニメーション処理
                 break;
             case 3:
-                Debug.Log("パンチ！");
+                Debug.Log("パンチ！3");
                 //アニメーション処理
                 break;
         }
         Debug.Log("break抜けた");
 
         BeatAudioSource.clip = Beat;
+        Debug.Log("拍セット");
         for (int i = 0; i < MAXCount; i++)
         {
             BeatAudioSource.Play();
+            Debug.Log("拍Play");
             Debug.Log(i);
             if (i == (MAXCount-1))
             {
                 if (handType)
                 {
-                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Right, 0.5f);
+                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Right, lpbbeat);
                     handType = false;
                 }
                 else
                 {
-                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Left, 0.5f);
+                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Left, lpbbeat);
                     handType = true;
                 }
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(lpbbeat);
         }
 
         BeatAudioSource.clip = BeatFin;
         BeatAudioSource.Play();
 
-        AttackCount++;
+        //AttackCount++;
         //ガード判定
         if (!Girdnow)
         {
@@ -171,9 +173,8 @@ public class MainGameManager : MonoBehaviour
             SpriteList[2].gameObject.SetActive(true);
             //可能になったらパッド振動
             MyPad.SetMotorSpeeds(1.0f, 1.0f);
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(lpbbeat);
             MyPad.SetMotorSpeeds(0.0f, 0.0f);
-            yield return new WaitForSeconds(0.35f);
             ParryAttack = false;
             Debug.Log("パリイ終了");
             SpriteList[2].gameObject.SetActive(false);
