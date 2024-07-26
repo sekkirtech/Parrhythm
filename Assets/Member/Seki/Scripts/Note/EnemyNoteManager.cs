@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class EnemyNoteManager : MonoBehaviour
@@ -73,7 +69,7 @@ public class EnemyNoteManager : MonoBehaviour
             Debug.LogError("MainGameManagerがアタッチされていない byEnemyNoteManager");
         }
         MusicReading();
-        InvokeRepeating("NotesIns", 0f, moveSpan);
+        InvokeRepeating("NotesIns", 10f, moveSpan);
     }
 
 
