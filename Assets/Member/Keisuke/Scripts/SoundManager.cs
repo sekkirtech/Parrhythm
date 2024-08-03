@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
 
     private Dictionary<SESoundData.SE, float> lastPlayedTime = new Dictionary<SESoundData.SE, float>();
+
+    private Tween _fadeTween;
 
     private void Awake()
     {
@@ -59,6 +62,7 @@ public class SoundManager : MonoBehaviour
 
     private IEnumerator StopBGMAfterSecondsCoroutine(float seconds)
     {
+        _fadeTween = bgmAudioSource.DOFade(0, seconds);
         yield return new WaitForSeconds(seconds);
         StopBGM();
     }
@@ -151,6 +155,14 @@ public class SoundManager : MonoBehaviour
         seAudioSources.Add(newSEAudioSource);
         return newSEAudioSource;
     }
+
+    private void OnDestroy()
+    {
+        if (_fadeTween != null)
+        {
+            _fadeTween?.Kill();
+        }
+    }
 }
 
 [System.Serializable]
@@ -160,6 +172,8 @@ public class BGMSoundData
     {
         //ラベル
         Title,
+        InGame,
+        Result,
     }
 
     public BGM bgm;
@@ -174,16 +188,11 @@ public class SESoundData
     public enum SE
     {
         //ラベル
-        Ghost,
-        GhostBarrier,
-        Streamer,
-        Streamer2,
-        field,
-        field2,
-        field3,
-        field4,
-        other,
-        other2,
+        Clear,
+        GameOver,
+        Start,
+        Select,
+        CursorMove,
     }
 
     public SE se;

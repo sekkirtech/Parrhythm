@@ -68,9 +68,11 @@ public class FadeManager : MonoBehaviour
 	/// </summary>
 	/// <param name='scene'>シーン名</param>
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
-	public void LoadScene (string scene, float interval)
+	public bool LoadScene (string scene, float interval)
 	{
+		if(isFading) return false; // 菊池追記　連打防止
 		StartCoroutine (TransScene (scene, interval));
+		return true;
 	}
 
 	/// <summary>
