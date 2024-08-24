@@ -1628,6 +1628,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 668061387}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &680780699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 680780700}
+  m_Layer: 0
+  m_Name: SEManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &680780700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680780699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.067537, y: -0.079395674, z: -0.17688493}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &695064315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1870,6 +1901,9 @@ MonoBehaviour:
   enemyHandAnimation: {fileID: 1622015001}
   BeatFlag: 1
   NoteMana: {fileID: 1373152870}
+  SlashSE: {fileID: 8300000, guid: dc329a98ee236224e82a3b450bd04223, type: 3}
+  DamageSE: {fileID: 8300000, guid: 4e9be956c88e82843823f12781c3deb2, type: 3}
+  GirdSE: {fileID: 8300000, guid: 28b1909cfcde8e54994c78eaf85890fc, type: 3}
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -4663,3 +4697,4 @@ SceneRoots:
   - {fileID: 1740131023}
   - {fileID: 416621831}
   - {fileID: 1442948694}
+  - {fileID: 680780700}

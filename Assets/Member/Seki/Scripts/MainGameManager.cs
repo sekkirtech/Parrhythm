@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -59,6 +60,15 @@ public class MainGameManager : MonoBehaviour
     public bool BeatFlag=true;
     
     [SerializeField, Header("NoteManager")] EnemyNoteManager NoteMana;
+
+
+    //SE用諸々
+    AudioSource DamageSource;
+    AudioSource GirdSource;
+    [SerializeField, Header("斬撃SE")] public AudioClip SlashSE;
+    [SerializeField, Header("ダメージSE")] AudioClip DamageSE;
+    [SerializeField, Header("盾ガードSE")] AudioClip GirdSE;
+
 
     void Start()
     {
@@ -178,6 +188,13 @@ public class MainGameManager : MonoBehaviour
             //SpriteList[0].SetActive(false);
             yield break;
         }
+        //盾ガードSE挿入
+        if(GirdSource==null) GirdSource = this.gameObject.AddComponent<AudioSource>();
+        GirdSource.clip = GirdSE;
+        GirdSource.loop = false;
+        GirdSource.Play();
+
+
         if (ParryReception)
         {
             Debug.Log("パリィ可能！");
@@ -200,6 +217,12 @@ public class MainGameManager : MonoBehaviour
 
     void PlayerDamage()
     {
+        //ダメージSE
+        if(DamageSource==null) DamageSource= this.gameObject.AddComponent<AudioSource>();
+        DamageSource.clip = DamageSE;
+        DamageSource.loop = false;
+        DamageSource.Play();
+
         Debug.Log("ダメージを受けた！");
         PlayerHp--;
         //Animation

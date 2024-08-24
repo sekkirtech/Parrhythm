@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
     //AnimationFlag
     public bool CancedGuardAnim=false;
 
-
+    AudioSource SlashSource;
 
     private CompositeDisposable disposables_=new CompositeDisposable();
 
@@ -141,7 +141,14 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetBool("Counted", true);
                 EnemyObj.EnemyDamage();
                 MainGameObj.ParryCount++;
+                
                 Debug.Log("パリィ成功");
+
+                //斬撃SE挿入
+                if (SlashSource==null)SlashSource=this.AddComponent<AudioSource>();
+                SlashSource.clip = MainGameObj.SlashSE;
+                SlashSource.loop = false;
+                SlashSource.Play();
             }
         }
 
