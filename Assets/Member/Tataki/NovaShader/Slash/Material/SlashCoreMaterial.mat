@@ -174,7 +174,7 @@ Material:
     - _BaseMapRotationCoord: 0
     - _BaseMapSliceCount: 4
     - _Blend: 0
-    - _BlendDst: 1
+    - _BlendDst: 10
     - _BlendSrc: 5
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -262,12 +262,14 @@ Material:
     - _TintColorMode: 0
     - _TintMap3DProgress: 0
     - _TintMap3DProgressCoord: 0
+    - _TintMapOffsetXCoord: 0
+    - _TintMapOffsetYCoord: 0
     - _TintMapSliceCount: 4
     - _TintRimProgress: 0.5
     - _TintRimProgressCoord: 0
     - _TintRimSharpness: 0.5
     - _TintRimSharpnessCoord: 0
-    - _TransparentBlendMode: 1
+    - _TransparentBlendMode: 0
     - _VertexAlphaMode: 0
     - _VertexDeformationEnabled: 0
     - _VertexDeformationIntensity: 0.1
