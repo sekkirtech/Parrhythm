@@ -149,7 +149,7 @@ public class MainGameManager : MonoBehaviour
         Debug.Log("拍セット");
         for (int i = 0; i < MAXCount; i++)
         {
-            BeatAudioSource.Play();
+            //BeatAudioSource.Play();
             Debug.Log("拍Play");
             Debug.Log(i);
             if (i == (MAXCount-1))
@@ -168,8 +168,8 @@ public class MainGameManager : MonoBehaviour
             yield return new WaitForSeconds(lpbbeat);
         }
 
-        BeatAudioSource.clip = BeatFin;
-        BeatAudioSource.Play();
+/*        BeatAudioSource.clip = BeatFin;
+        BeatAudioSource.Play();*/
 
         AttackCount++;
         //ガード判定
