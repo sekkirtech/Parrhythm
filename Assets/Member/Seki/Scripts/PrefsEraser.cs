@@ -16,5 +16,6 @@ public class PrefsEraser : MonoBehaviour
         PlayerPrefs.DeleteKey("Time");
         PlayerPrefs.DeleteKey("EnemyAttackCount");
         PlayerPrefs.DeleteKey("ParryCount");
+        PlayerPrefs.DeleteKey("IsWin");
     }
 }

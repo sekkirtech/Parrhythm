@@ -1,16 +1,15 @@
-using System;
+ï»¿using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyNoteManager : MonoBehaviour
 {
-    //‚PLPBŒo‰ß‚·‚éŠÔ
-    [SerializeField] private float BeatSplit = 0;
-    //€”õ‚ª‚Å‚«‚½‚©
-    public bool EnemyNoteManagerFix=false;
-    [SerializeField] public int[] NotesNum;//UŒ‚ƒ^ƒCƒ~ƒ“ƒOŠi”[
-    [SerializeField] public int[] AttackType;//UŒ‚è’iŠi”[
+    [SerializeField] private float BeatSplit = 0;//ï¼‘LPBçµŒéã™ã‚‹æ™‚é–“
+    public bool EnemyNoteManagerFix=false; //æº–å‚™ãŒã§ããŸã‹
+    [SerializeField] public int[] NotesNum;//æ”»æ’ƒã‚¿ã‚¤ãƒŸãƒ³ã‚°æ ¼ç´
+    [SerializeField] public int[] AttackType;//æ”»æ’ƒæ‰‹æ®µæ ¼ç´
     public int BPM;
-    public int LPB;//ˆê”ŒŠÔ‚É‰½•ªŠ„‚³‚ê‚Ä‚¢‚é‚©
+    public int LPB;//ä¸€ä¼¯é–“ã«ä½•åˆ†å‰²ã•ã‚Œã¦ã„ã‚‹ã‹
 
     private int ScoreLegth;
 
@@ -27,85 +26,121 @@ public class EnemyNoteManager : MonoBehaviour
     public class InputJson
     {
         public Notes[] notes;
-        //•ˆ–Ê‚ÌBPM
+        //è­œé¢ã®BPM
         public int BPM;
     }
 
     [Serializable]
     public class Notes
     {
-        //‰½”–Ú‚É”­¶‚©
+        //ä½•æ‹ç›®ã«ç™ºç”Ÿã‹
         public int num;
-        //ƒ^ƒCƒv
+        //ã‚¿ã‚¤ãƒ—
         public int block;
-        //ˆê”ŠÔ‚Ì•ªŠ„
+        //ä¸€æ‹é–“ã®åˆ†å‰²
         public int LPB;
     }
 
 
 
 
-    private float ReadSpan = 0.01f;//‰½•b‚²‚Æ‚ÉÀs‚·‚é‚©
-    private float nowTime;// ‰¹Šy‚ÌÄ¶‚³‚ê‚Ä‚¢‚éŠÔ
-    private int beatNum;// ¡‚Ì””
-    private int beatCount;// json”z—ñ—p(””)‚ÌƒJƒEƒ“ƒg
-    private bool isBeat;// ƒr[ƒg‚ğ‘Å‚Á‚Ä‚¢‚é‚©(¶¬‚Ìƒ^ƒCƒ~ƒ“ƒO)
+    private float ReadSpan = 0.01f;//ä½•ç§’ã”ã¨ã«å®Ÿè¡Œã™ã‚‹ã‹
+    public float NotenowTime;// éŸ³æ¥½ã®å†ç”Ÿã•ã‚Œã¦ã„ã‚‹æ™‚é–“
+    private int beatNum;// ä»Šã®æ‹æ•°
+    private int beatCount;// jsoné…åˆ—ç”¨(æ‹æ•°)ã®ã‚«ã‚¦ãƒ³ãƒˆ
+    private bool isBeat;// ãƒ“ãƒ¼ãƒˆã‚’æ‰“ã£ã¦ã„ã‚‹ã‹(ç”Ÿæˆã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°)
+    public float ClipLegth;//æ›²ã®é•·ã•
+    private AudioClip ClipSource;//éŸ³æº
+    [SerializeField, Header("éŸ³æºçµ‚äº†å¾Œä½•ç§’å¾Œã«é·ç§»ã™ã‚‹ã‹")] float EndWaitTime = 0;
+    private bool EndLoad = true;//å‹•ã„ã¦ã„ã‚‹ã‹
+    private float EndWaitSumLegth;//é·ç§»ã¾ã§ã®æ™‚é–“ã¨éŸ³æºã®é•·ã•ã‚’è¶³ã—ã¦æ ¼ç´
+    private float FadeDeltaTime;
+
 
     void Awake()
     {
         if (scoreData == null)
         {
-            Debug.LogError("ScoreData‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚È‚¢");
+            Debug.LogError("ScoreDataãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ãªã„");
         }
         if (mainGameManager == null)
         {
-            Debug.LogError("MainGameManager‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚È‚¢ byEnemyNoteManager");
+            Debug.LogError("MainGameManagerãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ãªã„ byEnemyNoteManager");
         }
-        //“Ç‚İ‚İ
+        //èª­ã¿è¾¼ã¿
         MusicReading();
-        //ˆê’èŠÔŒã‚ÉmoveSpanŠÔŠu‚Åw’èŠÖ”‚ğÀsiˆÚİ•K{j
+    }
+
+    private void Update()
+    {
+
+        if (EndLoad)
+        {
+            //éŸ³æºãŒçµ‚äº†ã—ä¸€å®šæ™‚é–“çµŒéã—ãŸã‚‰é·ç§»ã•ã›ã‚‹
+            if (NotenowTime > EndWaitSumLegth)
+            {
+                EndLoad = false;
+                PlayerPrefs.SetInt("IsWin", 0);
+                mainGameManager.toResult();
+            }
+        }
+        if (!EndLoad)
+        {
+            FadeDeltaTime += Time.deltaTime;
+            audioSource.volume = (float)(1.0 - FadeDeltaTime / 1.0f);
+        }
+    }
+
+    /// <summary>
+    /// ã‚²ãƒ¼ãƒ é–‹å§‹ã®æº–å‚™ãŒå®Œäº†ã—ãŸã‚‰MainGameManagerã‹ã‚‰å‘¼ã³å‡ºã—
+    /// </summary>
+    public void EnemyAttackStart()
+    {
+        //ç¬¬äºŒå¼•æ•°æ™‚é–“å¾Œã«ç¬¬ä¸‰å¼•æ•°é–“éš”ã§ç¬¬ä¸€å¼•æ•°é–¢æ•°ã‚’å®Ÿè¡Œï¼ˆç§»è¨­å¿…é ˆï¼‰
         InvokeRepeating("EnemyAttackIns", 3f, ReadSpan);
     }
 
 
     /// <summary>
-    /// •ˆ–Êã‚ÌŠÔ‚ÆƒQ[ƒ€‚ÌŠÔ‚ÌƒJƒEƒ“ƒg‚Æ§Œä
+    /// è­œé¢ä¸Šã®æ™‚é–“ã¨ã‚²ãƒ¼ãƒ ã®æ™‚é–“ã®ã‚«ã‚¦ãƒ³ãƒˆã¨åˆ¶å¾¡
     /// </summary>
     void GetScoreTime()
     {
-        //¡‚Ì‰¹Šy‚ÌŠÔ‚Ìæ“¾
-        nowTime += ReadSpan;
+        //ä»Šã®éŸ³æ¥½ã®æ™‚é–“ã®å–å¾—
+        NotenowTime += ReadSpan;
 
-        //ƒm[ƒc‚ª‚È‚¢‚È‚çI—¹
+        //ãƒãƒ¼ãƒ„ãŒãªã„ãªã‚‰çµ‚äº†
         if (beatCount > NotesNum.Length) return;
 
-        //Šy•ˆã‚Å‚Ç‚±‚©‚Ìæ“¾
-        beatNum = (int)(nowTime * BPM / 60 * LPB);
+        //æ¥½è­œä¸Šã§ã©ã“ãªã®ã‹ã®å¾—
+        beatNum = (int)(NotenowTime * BPM / 60 * LPB);
     }
 
+
     /// <summary>
-    /// UŒ‚ƒ^ƒCƒv‚Ì“Ç‚İæ‚è
+    /// æ”»æ’ƒã‚¿ã‚¤ãƒ—ã®èª­ã¿å–ã‚Š
+    /// InvokeRepeatingã§å®Ÿè¡Œã•ã‚Œã‚‹
     /// </summary>
     void EnemyAttackIns()
     {
         GetScoreTime();
 
-        //ƒJƒEƒ“ƒg‚Ìˆê’v‚ÅisBeat‚ğtrue‚É
+        //ã‚«ã‚¦ãƒ³ãƒˆã®ä¸€è‡´ã§isBeatã‚’trueã«
         if (beatCount < NotesNum.Length)
         {
             isBeat = (NotesNum[beatCount] == beatNum);
         }
 
-        //¶¬‚Ìƒ^ƒCƒ~ƒ“ƒO‚È‚ç
+        //ç”Ÿæˆã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ãªã‚‰
         if (isBeat)
         {
-            //Type0‚ÅBGMÄ¶
+            //Type0ã§BGMå†ç”Ÿ
             if (AttackType[beatCount] == 0)
             {
-                //BGMÄ¶
+                //BGMå†ç”Ÿ
                 audioSource.Play();
             }
-            else //0ˆÈŠO‚ÌƒAƒ^ƒbƒNŠÖ”‚Éƒ^ƒCƒv‚ğ“n‚µ‚ÄÀs
+            else //0ä»¥å¤–ã®æ™‚ã‚¢ã‚¿ãƒƒã‚¯ç”¨é–¢æ•°ã«ã‚¿ã‚¤ãƒ—ã‚’æ¸¡ã—ã¦å®Ÿè¡Œ
             {
                 StartCoroutine(mainGameManager.EnemmyAttack(AttackType[beatCount], (float)60 / (float)BPM));
             }
@@ -113,62 +148,55 @@ public class EnemyNoteManager : MonoBehaviour
 
             beatCount++;
             isBeat = false;
-
         }
     }
 
-    /*
-       void Update()
-       {
-           if (EnemyNoteManagerFix)
-           {
-               AttackTime = (float)60 / (float)BPM / (float)LPB * (float)NextBeat;
-               if (AttackTime <=mainGameManager.BattleTime)
-               {
-                   Debug.Log(AttackTime);
-                   StartCoroutine(mainGameManager.EnemmyAttack(NextAttackType,(float)BeatSplit*LPB));
-                   NextAttack();
-               }
-           }
-       }*/
-
-
 
     /// <summary>
-    /// •ˆ–Ê‚Ì“Ç‚İ‚İ
+    /// è­œé¢ã®èª­ã¿è¾¼ã¿
     /// </summary>
     void MusicReading()
     {
-        //ƒXƒe[ƒW”Ô†æ“¾
-        int StageNum = PlayerPrefs.GetInt("StageNum",100);
+        //ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·å–å¾—
+        int StageNum = PlayerPrefs.GetInt("StageNum",555);
 
-        if (StageNum == 100)
+        //ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ãŒæ ¼ç´ã•ã‚Œã¦ã‚‹ã‹ç¢ºèª
+        if (StageNum == 555)
         {
-            Debug.LogError("ƒXƒe[ƒWƒiƒ“ƒo[‚ªŠi”[‚³‚ê‚Ä‚È‚¢");
+            Debug.LogError("ã‚¹ãƒ†ãƒ¼ã‚¸ãƒŠãƒ³ãƒãƒ¼ãŒæ ¼ç´ã•ã‚Œã¦ãªã„");
         }
         else
         {
-            Debug.Log("ƒXƒe[ƒWƒiƒ“ƒo[Ši”[Ï");
+            Debug.Log("ã‚¹ãƒ†ãƒ¼ã‚¸ãƒŠãƒ³ãƒãƒ¼æ ¼ç´æ¸ˆ");
         }
 
-        //jsonƒtƒ@ƒCƒ‹‚ªŠi”[‚³‚ê‚Ä‚éêŠ‚ÌƒpƒXæ“¾
+        //jsonãƒ•ã‚¡ã‚¤ãƒ«ãŒæ ¼ç´ã•ã‚Œã¦ã‚‹å ´æ‰€ã®ãƒ‘ã‚¹å–å¾—
         string inputString = scoreData.GetListInScore(StageNum).GetScore().ToString();
-        Debug.Log(inputString);
-        //jsonƒtƒ@ƒCƒ‹æ“¾
+        //Debug.Log(inputString);
+        //jsonãƒ•ã‚¡ã‚¤ãƒ«å–å¾—
         InputJson inputJson = JsonUtility.FromJson<InputJson>(inputString);
 
-        //ŠeƒTƒCƒYŠi”[
+        //wavæ ¼ç´
+        ClipSource=scoreData.GetListInScore(StageNum).GetClip();
+        audioSource.clip = ClipSource;
+        //é•·ã•æ ¼ç´
+        ClipLegth=ClipSource.length;
+
+        //éŸ³æºçµ‚ã‚ã£ã¦é·ç§»ã™ã‚‹ã¾ã§ã®æ™‚é–“ã‚’ç®—å‡º
+        EndWaitSumLegth=ClipLegth+EndWaitTime;
+
+        //å„ã‚µã‚¤ã‚ºæ ¼ç´
         NotesNum = new int[inputJson.notes.Length];
         AttackType = new int[inputJson.notes.Length];
-        //î•ñŠi”[
+        //æƒ…å ±æ ¼ç´
         BPM = inputJson.BPM;
         LPB = inputJson.notes[0].LPB;
 
         for (int i = 0; i < inputJson.notes.Length; i++)
         {
-            //UŒ‚ƒ^ƒCƒ~ƒ“ƒOŠi”[
+            //æ”»æ’ƒã‚¿ã‚¤ãƒŸãƒ³ã‚°æ ¼ç´
             NotesNum[i] = inputJson.notes[i].num;
-            //UŒ‚è’iŠi”[
+            //æ”»æ’ƒæ‰‹æ®µæ ¼ç´
             AttackType[i] = inputJson.notes[i].block;
         }
         BeatSplit = (float)60/(float)BPM/(float)LPB;
@@ -176,7 +204,11 @@ public class EnemyNoteManager : MonoBehaviour
         Debug.Log(BeatSplit);
         ScoreLegth = NotesNum.Length;
         Debug.Log("ScoreLegth" + ScoreLegth);
-        //NextAttack();
         EnemyNoteManagerFix = true;
+    }
+
+    public void MusicFade()
+    {
+        EndLoad=false;
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -44,6 +42,7 @@ public class MainGameManager : MonoBehaviour
     [SerializeField,Header("スタミナ")] GuardController guardController;
     [SerializeField, Header("ガードコスト")] float GuardCost = 25.0f;
 
+    
 
     //拍用AudioSource
     [SerializeField] AudioSource BeatAudioSource;
@@ -58,31 +57,47 @@ public class MainGameManager : MonoBehaviour
 
     //Beatフラグ
     public bool BeatFlag=true;
+    
+    [SerializeField, Header("NoteManager")] EnemyNoteManager NoteMana;
 
     void Start()
     {
         BattleTime = 0.0f;
         AttackCount = 0;
         ParryCount = 0;
-        GameStart = true;
         ParryReception = false;
         MyPad = Gamepad.current;
     }
 
     void Update()
     {
-        //タイム計測、
-        if (GameStart) BattleTime += Time.deltaTime;
+        //譜面上タイム取得
+        if (GameStart)
+        {
+            BattleTime=NoteMana.NotenowTime;
+        }
+       
+
+        //ゲームが開始していないか
+        if (GameStart == false)
+        {
+            //譜面の読み込みが完了しているか
+            if (NoteMana.EnemyNoteManagerFix == true)
+            {
+                GameStart=true;
+                NoteMana.EnemyAttackStart();
+            }
+        }
     }
 
     //勝敗が決したときに呼び出す
-    public void toResult(int EnemyHP,int EnemyMaxHP)
+    public void toResult()
     {
         GameStart = false;
         //敵残HP
-        PlayerPrefs.SetInt("CurrentHP", EnemyHP);
+        PlayerPrefs.SetInt("CurrentHP", EnemyObj.EnemyHP);
         //敵最大HP
-        PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
+        PlayerPrefs.SetInt("MaxHP", EnemyObj.EnemyMaxHP);
         //戦闘時間
         PlayerPrefs.SetFloat("Time", BattleTime);
         //敵攻撃回数
@@ -90,7 +105,7 @@ public class MainGameManager : MonoBehaviour
         //パリィ成功回数
         PlayerPrefs.SetInt("ParryCount", ParryCount);
 
-
+        NoteMana.MusicFade();
         FadeManager.Instance.LoadScene("ResultScene", 1.0f);
     }
 

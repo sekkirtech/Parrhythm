@@ -158,7 +158,7 @@ public class PlayerManager : MonoBehaviour
         {
             playerlose = true;
             PlayerPrefs.SetInt("IsWin", 0);
-            MainGameObj.toResult(EnemyObj.EnemyHP, EnemyObj.EnemyMaxHP);
+            MainGameObj.toResult();
         }
     }
 

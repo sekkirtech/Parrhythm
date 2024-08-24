@@ -1869,6 +1869,7 @@ MonoBehaviour:
   BeatFin: {fileID: 8300000, guid: 18945514bff26b7489cda96b3a32eb61, type: 3}
   enemyHandAnimation: {fileID: 1622015001}
   BeatFlag: 1
+  NoteMana: {fileID: 1373152870}
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -3094,7 +3095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1373152869
 Transform:
   m_ObjectHideFlags: 0
@@ -3132,6 +3133,9 @@ MonoBehaviour:
   scoreData: {fileID: 11400000, guid: 7bc639b47f7f68e4aabfa7c3003328cd, type: 2}
   AttackTime: 0
   audioSource: {fileID: 1373152871}
+  NotenowTime: 0
+  ClipLegth: 0
+  EndWaitTime: 0
 --- !u!82 &1373152871
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3142,7 +3146,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 457d1402a62d13e44ac2b46c60b33854, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
