@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UniRx;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
 /// <summary>
 /// 結果シーンのビューを管理するクラス
@@ -22,6 +23,13 @@ public class ResultSceneView : MonoBehaviour
     private TextMeshProUGUI _percentage; // パーセンテージ値テキスト
     [SerializeField]
     private TextMeshProUGUI _clearRankText; // クリアランクテキスト
+
+    [SerializeField]
+    private Image _resultTitle; // 結果タイトル
+    [SerializeField]
+    private Sprite _winSprite; // 勝利時のスプライト
+    [SerializeField]
+    private Sprite _loseSprite; // 敗北時のスプライト
 
     [SerializeField]
     private float _sScore = 100; // Sランクのスコア閾値
@@ -70,6 +78,7 @@ public class ResultSceneView : MonoBehaviour
         isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
         SetLabelTexts();
         SetScoreAndPercentageTexts();
+        SetResultTitle();
 
         if (isWin)
         {
@@ -105,6 +114,11 @@ public class ResultSceneView : MonoBehaviour
                     );
         _percentage.text = percentage.ToString("F2") + "%";
         SetClearRank(CalculateClearRank(isWin, percentage, PlayerPrefs.GetFloat("Time", 0)));
+    }
+
+    private void SetResultTitle()
+    {
+        _resultTitle.sprite = isWin ? _winSprite : _loseSprite;
     }
 
     /// <summary>
