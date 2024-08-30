@@ -47,12 +47,12 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        //HPが０以下でリザルト（マイナス行くかもなので）
+        //HPが０以下でリザルト
         if (EnemyHP <= 0&&EnemySlain)
         {
             EnemySlain = false;
             PlayerPrefs.SetInt("IsWin", 1);
-            MainGameObj.toResult(EnemyHP,EnemyMaxHP);
+            MainGameObj.toResult();
         }
     }
 

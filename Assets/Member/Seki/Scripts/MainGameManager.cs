@@ -1,6 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -44,6 +43,7 @@ public class MainGameManager : MonoBehaviour
     [SerializeField,Header("スタミナ")] GuardController guardController;
     [SerializeField, Header("ガードコスト")] float GuardCost = 25.0f;
 
+    
 
     //拍用AudioSource
     [SerializeField] AudioSource BeatAudioSource;
@@ -58,31 +58,56 @@ public class MainGameManager : MonoBehaviour
 
     //Beatフラグ
     public bool BeatFlag=true;
+    
+    [SerializeField, Header("NoteManager")] EnemyNoteManager NoteMana;
+
+
+    //SE用諸々
+    AudioSource DamageSource;
+    AudioSource GirdSource;
+    [SerializeField, Header("斬撃SE")] public AudioClip SlashSE;
+    [SerializeField, Header("ダメージSE")] AudioClip DamageSE;
+    [SerializeField, Header("盾ガードSE")] AudioClip GirdSE;
+
 
     void Start()
     {
         BattleTime = 0.0f;
         AttackCount = 0;
         ParryCount = 0;
-        GameStart = true;
         ParryReception = false;
         MyPad = Gamepad.current;
     }
 
     void Update()
     {
-        //タイム計測、
-        if (GameStart) BattleTime += Time.deltaTime;
+        //譜面上タイム取得
+        if (GameStart)
+        {
+            BattleTime=NoteMana.NotenowTime;
+        }
+       
+
+        //ゲームが開始していないか
+        if (GameStart == false)
+        {
+            //譜面の読み込みが完了しているか
+            if (NoteMana.EnemyNoteManagerFix == true)
+            {
+                GameStart=true;
+                NoteMana.EnemyAttackStart();
+            }
+        }
     }
 
     //勝敗が決したときに呼び出す
-    public void toResult(int EnemyHP,int EnemyMaxHP)
+    public void toResult()
     {
         GameStart = false;
         //敵残HP
-        PlayerPrefs.SetInt("CurrentHP", EnemyHP);
+        PlayerPrefs.SetInt("CurrentHP", EnemyObj.EnemyHP);
         //敵最大HP
-        PlayerPrefs.SetInt("MaxHP", EnemyMaxHP);
+        PlayerPrefs.SetInt("MaxHP", EnemyObj.EnemyMaxHP);
         //戦闘時間
         PlayerPrefs.SetFloat("Time", BattleTime);
         //敵攻撃回数
@@ -90,7 +115,7 @@ public class MainGameManager : MonoBehaviour
         //パリィ成功回数
         PlayerPrefs.SetInt("ParryCount", ParryCount);
 
-
+        NoteMana.MusicFade();
         FadeManager.Instance.LoadScene("ResultScene", 1.0f);
     }
 
@@ -124,7 +149,7 @@ public class MainGameManager : MonoBehaviour
         Debug.Log("拍セット");
         for (int i = 0; i < MAXCount; i++)
         {
-            BeatAudioSource.Play();
+            //BeatAudioSource.Play();
             Debug.Log("拍Play");
             Debug.Log(i);
             if (i == (MAXCount-1))
@@ -143,8 +168,8 @@ public class MainGameManager : MonoBehaviour
             yield return new WaitForSeconds(lpbbeat);
         }
 
-        BeatAudioSource.clip = BeatFin;
-        BeatAudioSource.Play();
+/*        BeatAudioSource.clip = BeatFin;
+        BeatAudioSource.Play();*/
 
         AttackCount++;
         //ガード判定
@@ -163,6 +188,13 @@ public class MainGameManager : MonoBehaviour
             //SpriteList[0].SetActive(false);
             yield break;
         }
+        //盾ガードSE挿入
+        if(GirdSource==null) GirdSource = this.gameObject.AddComponent<AudioSource>();
+        GirdSource.clip = GirdSE;
+        GirdSource.loop = false;
+        GirdSource.Play();
+
+
         if (ParryReception)
         {
             Debug.Log("パリィ可能！");
@@ -185,6 +217,12 @@ public class MainGameManager : MonoBehaviour
 
     void PlayerDamage()
     {
+        //ダメージSE
+        if(DamageSource==null) DamageSource= this.gameObject.AddComponent<AudioSource>();
+        DamageSource.clip = DamageSE;
+        DamageSource.loop = false;
+        DamageSource.Play();
+
         Debug.Log("ダメージを受けた！");
         PlayerHp--;
         //Animation
