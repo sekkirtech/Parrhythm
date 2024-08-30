@@ -61,6 +61,7 @@ public class EnemyNoteManager : MonoBehaviour
         {
             Debug.LogError("MainGameManagerがアタッチされていない byEnemyNoteManager");
         }
+
         //読み込み
         MusicReading();
         //一定時間後にmoveSpan間隔で指定関数を実行（移設必須）
