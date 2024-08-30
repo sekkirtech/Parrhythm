@@ -171,7 +171,7 @@ Material:
     - _AlphaTransitionMapProgress: 0
     - _AlphaTransitionMapProgressCoord: 0
     - _AlphaTransitionMapSliceCount: 4
-    - _AlphaTransitionMode: 0
+    - _AlphaTransitionMode: 1
     - _AlphaTransitionProgress: 0
     - _AlphaTransitionProgressCoord: 0
     - _BaseMapMirrorSampling: 0
