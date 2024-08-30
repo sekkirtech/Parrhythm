@@ -190,6 +190,7 @@ public class MainGameManager : MonoBehaviour
         }
         //盾ガードSE挿入
         if(GirdSource==null) GirdSource = this.gameObject.AddComponent<AudioSource>();
+        GirdSource.volume = 0.5f;
         GirdSource.clip = GirdSE;
         GirdSource.loop = false;
         GirdSource.Play();
