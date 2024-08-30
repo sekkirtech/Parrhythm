@@ -1,0 +1,9 @@
+diff a/Assets/Member/Seki/Scripts/Note/EnemyNoteManager.cs b/Assets/Member/Seki/Scripts/Note/EnemyNoteManager.cs	(rejected hunks)
+@@ -61,6 +61,7 @@
+         {
+             Debug.LogError("MainGameManager���A�^�b�`����Ă��Ȃ� byEnemyNoteManager");
+         }
++
+         //�ǂݍ���
+         MusicReading();
+         //��莞�Ԍ��moveSpan�Ԋu�Ŏw��֐�����s�i�ڐݕK�{�j

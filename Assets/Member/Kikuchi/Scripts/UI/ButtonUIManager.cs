@@ -92,7 +92,9 @@ public class ButtonUIManager : MonoBehaviour
     /// </summary>
     private void OnSelect()
     {
+        if (FadeManager.Instance.IsFading) return;
         _buttons[_index].GetComponent<ButtonUIUtil>().OnNext();
+        SoundManager.Instance.StopBGM();
         SoundManager.Instance.PlaySE(SESoundData.SE.Select);
     }
 
