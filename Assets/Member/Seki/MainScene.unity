@@ -3025,7 +3025,7 @@ MonoBehaviour:
   MainGameObj: {fileID: 724742208}
   PlayerAnim: {fileID: 434911251}
   CancedGuardAnim: 0
-  ParryEffect: {fileID: 0}
+  ParryEffect: {fileID: 1978380917}
   SlashEffect: {fileID: 1405451463}
   DelayFlame: 20
 --- !u!82 &1372795744
@@ -4207,7 +4207,7 @@ PrefabInstance:
     - target: {fileID: 4769977626791117760, guid: b3e021bda3399704583969216303c83b,
         type: 3}
       propertyPath: m_Name
-      value: ParryEffect (1)
+      value: ParryEffect
       objectReference: {fileID: 0}
     - target: {fileID: 8973354628243925027, guid: b3e021bda3399704583969216303c83b,
         type: 3}
@@ -4267,6 +4267,12 @@ PrefabInstance:
 --- !u!4 &1883297163 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8973354628243925027, guid: b3e021bda3399704583969216303c83b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1883297162}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1978380917 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 297165650205135317, guid: b3e021bda3399704583969216303c83b,
     type: 3}
   m_PrefabInstance: {fileID: 1883297162}
   m_PrefabAsset: {fileID: 0}

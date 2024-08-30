@@ -24,21 +24,21 @@ AvatarMask:
   - m_Path: MD001/sword
     m_Weight: 0
   - m_Path: MD001_Jnt
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip/Jnt_spin
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip/Jnt_spin/Jnt_chest
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip/Jnt_spin/Jnt_chest/Jnt_head
     m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip/Jnt_spin/Jnt_chest/Jnt_L_arm
     m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip/Jnt_spin/Jnt_chest/Jnt_muffler_01
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip/Jnt_spin/Jnt_chest/Jnt_muffler_01/curve1
     m_Weight: 0
   - m_Path: MD001_Jnt/Jnt_leg/Jnt_hip/Jnt_spin/Jnt_chest/Jnt_muffler_01/Jnt_muffler_02

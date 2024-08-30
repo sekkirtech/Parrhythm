@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField, Header("スラッシュエフェクト")] ParticleSystem SlashEffect;
 
-    [SerializeField] int DelayFlame = 9;
+    [SerializeField] int DelayFlame = 20;
 
 
     void Start()
@@ -164,6 +164,7 @@ public class PlayerManager : MonoBehaviour
 
                 //斬撃SE挿入
                 if (SlashSource==null)SlashSource=this.AddComponent<AudioSource>();
+                SlashSource.volume = 0.5f;
                 SlashSource.clip = MainGameObj.SlashSE;
                 SlashSource.loop = false;
                 SlashSource.Play();

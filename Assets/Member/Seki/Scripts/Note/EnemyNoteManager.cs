@@ -142,6 +142,7 @@ public class EnemyNoteManager : MonoBehaviour
             //Type0でBGM再生
             if (AttackType[beatCount] == 0)
             {
+                audioSource.volume = 0.5f;
                 //BGM再生
                 audioSource.Play();
             }
