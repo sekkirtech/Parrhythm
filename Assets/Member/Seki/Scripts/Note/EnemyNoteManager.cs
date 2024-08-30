@@ -22,6 +22,8 @@ public class EnemyNoteManager : MonoBehaviour
     [SerializeField] float AttackTime;
     [SerializeField] AudioSource audioSource;
 
+    [SerializeField] bool TestMode;
+
     [Serializable]
     public class InputJson
     {
@@ -61,7 +63,10 @@ public class EnemyNoteManager : MonoBehaviour
     {
         if (scoreData == null)
         {
-            Debug.LogError("ScoreDataがアタッチされてない");
+            if (!TestMode)
+            {
+                Debug.LogError("ScoreDataがアタッチされてない");
+            }
         }
         if (mainGameManager == null)
         {
@@ -163,7 +168,14 @@ public class EnemyNoteManager : MonoBehaviour
         //ステージ番号が格納されてるか確認
         if (StageNum == 555)
         {
-            Debug.LogError("ステージナンバーが格納されてない");
+            if (TestMode)
+            {
+                StageNum = 0;
+            }
+            else
+            {
+                Debug.LogError("ステージナンバーが格納されてない");
+            }
         }
         else
         {
