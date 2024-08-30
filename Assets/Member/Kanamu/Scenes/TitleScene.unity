@@ -1638,11 +1638,20 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 11f502786a21e5740b4a74b795208f3e, type: 3}
     volume: 1
   seSoundDatas:
-  - se: 8
-    audioClip: {fileID: 8300000, guid: 019002ef37cb3c441930d35836cf4e9d, type: 3}
+  - se: 3
+    audioClip: {fileID: 8300000, guid: 805fd7c68cfed5848bfd78b38dc7f95a, type: 3}
     volume: 1
-  - se: 9
-    audioClip: {fileID: 8300000, guid: e2f523041addda346abef1ea89c33a43, type: 3}
+  - se: 4
+    audioClip: {fileID: 8300000, guid: d01831991a6416b4f976fd61785543f8, type: 3}
+    volume: 1
+  - se: 0
+    audioClip: {fileID: 8300000, guid: a0977b18507fb3949bcbe127c2d0a82f, type: 3}
+    volume: 1
+  - se: 1
+    audioClip: {fileID: 8300000, guid: bcca6f436958dec48ac52db7fded0a04, type: 3}
+    volume: 1
+  - se: 2
+    audioClip: {fileID: 8300000, guid: 2480d7410970e7744a4dd999e1491b94, type: 3}
     volume: 1
   masterVolume: 0.1
   bgmMasterVolume: 1
@@ -1833,6 +1842,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -325}
   m_SizeDelta: {x: 1000, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1397559528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1397559530}
+  - component: {fileID: 1397559529}
+  m_Layer: 0
+  m_Name: PlayerPrefsEraser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1397559529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397559528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36addbc6659b7e24c876c4f34741868c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1397559530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397559528}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 205, z: 275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1447370632
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,3 +2389,4 @@ SceneRoots:
   - {fileID: 6634410786011108585}
   - {fileID: 1191103466}
   - {fileID: 1035600638}
+  - {fileID: 1397559530}

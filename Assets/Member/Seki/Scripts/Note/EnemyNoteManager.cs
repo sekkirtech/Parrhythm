@@ -5,10 +5,6 @@ public class EnemyNoteManager : MonoBehaviour
 {
     //１LPB経過する時間
     [SerializeField] private float BeatSplit = 0;
-    //次の攻撃が何LPB目か
-    [SerializeField]private float NextBeat = 0;
-    //次の攻撃が何タイプか
-    [SerializeField] private int NextAttackType = 4;
     //準備ができたか
     public bool EnemyNoteManagerFix=false;
     [SerializeField] public int[] NotesNum;//攻撃タイミング格納
@@ -48,10 +44,8 @@ public class EnemyNoteManager : MonoBehaviour
 
 
 
-    [SerializeField]
-    private GameObject notesPre;
 
-    private float moveSpan = 0.01f;
+    private float ReadSpan = 0.01f;//何秒ごとに実行するか
     private float nowTime;// 音楽の再生されている時間
     private int beatNum;// 今の拍数
     private int beatCount;// json配列用(拍数)のカウント
@@ -59,7 +53,6 @@ public class EnemyNoteManager : MonoBehaviour
 
     void Awake()
     {
-        PlayerPrefs.SetInt("StageNum", 0);
         if (scoreData == null)
         {
             Debug.LogError("ScoreDataがアタッチされてない");
@@ -68,8 +61,10 @@ public class EnemyNoteManager : MonoBehaviour
         {
             Debug.LogError("MainGameManagerがアタッチされていない byEnemyNoteManager");
         }
+        //読み込み
         MusicReading();
-        InvokeRepeating("NotesIns", 10f, moveSpan);
+        //一定時間後にmoveSpan間隔で指定関数を実行（移設必須）
+        InvokeRepeating("EnemyAttackIns", 3f, ReadSpan);
     }
 
 
@@ -79,73 +74,50 @@ public class EnemyNoteManager : MonoBehaviour
     void GetScoreTime()
     {
         //今の音楽の時間の取得
-        nowTime += moveSpan; //(1)
+        nowTime += ReadSpan;
 
-        //ノーツが無くなったら処理終了
+        //ノーツがないなら終了
         if (beatCount > NotesNum.Length) return;
 
         //楽譜上でどこかの取得
-        beatNum = (int)(nowTime * BPM / 60 * LPB); //(2)
+        beatNum = (int)(nowTime * BPM / 60 * LPB);
     }
 
     /// <summary>
-    /// ノーツを生成する
+    /// 攻撃タイプの読み取り
     /// </summary>
-    void NotesIns()
+    void EnemyAttackIns()
     {
         GetScoreTime();
 
-        //json上でのカウントと楽譜上でのカウントの一致
+        //カウントの一致でisBeatをtrueに
         if (beatCount < NotesNum.Length)
         {
-            isBeat = (NotesNum[beatCount] == beatNum); //(3)
+            isBeat = (NotesNum[beatCount] == beatNum);
         }
 
         //生成のタイミングなら
         if (isBeat)
         {
-            //ノーツ0の生成
+            //Type0でBGM再生
             if (AttackType[beatCount] == 0)
             {
+                //BGM再生
                 audioSource.Play();
             }
-
-            //ノーツ1の生成
-            if (AttackType[beatCount] == 1)
+            else //0以外の時アタック関数にタイプを渡して実行
             {
-                StartCoroutine(mainGameManager.EnemmyAttack(1,(float)60/(float)BPM));
-            }
-            if (AttackType[beatCount] == 2)
-            {
-                StartCoroutine(mainGameManager.EnemmyAttack(2, (float)60 / (float)BPM));
-            }
-            if (AttackType[beatCount] == 3)
-            {
-                StartCoroutine(mainGameManager.EnemmyAttack(3, (float)60 / (float)BPM));
+                StartCoroutine(mainGameManager.EnemmyAttack(AttackType[beatCount], (float)60 / (float)BPM));
             }
 
-            beatCount++; //(5)
+
+            beatCount++;
             isBeat = false;
 
         }
     }
 
     /*
-      void Start()
-       {
-           PlayerPrefs.SetInt("StageNum", 0);
-           if (scoreData == null)
-           {
-               Debug.LogError("ScoreDataがアタッチされてない");
-           }
-           if (mainGameManager == null)
-           {
-               Debug.LogError("MainGameManagerがアタッチされていない byEnemyNoteManager");
-           }
-           MusicReading();
-       }
-
-    
        void Update()
        {
            if (EnemyNoteManagerFix)
@@ -168,7 +140,16 @@ public class EnemyNoteManager : MonoBehaviour
     void MusicReading()
     {
         //ステージ番号取得
-        int StageNum = PlayerPrefs.GetInt("StageNum", 0);
+        int StageNum = PlayerPrefs.GetInt("StageNum",100);
+
+        if (StageNum == 100)
+        {
+            Debug.LogError("ステージナンバーが格納されてない");
+        }
+        else
+        {
+            Debug.Log("ステージナンバー格納済");
+        }
 
         //jsonファイルが格納されてる場所のパス取得
         string inputString = scoreData.GetListInScore(StageNum).GetScore().ToString();
@@ -176,7 +157,7 @@ public class EnemyNoteManager : MonoBehaviour
         //jsonファイル取得
         InputJson inputJson = JsonUtility.FromJson<InputJson>(inputString);
 
-        //サイズ格納
+        //各サイズ格納
         NotesNum = new int[inputJson.notes.Length];
         AttackType = new int[inputJson.notes.Length];
         //情報格納
@@ -198,17 +179,4 @@ public class EnemyNoteManager : MonoBehaviour
         //NextAttack();
         EnemyNoteManagerFix = true;
     }
-
-    /*void NextAttack()
-    {
-        mainGameManager.AttackCount++;
-        if (mainGameManager.AttackCount > ScoreLegth+1)
-        {
-            Debug.Log("終了");
-            EnemyNoteManagerFix=false;
-            return;
-        }
-        NextBeat = NotesNum[mainGameManager.AttackCount];
-        NextAttackType = AttackType[mainGameManager.AttackCount-1];
-    }*/
 }

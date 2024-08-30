@@ -23,13 +23,15 @@ public class TitelButton : MonoBehaviour
 
     private Vector2 _tempRStickValue = Vector2.zero;
 
-   private CompositeDisposable disposables = new CompositeDisposable();
+    private CompositeDisposable disposables = new CompositeDisposable();
+
+    private Tween _fadeTween;
     private void Start()
     {
         ControllerManager.Instance.SouthButtonObservable.Subscribe(x =>
         {
             FadeManager.Instance.LoadScene("StageSelect", 1.0f);
-            SoundManager.Instance.PlaySE(SESoundData.SE.other);
+            SoundManager.Instance.PlaySE(SESoundData.SE.Select);
         }).AddTo(disposables); // 菊池修正　xボタンに
 
         ControllerManager.Instance.TouchPadObservable.Subscribe(x =>
@@ -37,12 +39,12 @@ public class TitelButton : MonoBehaviour
             if(_licensePanel.activeSelf)
             {
                 _licensePanel.SetActive(false);
-                SoundManager.Instance.PlaySE(SESoundData.SE.other);
+                SoundManager.Instance.PlaySE(SESoundData.SE.Select);
             }
             else
             {
                 _licensePanel.SetActive(true);
-                SoundManager.Instance.PlaySE(SESoundData.SE.other);
+                SoundManager.Instance.PlaySE(SESoundData.SE.Select);
             }
         }).AddTo(disposables); // 菊池追記　ライセンス表記の追加
 
@@ -54,7 +56,7 @@ public class TitelButton : MonoBehaviour
 
         
         SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
-        _buttonTextRTF.DOFade(_fadeValue, _fadeTime).SetLoops(-1, LoopType.Yoyo);// 菊池追記　ボタンのテキストを点滅させる
+        _fadeTween = _buttonTextRTF.DOFade(_fadeValue, _fadeTime).SetLoops(-1, LoopType.Yoyo);// 菊池追記　ボタンのテキストを点滅させる
     }
 
     private void Update()
@@ -74,6 +76,7 @@ public class TitelButton : MonoBehaviour
     private void OnDestroy()
     {
         disposables.Dispose();
+        _fadeTween?.Kill();
     }
 
 }

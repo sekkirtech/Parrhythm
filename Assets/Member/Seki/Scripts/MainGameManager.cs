@@ -106,15 +106,15 @@ public class MainGameManager : MonoBehaviour
         switch (MAXCount)
         {
             case 1:
-                Debug.Log("ビーム攻撃1");
+                Debug.Log("ビーム攻撃　1");
                 //アニメーション処理
                 break;
             case 2:
-                Debug.Log("ロケット攻撃2");
+                Debug.Log("ロケット攻撃　2");
                 //アニメーション処理
                 break;
             case 3:
-                Debug.Log("パンチ！3");
+                Debug.Log("パンチ！　3");
                 //アニメーション処理
                 break;
         }

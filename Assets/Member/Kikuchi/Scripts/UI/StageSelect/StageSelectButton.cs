@@ -24,6 +24,10 @@ public class StageSelectButton : ButtonUIUtil
     public override void OnNext()
     {
         PlayerPrefs.SetInt("StageNum", _stageNum);
-        FadeManager.Instance.LoadScene("MainScene", 1.0f);
+        var flag = FadeManager.Instance.LoadScene("MainScene", 1.0f);
+        if(flag)
+        {
+            SoundManager.Instance.StopBGMAfterSeconds(1.0f);
+        }
     }
 }

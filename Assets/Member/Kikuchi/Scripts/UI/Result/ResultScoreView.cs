@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// 結果シーンのビューを管理するクラス
@@ -47,6 +48,8 @@ public class ResultSceneView : MonoBehaviour
     [SerializeField]
     private Color _dColor = Color.gray; // Dランクの色
 
+    private bool isWin = false; // 勝敗のフラグ
+
     /// <summary>
     /// クリアランクの定義
     /// </summary>
@@ -62,11 +65,23 @@ public class ResultSceneView : MonoBehaviour
     /// <summary>
     /// 初期化時にテキストを設定します。
     /// </summary>
-    private void Start()
+    private async void Start()
     {
-        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
+        isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
         SetLabelTexts();
         SetScoreAndPercentageTexts();
+
+        if (isWin)
+        {
+            SoundManager.Instance.PlaySE(SESoundData.SE.Clear);
+            await UniTask.Delay(5000);
+        }
+        else
+        {
+            SoundManager.Instance.PlaySE(SESoundData.SE.GameOver);
+            await UniTask.Delay(3000);
+        }
+        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
     }
 
     /// <summary>
@@ -74,7 +89,6 @@ public class ResultSceneView : MonoBehaviour
     /// </summary>
     private void SetLabelTexts()
     {
-        bool isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
         _timeText.text = "Time";
         _percentageText.text = isWin ? "Parry" : "HP";
     }
@@ -84,7 +98,6 @@ public class ResultSceneView : MonoBehaviour
     /// </summary>
     private void SetScoreAndPercentageTexts()
     {
-        bool isWin = PlayerPrefs.GetInt("IsWin", 0) != 0;
         _time.text = PlayerPrefs.GetFloat("Time", 0).ToString("F2");
         var percentage = CalculatePercentage(
                     isWin ? PlayerPrefs.GetInt("EnemyAttackCount", 100) : PlayerPrefs.GetInt("MaxHP", 100),
