@@ -6,6 +6,7 @@ using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 //using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 
@@ -29,9 +30,15 @@ public class PlayerManager : MonoBehaviour
     //AnimationFlag
     public bool CancedGuardAnim=false;
 
-
+    AudioSource SlashSource;
 
     private CompositeDisposable disposables_=new CompositeDisposable();
+
+    [SerializeField, Header("パリィエフェクト")] ParticleSystem ParryEffect;
+
+    [SerializeField, Header("スラッシュエフェクト")] ParticleSystem SlashEffect;
+
+    [SerializeField] int DelayFlame = 9;
 
 
     void Start()
@@ -43,6 +50,8 @@ public class PlayerManager : MonoBehaviour
         MainGameObj.SpriteList[2].gameObject.SetActive(false);
         MainGameObj.SpriteList[3].gameObject.SetActive(false);
         playerlose = false;
+        ParryEffect.gameObject.SetActive(false);
+        SlashEffect.gameObject.SetActive(false);
 
         //nullチェック
         if (EnemyObj == null)
@@ -67,6 +76,8 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) || GirdButton)
         {
             Debug.Log("ガード");
+
+            //ガード中ではないとき
             if (!MainGameObj.Girdnow)
             {
                 //キャンセルアニメーション加速
@@ -82,11 +93,12 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetBool("GuardCancel", false);
             }
             CancedGuardAnim = true;
-            //MainGameObj.SpriteList[1].gameObject.SetActive(true);
             MainGameObj.Girdnow = true;
+
             //タイム計測
             GirdTime += Time.deltaTime;
-            //0.25秒以内でパリィ可、超えたら不可に
+
+            //ガード開始してから0.25秒以内でパリィ可、超えたら不可に
             if (GirdTime > 0.5)
             {
                 MainGameObj.ParryReception = false;
@@ -98,6 +110,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
+            //ガード解消時に諸々初期化等
             if(MainGameObj.Girdnow)
             {
                 MainGameObj.Girdnow=false;
@@ -127,6 +140,9 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("ParryHits" + MainGameObj.ParryHits);
             if (MainGameObj.ParryAttack && MainGameObj.ParryHits)
             {
+                ParryEffect.Stop();
+
+
                 MainGameObj.ParryHits = false;
                 MainGameObj.SpriteList[3].gameObject.SetActive(true);
                 HanteiTime = 0.0f;
@@ -140,8 +156,24 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetTrigger("Counter");
                 PlayerAnim.SetBool("Counted", true);
                 EnemyObj.EnemyDamage();
+
+                //パリィカウント
                 MainGameObj.ParryCount++;
+                
                 Debug.Log("パリィ成功");
+
+                //斬撃SE挿入
+                if (SlashSource==null)SlashSource=this.AddComponent<AudioSource>();
+                SlashSource.clip = MainGameObj.SlashSE;
+                SlashSource.loop = false;
+                SlashSource.Play();
+
+                //エフェクト挿入
+                ParryEffect.gameObject.SetActive(true);
+                ParryEffect.Play();
+                StartCoroutine(SlashCot(DelayFlame));
+
+
             }
         }
 
@@ -158,7 +190,7 @@ public class PlayerManager : MonoBehaviour
         {
             playerlose = true;
             PlayerPrefs.SetInt("IsWin", 0);
-            MainGameObj.toResult(EnemyObj.EnemyHP, EnemyObj.EnemyMaxHP);
+            MainGameObj.toResult();
         }
     }
 
@@ -166,5 +198,20 @@ public class PlayerManager : MonoBehaviour
     private void OnDestroy()
     {
         disposables_.Dispose();
+    }
+
+    /// <summary>
+    /// アニメーションとエフェクトのタイミングを合わせるために再生するフレームを遅らせる
+    /// </summary>
+    /// <param name="flame">遅らせるフレーム数</param>
+    /// <returns></returns>
+    IEnumerator SlashCot(int flame)
+    {
+        for (var i = 0; i < flame; i++)
+        {
+            yield return null;
+        }
+        SlashEffect.gameObject.SetActive(true);
+        SlashEffect.Play();
     }
 }
