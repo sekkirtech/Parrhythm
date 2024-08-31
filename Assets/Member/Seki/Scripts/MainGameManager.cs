@@ -204,10 +204,17 @@ public class MainGameManager : MonoBehaviour
             //パリィ可能か
             ParryAttack = true;
             SpriteList[2].gameObject.SetActive(true);
-            //可能になったらパッド振動
-            MyPad.SetMotorSpeeds(1.0f, 1.0f);
+            //ゲームパッド接続状態で可能になったらパッド振動
+            if (MyPad != null)
+            {
+                MyPad.SetMotorSpeeds(1.0f, 1.0f);
+            }
             yield return new WaitForSeconds(lpbbeat);
-            MyPad.SetMotorSpeeds(0.0f, 0.0f);
+            //ゲームパッド振動初期化
+            if(MyPad != null)
+            {
+                MyPad.SetMotorSpeeds(0.0f, 0.0f);
+            }
             ParryAttack = false;
             Debug.Log("パリイ終了");
             SpriteList[2].gameObject.SetActive(false);
