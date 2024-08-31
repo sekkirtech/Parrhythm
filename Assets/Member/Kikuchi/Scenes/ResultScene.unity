@@ -2166,7 +2166,7 @@ MonoBehaviour:
   _clearRankText: {fileID: 1232910378}
   _resultTitle: {fileID: 751931490}
   _winSprite: {fileID: 21300000, guid: 3ba616affdca0c646b93d640248d5e19, type: 3}
-  _loseSprite: {fileID: 21300000, guid: 511d25888a93f224b8cad02bc9c99dac, type: 3}
+  _loseSprite: {fileID: 21300000, guid: 148c9042c4eb5214b9124646eac724f5, type: 3}
   _sScore: 100
   _aScore: 80
   _bScore: 60
