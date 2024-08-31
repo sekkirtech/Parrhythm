@@ -14,7 +14,7 @@ public class ParticleSpeed : MonoBehaviour
 
     //パーティクルの速度
     [SerializeField]
-    private float _spped = 1;
+    private float _spped = 0.4f;
 
     //=================================================================================
     //初期化
@@ -42,7 +42,8 @@ public class ParticleSpeed : MonoBehaviour
         //全パーティクルの速度を変更
         foreach (var particle in _particleSystems)
         {
-            ChangeSpeed(particle, _spped);
+            float _particle = 1  * _spped;
+            ChangeSpeed(particle, _particle);
         }
     }
 
@@ -53,8 +54,8 @@ public class ParticleSpeed : MonoBehaviour
     //指定したパーティクルの速度を変更
     private void ChangeSpeed(ParticleSystem particle, float speed)
     {
-        var main = particle.main;
-        main.simulationSpeed = speed;
+        var beameffect = particle.main;
+        beameffect.simulationSpeed = speed;
     }
 
 }
