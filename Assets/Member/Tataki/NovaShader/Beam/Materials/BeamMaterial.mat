@@ -14,8 +14,10 @@ Material:
   m_ValidKeywords:
   - _ALPHA_TRANSITION_MAP_MODE_2D
   - _BASE_MAP_MODE_2D
+  - _EMISSION_AREA_MAP
   - _EMISSION_COLOR_COLOR
   - _EMISSION_MAP_MODE_2D
+  - _FADE_TRANSITION_ENABLED
   - _PARALLAX_MAP_MODE_2D
   - _TINT_AREA_ALL
   - _TINT_COLOR_ENABLED
@@ -33,9 +35,9 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTransitionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b10ca02993bc33648aa6b8decee11049, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 0.71, y: 0}
     - _AlphaTransitionMap2DArray:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -45,7 +47,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: c8944247654dc9e4c8a746184127e6d8, type: 3}
+        m_Texture: {fileID: 2800000, guid: b10ca02993bc33648aa6b8decee11049, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap2DArray:
@@ -155,17 +157,17 @@ Material:
     - _AlphaTransitionMapChannelsX: 0
     - _AlphaTransitionMapMode: 0
     - _AlphaTransitionMapOffsetXCoord: 0
-    - _AlphaTransitionMapOffsetYCoord: 0
+    - _AlphaTransitionMapOffsetYCoord: 1
     - _AlphaTransitionMapProgress: 0
     - _AlphaTransitionMapProgressCoord: 0
     - _AlphaTransitionMapSliceCount: 4
-    - _AlphaTransitionMode: 0
-    - _AlphaTransitionProgress: 0
+    - _AlphaTransitionMode: 1
+    - _AlphaTransitionProgress: 0.4
     - _AlphaTransitionProgressCoord: 0
     - _BaseMapMirrorSampling: 0
     - _BaseMapMode: 0
     - _BaseMapOffsetXCoord: 0
-    - _BaseMapOffsetYCoord: 0
+    - _BaseMapOffsetYCoord: 1
     - _BaseMapProgress: 0
     - _BaseMapProgressCoord: 0
     - _BaseMapRotation: 0
@@ -190,7 +192,7 @@ Material:
     - _DissolveSharpness: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EmissionAreaType: 0
+    - _EmissionAreaType: 2
     - _EmissionColorType: 0
     - _EmissionIntensity: 1
     - _EmissionIntensityCoord: 0
@@ -217,7 +219,7 @@ Material:
     - _InverseTintRim: 0
     - _KeepEdgeTransparency: 1
     - _LuminanceTransparencyEnabled: 0
-    - _LuminanceTransparencyProgress: 0.5
+    - _LuminanceTransparencyProgress: 0
     - _LuminanceTransparencyProgressCoord: 0
     - _LuminanceTransparencySharpness: 0.5
     - _LuminanceTransparencySharpnessCoord: 0
@@ -288,7 +290,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TintColor: {r: 95.87453, g: 95.87453, b: 95.87453, a: 1}
+    - _TintColor: {r: 5.5908813, g: 5.5908813, b: 5.5908813, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8036524114866199241
 MonoBehaviour:
