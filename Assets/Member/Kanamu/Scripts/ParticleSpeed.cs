@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 /// <summary>
 /// パーティクルのスピードを変えるクラス
@@ -12,23 +13,24 @@ public class ParticleSpeed : MonoBehaviour
     //速度を変える対象のパーティクル
     private List<ParticleSystem> _particleSystems;
 
+    private ParticleSystem particle;
+
     //パーティクルの速度
     [SerializeField]
     private float _spped = 0.4f;
 
-    //=================================================================================
-    //初期化
-    //=================================================================================
 
     private void Start()
     {
+        particle = this.GetComponent<ParticleSystem>();
+
+        // 停止
+        particle.Stop();
+
         //子にある全てのパーティクルを取得
         _particleSystems = gameObject.GetComponentsInChildren<ParticleSystem>().ToList();
     }
 
-    //=================================================================================
-    //イベント
-    //=================================================================================
 
     //Inspectorで値(_speed)を変更した時に呼ばれる
     private void OnValidate()
@@ -47,15 +49,14 @@ public class ParticleSpeed : MonoBehaviour
         }
     }
 
-    //=================================================================================
-    //変更
-    //=================================================================================
-
     //指定したパーティクルの速度を変更
     private void ChangeSpeed(ParticleSystem particle, float speed)
     {
         var beameffect = particle.main;
         beameffect.simulationSpeed = speed;
+
+        particle.Play();
     }
+    
 
 }
