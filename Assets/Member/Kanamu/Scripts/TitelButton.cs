@@ -34,7 +34,7 @@ public class TitelButton : MonoBehaviour
             SoundManager.Instance.PlaySE(SESoundData.SE.Select);
         }).AddTo(disposables); // ‹e’rC³@xƒ{ƒ^ƒ“‚É
 
-        ControllerManager.Instance.TouchPadObservable.Subscribe(x =>
+        ControllerManager.Instance.NorthButtonObservable.Subscribe(x =>
         {
             if(_licensePanel.activeSelf)
             {
