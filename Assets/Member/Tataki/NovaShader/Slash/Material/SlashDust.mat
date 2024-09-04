@@ -264,6 +264,8 @@ Material:
     - _TintColorMode: 0
     - _TintMap3DProgress: 0
     - _TintMap3DProgressCoord: 0
+    - _TintMapOffsetXCoord: 0
+    - _TintMapOffsetYCoord: 0
     - _TintMapSliceCount: 4
     - _TintRimProgress: 0.5
     - _TintRimProgressCoord: 0
