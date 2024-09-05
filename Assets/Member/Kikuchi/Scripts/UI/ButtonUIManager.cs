@@ -95,6 +95,7 @@ public class ButtonUIManager : MonoBehaviour
         if (FadeManager.Instance.IsFading) return;
         _buttons[_index].GetComponent<ButtonUIUtil>().OnNext();
         SoundManager.Instance.StopBGM();
+        SoundManager.Instance.StopAllSE();
         SoundManager.Instance.PlaySE(SESoundData.SE.Select);
     }
 
