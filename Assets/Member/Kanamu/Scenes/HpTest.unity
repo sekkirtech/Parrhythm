@@ -1812,6 +1812,10 @@ MonoBehaviour:
   BeatFin: {fileID: 8300000, guid: 18945514bff26b7489cda96b3a32eb61, type: 3}
   enemyHandAnimation: {fileID: 1622015001}
   BeatFlag: 1
+  NoteMana: {fileID: 0}
+  SlashSE: {fileID: 0}
+  DamageSE: {fileID: 0}
+  GirdSE: {fileID: 0}
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -2925,6 +2929,9 @@ MonoBehaviour:
   MainGameObj: {fileID: 724742208}
   PlayerAnim: {fileID: 1440718895}
   CancedGuardAnim: 0
+  ParryEffect: {fileID: 0}
+  SlashEffect: {fileID: 0}
+  DelayFlame: 9
 --- !u!82 &1372795744
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3076,6 +3083,10 @@ MonoBehaviour:
   scoreData: {fileID: 11400000, guid: 7bc639b47f7f68e4aabfa7c3003328cd, type: 2}
   AttackTime: 0
   audioSource: {fileID: 1373152871}
+  TestMode: 0
+  NotenowTime: 0
+  ClipLegth: 0
+  EndWaitTime: 0
 --- !u!82 &1373152871
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3821,7 +3832,7 @@ RectTransform:
   m_GameObject: {fileID: 1820293029}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.27777773, y: 0.23437496, z: 0.24999997}
+  m_LocalScale: {x: 0.2777777, y: 0.21, z: 0.24999997}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2083337364}
