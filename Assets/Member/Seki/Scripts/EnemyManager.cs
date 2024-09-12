@@ -25,7 +25,7 @@ public class EnemyManager : MonoBehaviour
         //nullチェック
         if (PlayerObj == null)
         {
-            Debug.LogError("PlayerManagerがアタッチされてません。アタッチします");
+            Debug.LogError("PlayerManagerがアタッチされてません。");
         }
     }
 

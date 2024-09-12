@@ -39,10 +39,7 @@ public class PlayerManager : MonoBehaviour
     {
         //初期化
         GirdTime = 0.0f;
-        MainGameObj.SpriteList[0].gameObject.SetActive(false);
-        MainGameObj.SpriteList[1].gameObject.SetActive(false);
-        MainGameObj.SpriteList[2].gameObject.SetActive(false);
-        MainGameObj.SpriteList[3].gameObject.SetActive(false);
+        MainGameObj.ParryTimingSprite.gameObject.SetActive(false);
         playerlose = false;
         ParryEffect.gameObject.SetActive(false);
         SlashEffect.gameObject.SetActive(false);
@@ -72,7 +69,7 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("ガード");
 
             //ガード中ではないとき
-            if (!MainGameObj.Girdnow)
+            if (!MainGameObj.Guardnow)
             {
                 //キャンセルアニメーション加速
                 PlayerAnim.SetFloat("GuardCancelSpeed", 5f);
@@ -87,12 +84,12 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetBool("GuardCancel", false);
             }
             CancedGuardAnim = true;
-            MainGameObj.Girdnow = true;
+            MainGameObj.Guardnow = true;
 
             //タイム計測
             GirdTime += Time.deltaTime;
 
-            //ガード開始してから0.25秒以内でパリィ可、超えたら不可に
+            //ガード開始してから0.5秒以内でパリィ可、超えたら不可に
             if (GirdTime > 0.5)
             {
                 MainGameObj.ParryReception = false;
@@ -105,9 +102,9 @@ public class PlayerManager : MonoBehaviour
         else
         {
             //ガード解消時に諸々初期化等
-            if(MainGameObj.Girdnow)
+            if(MainGameObj.Guardnow)
             {
-                MainGameObj.Girdnow=false;
+                MainGameObj.Guardnow=false;
                 CancedGuardAnim = false;
 
                 //アニメーションスピード加速
@@ -138,7 +135,7 @@ public class PlayerManager : MonoBehaviour
 
 
                 MainGameObj.ParryHits = false;
-                MainGameObj.SpriteList[3].gameObject.SetActive(true);
+                MainGameObj.ParryTimingSprite.gameObject.SetActive(true);
                 HanteiTime = 0.0f;
                 //アニメーションスピード加速
                 PlayerAnim.SetFloat("GuardIdleSpeed", 5f);
@@ -170,13 +167,6 @@ public class PlayerManager : MonoBehaviour
 
 
             }
-        }
-
-        //パリィ成功画面の削除
-        if (MainGameObj.SpriteList[3].gameObject.activeSelf)
-        {
-            HanteiTime += Time.deltaTime;
-            if (HanteiTime > 1.0f) MainGameObj.SpriteList[3].gameObject.SetActive(false);
         }
 
 

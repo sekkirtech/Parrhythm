@@ -16294,15 +16294,10 @@ MonoBehaviour:
   EnemyObj: {fileID: 809606418}
   BattleTime: 0
   GameStart: 0
-  SpriteList:
-  - {fileID: 1520178512}
-  - {fileID: 1674186572}
-  - {fileID: 341959859}
-  - {fileID: 822221536}
+  ParryTimingSprite: {fileID: 341959859}
   AttackCount: 0
   ParryCount: 0
-  Girdnow: 0
-  SutaminaGird: 1
+  Guardnow: 0
   HpSprite:
   - {fileID: 912659433}
   - {fileID: 535654640}
@@ -16313,9 +16308,6 @@ MonoBehaviour:
   ParryAttack: 0
   guardController: {fileID: 1217443395}
   GuardCost: 25
-  BeatAudioSource: {fileID: 724742210}
-  Beat: {fileID: 8300000, guid: ff6610f3885ba6340bc8f947278f73de, type: 3}
-  BeatFin: {fileID: 8300000, guid: 18945514bff26b7489cda96b3a32eb61, type: 3}
   enemyHandAnimation: {fileID: 1622015001}
   BeamMana: {fileID: 298197664}
   BeatFlag: 1
@@ -22524,7 +22516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1373152869
 Transform:
   m_ObjectHideFlags: 0
@@ -22554,13 +22546,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BeatSplit: 0
   EnemyNoteManagerFix: 0
-  NotesNum: 
+  AttackTiming: 
   AttackType: 
   BPM: 0
   LPB: 0
   mainGameManager: {fileID: 724742208}
   scoreData: {fileID: 11400000, guid: 7bc639b47f7f68e4aabfa7c3003328cd, type: 2}
-  audioSource: {fileID: 1373152871}
+  MusicSource: {fileID: 0}
   TestMode: 1
   NotenowTime: 0
   ClipLegth: 0
