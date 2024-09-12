@@ -1,13 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UniRx;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using DG.Tweening;
-//using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 
 public class PlayerManager : MonoBehaviour
@@ -155,7 +149,7 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetTrigger("GuardIdle");
                 PlayerAnim.SetTrigger("Counter");
                 PlayerAnim.SetBool("Counted", true);
-                EnemyObj.EnemyDamage();
+                EnemyObj.EnemyDamage(1);
 
                 //パリィカウント
                 MainGameObj.ParryCount++;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 public class EnemyNoteManager : MonoBehaviour
@@ -8,7 +7,7 @@ public class EnemyNoteManager : MonoBehaviour
     public bool EnemyNoteManagerFix=false; //準備ができたか
     [SerializeField] public int[] NotesNum;//攻撃タイミング格納
     [SerializeField] public int[] AttackType;//攻撃手段格納
-    public int BPM;
+    public int BPM;//そのままの意
     public int LPB;//一伯間に何分割されているか
 
     private int ScoreLegth;
@@ -17,12 +16,11 @@ public class EnemyNoteManager : MonoBehaviour
 
     [SerializeField]MainGameManager mainGameManager;
 
-    [SerializeField] ScoreBox scoreData;
+    [SerializeField] ScoreBox scoreData;//音源、譜面データ
 
-    [SerializeField] float AttackTime;
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource audioSource;//音源再生用
 
-    [SerializeField] bool TestMode;
+    [SerializeField] bool TestMode;//テストモード
 
     [Serializable]
     public class InputJson
@@ -37,7 +35,7 @@ public class EnemyNoteManager : MonoBehaviour
     {
         //何拍目に発生か
         public int num;
-        //タイプ
+        //攻撃タイプ
         public int block;
         //一拍間の分割
         public int LPB;
@@ -48,15 +46,15 @@ public class EnemyNoteManager : MonoBehaviour
 
     private float ReadSpan = 0.01f;//何秒ごとに実行するか
     public float NotenowTime;// 音楽の再生されている時間
-    private int beatNum;// 今の拍数
+    private int beatNum;// 譜面上で今何拍目か
     private int beatCount;// json配列用(拍数)のカウント
-    private bool isBeat;// ビートを打っているか(生成のタイミング)
-    public float ClipLegth;//曲の長さ
+    private bool isBeat;//攻撃生成用フラグ
+    public float ClipLegth;//音源の長さ
     private AudioClip ClipSource;//音源
     [SerializeField, Header("音源終了後何秒後に遷移するか")] float EndWaitTime = 0;
     private bool EndLoad = true;//動いているか
     private float EndWaitSumLegth;//遷移までの時間と音源の長さを足して格納
-    private float FadeDeltaTime;
+    private float FadeDeltaTime;//音源Fade用
 
 
     void Awake()
@@ -72,7 +70,7 @@ public class EnemyNoteManager : MonoBehaviour
         {
             Debug.LogError("MainGameManagerがアタッチされていない byEnemyNoteManager");
         }
-        //読み込み
+        //譜面読み込み
         MusicReading();
     }
 

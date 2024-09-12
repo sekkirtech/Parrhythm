@@ -76,6 +76,10 @@ public class MainGameManager : MonoBehaviour
 
     void Start()
     {
+        //FPSを60に固定
+        Application.targetFrameRate = 60;
+
+        //初期化
         BattleTime = 0.0f;
         AttackCount = 0;
         ParryCount = 0;
