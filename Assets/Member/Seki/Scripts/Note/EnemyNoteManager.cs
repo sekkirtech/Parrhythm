@@ -35,9 +35,9 @@ public class EnemyNoteManager : MonoBehaviour
     public class Notes
     {
         //何拍目に発生か
-        public int Num;
+        public int num;
         //攻撃タイプ
-        public int Block;
+        public int block;
         //一拍間の分割
         public int LPB;
     }
@@ -192,7 +192,6 @@ public class EnemyNoteManager : MonoBehaviour
 
         //jsonファイルが格納されてる場所のパス取得
         string inputString = scoreData.GetListInScore(StageNum).GetScore().ToString();
-        //Debug.Log(inputString);
         //jsonファイル取得
         InputJson inputJson = JsonUtility.FromJson<InputJson>(inputString);
 
@@ -215,9 +214,9 @@ public class EnemyNoteManager : MonoBehaviour
         for (int i = 0; i < inputJson.notes.Length; i++)
         {
             //攻撃タイミング格納
-            AttackTiming[i] = inputJson.notes[i].Num;
+            AttackTiming[i] = inputJson.notes[i].num;
             //攻撃手段格納
-            AttackType[i] = inputJson.notes[i].Block;
+            AttackType[i] = inputJson.notes[i].block;
         }
         BeatSplit = (float)60/(float)BPM/(float)LPB;
 
