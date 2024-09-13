@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -43,7 +42,7 @@ public class MainGameManager : MonoBehaviour
     [SerializeField,Header("スタミナ")] GuardController guardController;
     [SerializeField, Header("ガードコスト")] float GuardCost = 25.0f;
 
-    
+
 
     //拍用AudioSource
     [SerializeField] AudioSource BeatAudioSource;
@@ -51,10 +50,15 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] AudioClip BeatFin;
 
 
-    //仮エネミーアニメーション
+    //パンチアニメーション
     [SerializeField] EnemyHandAnimation enemyHandAnimation;
+    //パンチアニメーション左右制御
     private bool handType=false;
+    //ビームエフェクト制御
+    [SerializeField] ParticleSpeed BeamMana;
 
+    bool panchi = false;
+    bool beam = false;
 
     //Beatフラグ
     public bool BeatFlag=true;
@@ -127,16 +131,20 @@ public class MainGameManager : MonoBehaviour
 /// <returns></returns>
     public IEnumerator EnemmyAttack(int MAXCount,float lpbbeat)
     {
+        panchi=false;
+        beam=false;
         BeatFlag = false;
         switch (MAXCount)
         {
             case 1:
-                Debug.Log("ビーム攻撃　1");
+                Debug.Log("パンチ攻撃　1");
                 //アニメーション処理
+                panchi = true;
                 break;
             case 2:
-                Debug.Log("ロケット攻撃　2");
+                Debug.Log("ビーム攻撃　2");
                 //アニメーション処理
+                beam = true;
                 break;
             case 3:
                 Debug.Log("パンチ！　3");
@@ -147,22 +155,32 @@ public class MainGameManager : MonoBehaviour
 
         BeatAudioSource.clip = Beat;
         Debug.Log("拍セット");
-        for (int i = 0; i < MAXCount; i++)
+        for (int i = 0; i < 3; i++)
         {
             //BeatAudioSource.Play();
             Debug.Log("拍Play");
             Debug.Log(i);
-            if (i == (MAXCount-1))
+            if (panchi)
             {
-                if (handType)
+                if (i == (2))
                 {
-                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Right, lpbbeat);
-                    handType = false;
+                    if (handType)
+                    {
+                        enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Right, lpbbeat);
+                        handType = false;
+                    }
+                    else
+                    {
+                        enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Left, lpbbeat);
+                        handType = true;
+                    }
                 }
-                else
+            }
+            if (beam)
+            {
+                if (i == (1))
                 {
-                    enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Left, lpbbeat);
-                    handType = true;
+                    BeamMana.ChangeSpeed(1.0f);
                 }
             }
             yield return new WaitForSeconds(lpbbeat);

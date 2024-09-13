@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   scoreInfoList:
-  - ScorePath: {fileID: 4900000, guid: 764b16ea8810c9040bfd106bdb5dd102, type: 3}
+  - ScorePath: {fileID: 4900000, guid: 51cd553e4f4e5404abee13aec4d9a1cf, type: 3}
     MusicClip: {fileID: 8300000, guid: 457d1402a62d13e44ac2b46c60b33854, type: 3}

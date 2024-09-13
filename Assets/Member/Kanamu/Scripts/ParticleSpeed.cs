@@ -33,7 +33,7 @@ public class ParticleSpeed : MonoBehaviour
 
 
     //Inspectorで値(_speed)を変更した時に呼ばれる
-    private void OnValidate()
+/*    private void OnValidate()
     {
         //実行中以外はスルー
         if (!Application.isPlaying)
@@ -45,12 +45,12 @@ public class ParticleSpeed : MonoBehaviour
         foreach (var particle in _particleSystems)
         {
             float _particle = 1  * _spped;
-            ChangeSpeed(particle, _particle);
+            ChangeSpeed( _particle);
         }
-    }
+    }*/
 
     //指定したパーティクルの速度を変更
-    private void ChangeSpeed(ParticleSystem particle, float speed)
+    public void ChangeSpeed(float speed)
     {
         var beameffect = particle.main;
         beameffect.simulationSpeed = speed;
