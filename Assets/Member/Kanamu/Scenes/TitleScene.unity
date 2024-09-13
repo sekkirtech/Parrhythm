@@ -325,6 +325,9 @@ MonoBehaviour:
   _scrollbar: {fileID: 234273276}
   _fadeTime: 1.5
   _fadeValue: 0
+  Buttons:
+  - {fileID: 1219118324}
+  - {fileID: 1447370632}
 --- !u!1 &211265873
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +385,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 69a3826c3712dff4686229b87980e0bd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17bf7a574efaa4c4b8d1dede1dc798c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1778,6 +1781,7 @@ GameObject:
   - component: {fileID: 1219118327}
   - component: {fileID: 1219118326}
   - component: {fileID: 1219118325}
+  - component: {fileID: 1219118328}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1842,6 +1846,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -325}
   m_SizeDelta: {x: 1000, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1219118328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219118324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702ab84b0aa61c4a8436096ab7a06d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taitelButtonType: 0
+  LicensePanel: {fileID: 131725341}
+  isSelect: 0
 --- !u!1 &1397559528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,6 +1916,7 @@ GameObject:
   - component: {fileID: 1447370633}
   - component: {fileID: 1447370635}
   - component: {fileID: 1447370634}
+  - component: {fileID: 1447370636}
   m_Layer: 5
   m_Name: LicenseButton
   m_TagString: Untagged
@@ -2021,6 +2041,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447370632}
   m_CullTransparentMesh: 1
+--- !u!114 &1447370636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447370632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2702ab84b0aa61c4a8436096ab7a06d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taitelButtonType: 1
+  LicensePanel: {fileID: 131725341}
+  isSelect: 0
 --- !u!1 &1911646385
 GameObject:
   m_ObjectHideFlags: 0
