@@ -5,6 +5,7 @@ using UnityEngine;
 using UniRx;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 結果シーンのビューを管理するクラス
@@ -83,14 +84,31 @@ public class ResultSceneView : MonoBehaviour
         if (isWin)
         {
             SoundManager.Instance.PlaySE(SESoundData.SE.Clear);
-            await UniTask.Delay(5000);
+            try
+            {
+                await UniTask.Delay(5000, cancellationToken: this.GetCancellationTokenOnDestroy());
+            }
+            catch (System.OperationCanceledException)
+            {
+                return;
+            }
         }
         else
         {
             SoundManager.Instance.PlaySE(SESoundData.SE.GameOver);
-            await UniTask.Delay(3000);
+            try
+            {
+                await UniTask.Delay(3000, cancellationToken: this.GetCancellationTokenOnDestroy());
+            }
+            catch (System.OperationCanceledException)
+            {
+                return;
+            }
         }
-        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
+        if(SceneManager.GetActiveScene().name == "ResultScene")
+        {
+            SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
+        } 
     }
 
     /// <summary>
