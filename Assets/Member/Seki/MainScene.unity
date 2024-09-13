@@ -16315,6 +16315,7 @@ MonoBehaviour:
   SlashSE: {fileID: 8300000, guid: 774f1385b0d35bd4692769b8e06a3619, type: 3}
   DamageSE: {fileID: 8300000, guid: 0d9101e44e6a3754faa670738eb25117, type: 3}
   GirdSE: {fileID: 8300000, guid: 38ef536956b3f6542b0fcef880d72bd4, type: 3}
+  robotKnockback: {fileID: 809606422}
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -22574,7 +22575,7 @@ MonoBehaviour:
   BPM: 0
   LPB: 0
   mainGameManager: {fileID: 724742208}
-  scoreData: {fileID: 11400000, guid: 7bc639b47f7f68e4aabfa7c3003328cd, type: 2}
+  scoreData: {fileID: 11400000, guid: c19f976a6148f394bba549ae4ba669b8, type: 2}
   MusicSource: {fileID: 0}
   TestMode: 1
   NotenowTime: 0
