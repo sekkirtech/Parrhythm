@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -10,17 +7,11 @@ public class EnemyManager : MonoBehaviour
     //敵のHP
     [SerializeField]public int EnemyMaxHP = 3;
     public int EnemyHP = 0;
-    //プレファブ
-    [SerializeField] GameObject[] AttackObj;
-    //情報格納用マネージャー
+    //メインゲームマネージャー
     [SerializeField] MainGameManager MainGameObj;
-    //BGM用Source
-    //[SerializeField] AudioClip[] BGMClip;
     //討伐されてるか
     bool EnemySlain=false;
-    //α版用
-    private TextMeshProUGUI HPtext;
-    //HPバーscript格納
+    //メンバーが作成したHPバーscript格納
     [SerializeField] HpBar Bar;
 
     void Start()
@@ -34,14 +25,7 @@ public class EnemyManager : MonoBehaviour
         //nullチェック
         if (PlayerObj == null)
         {
-            Debug.Log("Playerのスクリプトがないからアタッチします");
-            GameObject playerseki = GameObject.Find("Player");
-            PlayerObj = playerseki.GetComponent<PlayerManager>();
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            //プレハブ名が未確定のためエラーで表記
-            //if (AttackObj[i] == null) Debug.LogError("攻撃オブジェクトの" + i + "番がありません");
+            Debug.LogError("PlayerManagerがアタッチされてません。");
         }
     }
 
@@ -50,16 +34,22 @@ public class EnemyManager : MonoBehaviour
         //HPが０以下でリザルト
         if (EnemyHP <= 0&&EnemySlain)
         {
+            //複数回読み込まないようフラグ
             EnemySlain = false;
+            //勝ち
             PlayerPrefs.SetInt("IsWin", 1);
+            //Scene遷移
             MainGameObj.toResult();
         }
     }
 
-    public void EnemyDamage()
+    /// <summary>
+    /// エネミー側がダメージを受けた時に使用
+    /// </summary>
+    /// <param name="Damage">受けたダメージ</param>
+    public void EnemyDamage(int Damage)
     {
-        //アニメーション挿入
-        EnemyHP--;
-        Bar.SetHp(1);
+        EnemyHP-=Damage;
+        Bar.SetHp(Damage);
     }
 }
