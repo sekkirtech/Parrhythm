@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class RobotKnockback : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class RobotKnockback : MonoBehaviour
 
     [SerializeField]
     [Tooltip("ノックバックの時間")]
-    private float _knockbackDuration = 1;
+    private float _knockbackDuration = 0.7f;
 
     [SerializeField]
     private List<GameObject> _beamTransforms;
@@ -29,6 +30,11 @@ public class RobotKnockback : MonoBehaviour
     private List<Vector3> _initBeamRotations = new List<Vector3>();
     [SerializeField]
     private Animator _animator;
+
+    [SerializeField]
+    private ParticleSpeed _particleSpeed;
+
+    private bool _isKnockbacking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -44,10 +50,17 @@ public class RobotKnockback : MonoBehaviour
 
     public async UniTask Knockback(float duration = 1)
     {
+        if (_isKnockbacking)
+        {
+            return;
+        }
+        _isKnockbacking = true;
         _animator.speed = 0;
+        _animator.enabled = false;
         var tweenTime = _knockbackDuration * duration;
-
-        var move = _robotTransform.DOMoveZ(_initPosition.z - _knockbackDistance, tweenTime / 2)
+        await UniTask.Delay(TimeSpan.FromSeconds(0.6f), cancellationToken: this.GetCancellationTokenOnDestroy());
+        
+        var move = _robotTransform.DOMoveZ(_knockbackDistance, tweenTime / 2)
             .OnUpdate(() =>
             {
                 var indexedList = _beamTransforms.Select((x, i) => new { Index = i, Value = x }).ToList();
@@ -57,8 +70,7 @@ public class RobotKnockback : MonoBehaviour
                 }
             })
             .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo).SetLink(_robotTransform.gameObject);
-        move.Play();
-        await _robotTransform.DORotate(new Vector3(_knockbackPower, 180, 0), tweenTime / 2)
+        var rot = _robotTransform.DORotate(new Vector3(_knockbackPower, 180, 0), tweenTime / 2)
             .OnUpdate(() =>
             {
                 var indexedList = _beamTransforms.Select((x, i) => new { Index = i, Value = x }).ToList();
@@ -67,8 +79,21 @@ public class RobotKnockback : MonoBehaviour
                     beamTransform.Value.transform.eulerAngles = _initBeamRotations[beamTransform.Index];
                 }
             })
-            .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo).SetLink(_robotTransform.gameObject).ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+            .SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo).SetLink(_robotTransform.gameObject);
+        var sequence = DOTween.Sequence().Join(move).Join(rot);
 
+        await sequence.Play().ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+        
+        _animator.enabled = true;
         _animator.speed = 1;
+        _isKnockbacking = false;
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _particleSpeed.ChangeSpeed(1f);
+            Knockback().Forget();
+        }
     }
 }
