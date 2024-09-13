@@ -11,6 +11,9 @@ public class EnemyHandAnimation : MonoBehaviour
     [SerializeField]
     private Transform _playerTransForm;
 
+    [SerializeField]
+    private float duration = 1.0f;
+
     public enum HandType
     {
         Left,
@@ -22,20 +25,5 @@ public class EnemyHandAnimation : MonoBehaviour
         var hand = handType == HandType.Left ? _leftHand : _rightHand;
 
         hand.transform.DOMove(_playerTransForm.localPosition, duration).SetEase(Ease.Linear).SetLoops(2, LoopType.Yoyo);
-    }
-
-    [SerializeField]
-    private float duration = 1.0f;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            MoveHand(HandType.Left, duration);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            MoveHand(HandType.Right, duration);
-        }
     }
 }
