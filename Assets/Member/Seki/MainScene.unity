@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 131988982}
   - component: {fileID: 131988981}
   m_Layer: 0
-  m_Name: Beam (1)
+  m_Name: BeamOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16864,6 +16864,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 809606420}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24dfb2450392b7e46b86e1f3249203cb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 809606422}
   m_SourcePrefab: {fileID: 100100000, guid: 24dfb2450392b7e46b86e1f3249203cb, type: 3}
 --- !u!1 &809606417 stripped
 GameObject:
@@ -16916,6 +16920,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 809606416}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &809606422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809606417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c4a9d3af7795242ad3af1d7ea0a680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _knockbackPower: -10
+  _knockbackDistance: 3
+  _knockbackDuration: 1
+  _beamTransforms:
+  - {fileID: 819726397}
+  - {fileID: 131988979}
+  _animator: {fileID: 809606420}
 --- !u!1 &819726397
 GameObject:
   m_ObjectHideFlags: 0
