@@ -16648,13 +16648,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c4a9d3af7795242ad3af1d7ea0a680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knockbackPower: -10
+  _knockbackPower: -15
   _knockbackDistance: 3
-  _knockbackDuration: 1
+  _knockbackDuration: 0.7
   _beamTransforms:
   - {fileID: 819726397}
   - {fileID: 131988979}
   _animator: {fileID: 809606420}
+  _particleSpeed: {fileID: 298197664}
 --- !u!1 &819726397
 GameObject:
   m_ObjectHideFlags: 0
