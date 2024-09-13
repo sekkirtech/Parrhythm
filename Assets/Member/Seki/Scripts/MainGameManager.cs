@@ -67,6 +67,8 @@ public class MainGameManager : MonoBehaviour
 
     private float BeamSpeed;//ビーム攻撃発生時に渡す引数格納枠
 
+    [SerializeField] RobotKnockback robotKnockback;　//ロボ動作制御
+
 
     void Start()
     {
@@ -193,6 +195,7 @@ public class MainGameManager : MonoBehaviour
                 {
                     //120BPMを1倍とした倍数を渡す
                     BeamMana.ChangeSpeed(BeamSpeed);
+                    robotKnockback.Knockback(BeamSpeed);
                 }
             }
             yield return new WaitForSeconds(lpbbeat);
