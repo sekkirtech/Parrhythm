@@ -15908,7 +15908,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -16316,6 +16316,7 @@ MonoBehaviour:
   DamageSE: {fileID: 8300000, guid: 0d9101e44e6a3754faa670738eb25117, type: 3}
   GirdSE: {fileID: 8300000, guid: 38ef536956b3f6542b0fcef880d72bd4, type: 3}
   robotKnockback: {fileID: 809606422}
+  TestMode: 1
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -16328,7 +16329,8 @@ Transform:
   m_LocalPosition: {x: -9.067537, y: -0.079395674, z: -0.17688493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2024354556}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &724742210
@@ -22541,7 +22543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1373152869
 Transform:
   m_ObjectHideFlags: 0
@@ -23747,7 +23749,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2038016181}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 724742209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -24241,7 +24243,6 @@ SceneRoots:
   - {fileID: 217210006}
   - {fileID: 581383804}
   - {fileID: 724742209}
-  - {fileID: 2024354556}
   - {fileID: 733444795}
   - {fileID: 1303029630}
   - {fileID: 1534225349}

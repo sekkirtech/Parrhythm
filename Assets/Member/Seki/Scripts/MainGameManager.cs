@@ -69,6 +69,8 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] RobotKnockback robotKnockback;　//ロボ動作制御
 
+    [SerializeField] bool TestMode=false;
+
 
     void Start()
     {
@@ -116,6 +118,7 @@ public class MainGameManager : MonoBehaviour
                 NoteMana.EnemyAttackStart();
             }
         }
+        if (TestMode) PlayerHp = 3;
     }
 
     //勝敗が決したときに呼び出す
