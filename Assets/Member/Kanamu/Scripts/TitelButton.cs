@@ -16,6 +16,10 @@ public class TitelButton : MonoBehaviour
     private GameObject _licensePanel;// 菊池追記　ライセンスパネル
     [SerializeField]
     private Scrollbar _scrollbar;
+    [SerializeField]
+    private GameObject _titleButton;
+    [SerializeField]
+    private GameObject _startButtons; 
 
     [SerializeField]
     private float _fadeTime = 1.5f;
@@ -38,6 +42,8 @@ public class TitelButton : MonoBehaviour
     private int currentIndex = 0;
 
     private float mooveCD = 0f;
+
+    private bool _isFirstPress = false;
 
 
     private void Start()
@@ -65,19 +71,26 @@ public class TitelButton : MonoBehaviour
         //        SoundManager.Instance.PlaySE(SESoundData.SE.Select);
         //    }
         //}).AddTo(disposables); // 菊池追記　ライセンス表記の追加
+        
 
-        ControllerManager.Instance.SouthButtonObservable.Subscribe(x =>
+        ControllerManager.Instance.SouthButtonObservable
+        .Where(_ => _isFirstPress)
+        .Subscribe(x =>
         {
             titleButtonUtils[currentIndex].OnNext();
         }).AddTo(disposables);
 
-        ControllerManager.Instance.RStickObservable.Subscribe(x =>
+        ControllerManager.Instance.RStickObservable
+        .Where(_ => _isFirstPress)
+        .Subscribe(x =>
         {
             Debug.Log(x);
             _tempRStickValue = x;
         }).AddTo(disposables); // 菊池追記　右スティックで遊び方へ
 
-        ControllerManager.Instance.RStickObservable.Subscribe(x =>
+        ControllerManager.Instance.RStickObservable
+        .Where(_ => _isFirstPress)
+        .Subscribe(x =>
         {
             if (Time.time - mooveCD < 0.2f) return;
             if (x.x > 0) index++;
@@ -85,7 +98,9 @@ public class TitelButton : MonoBehaviour
             mooveCD = Time.time;
         }).AddTo(disposables);
 
-        ControllerManager.Instance.LStickObservable.Subscribe(x =>
+        ControllerManager.Instance.LStickObservable
+        .Where(_ => _isFirstPress)
+        .Subscribe(x =>
         {
             if (Time.time - mooveCD < 0.2f) return;
             if (x.x > 0) index++;
@@ -93,11 +108,35 @@ public class TitelButton : MonoBehaviour
             mooveCD = Time.time;
         }).AddTo(disposables);
 
-        this.ObserveEveryValueChanged(x => x.index).Subscribe(x =>
+        ControllerManager.Instance.DPadObservable
+        .Subscribe(x =>
+        {
+            if (Time.time - mooveCD < 0.2f) return;
+            if (x.x > 0) index++;
+            else index--;
+            mooveCD = Time.time;
+        }).AddTo(disposables);
+
+        this.ObserveEveryValueChanged(x => x.index)
+        .Where(_ => _isFirstPress)
+        .Subscribe(x =>
         {
             if ((index + 2 ) % 2 == 0) currentIndex = 0;
             else if ((index + 2 ) % 2 == 1) currentIndex = 1;
+            SoundManager.Instance.PlaySE(SESoundData.SE.CursorMove);
         }).AddTo(disposables);
+
+        ControllerManager.Instance.SouthButtonObservable
+        .Where(_ => !_isFirstPress)
+        .Subscribe(x =>
+        {
+            _isFirstPress = true;
+            _titleButton.SetActive(false);
+            _startButtons.SetActive(true);
+            SoundManager.Instance.PlaySE(SESoundData.SE.Select);
+        }).AddTo(disposables);
+
+        _startButtons.SetActive(false);
     
         SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
         _fadeTween = _buttonTextRTF.DOFade(_fadeValue, _fadeTime).SetLoops(-1, LoopType.Yoyo);// 菊池追記　ボタンのテキストを点滅させる
