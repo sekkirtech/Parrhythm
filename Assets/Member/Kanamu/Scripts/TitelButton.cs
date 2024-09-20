@@ -92,8 +92,8 @@ public class TitelButton : MonoBehaviour
         .Where(_ => _isFirstPress)
         .Subscribe(x =>
         {
-            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.y) <= 0.2f) return;
-            if (x.x > 0) index++;
+            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.x) <= 0.2f) return;
+            if (x.y > 0) index++;
             else index--;
             mooveCD = Time.time;
         }).AddTo(disposables);
@@ -102,8 +102,8 @@ public class TitelButton : MonoBehaviour
         .Where(_ => _isFirstPress)
         .Subscribe(x =>
         {
-            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.y) <= 0.2f) return;
-            if (x.x > 0) index++;
+            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.x) <= 0.2f) return;
+            if (x.y > 0) index++;
             else index--;
             mooveCD = Time.time;
         }).AddTo(disposables);
@@ -111,8 +111,8 @@ public class TitelButton : MonoBehaviour
         ControllerManager.Instance.DPadObservable
         .Subscribe(x =>
         {
-            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.y) <= 0.2f) return;
-            if (x.x > 0) index++;
+            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.x) <= 0.2f) return;
+            if (x.y > 0) index++;
             else index--;
             mooveCD = Time.time;
         }).AddTo(disposables);
