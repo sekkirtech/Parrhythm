@@ -6,6 +6,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] AudioSource bgmAudioSource;
+    public AudioSource BgmAudioSource => bgmAudioSource;
     [SerializeField] List<AudioSource> seAudioSources; // 複数のSE再生用のオーディオソース
 
     [SerializeField] List<BGMSoundData> bgmSoundDatas;

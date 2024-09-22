@@ -92,8 +92,8 @@ public class TitelButton : MonoBehaviour
         .Where(_ => _isFirstPress)
         .Subscribe(x =>
         {
-            if (Time.time - mooveCD < 0.2f) return;
-            if (x.x > 0) index++;
+            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.x) <= 0.2f) return;
+            if (x.y > 0) index++;
             else index--;
             mooveCD = Time.time;
         }).AddTo(disposables);
@@ -102,8 +102,8 @@ public class TitelButton : MonoBehaviour
         .Where(_ => _isFirstPress)
         .Subscribe(x =>
         {
-            if (Time.time - mooveCD < 0.2f) return;
-            if (x.x > 0) index++;
+            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.x) <= 0.2f) return;
+            if (x.y > 0) index++;
             else index--;
             mooveCD = Time.time;
         }).AddTo(disposables);
@@ -111,8 +111,8 @@ public class TitelButton : MonoBehaviour
         ControllerManager.Instance.DPadObservable
         .Subscribe(x =>
         {
-            if (Time.time - mooveCD < 0.2f) return;
-            if (x.x > 0) index++;
+            if (Time.time - mooveCD < 0.2f || Mathf.Abs(x.x) <= 0.2f) return;
+            if (x.y > 0) index++;
             else index--;
             mooveCD = Time.time;
         }).AddTo(disposables);
@@ -121,9 +121,11 @@ public class TitelButton : MonoBehaviour
         .Where(_ => _isFirstPress)
         .Subscribe(x =>
         {
-            if ((index + 2 ) % 2 == 0) currentIndex = 0;
-            else if ((index + 2 ) % 2 == 1) currentIndex = 1;
+            var absIndex = Mathf.Abs(index);
+            if ((absIndex + 2 ) % 2 == 0) currentIndex = 0;
+            else if ((absIndex + 2 ) % 2 == 1) currentIndex = 1;
             SoundManager.Instance.PlaySE(SESoundData.SE.CursorMove);
+            Debug.Log(index + " :   " + currentIndex);
         }).AddTo(disposables);
 
         ControllerManager.Instance.SouthButtonObservable
