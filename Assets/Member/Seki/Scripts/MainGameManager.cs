@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -38,6 +39,8 @@ public class MainGameManager : MonoBehaviour
     
     Gamepad MyPad;//コントローラー格納
 
+    public bool PadVibration=false; //コントローラーがバイブレーション中か
+
     [SerializeField,Header("スタミナ")] GuardController guardController;
 
     [SerializeField, Header("ガードコスト")] float GuardCost = 25.0f;
@@ -47,10 +50,8 @@ public class MainGameManager : MonoBehaviour
     
     private bool handType=false;//パンチアニメーション左右制御用
     
-    [SerializeField] ParticleSpeed BeamMana;//ビームエフェクト制御
+    [SerializeField] BeamParticleSpeed BeamMana;//ビームエフェクト制御
 
-    bool panchi = false;
-    bool beam = false;
 
     
     public bool BeatFlag=true;//Beatフラグ
@@ -94,9 +95,6 @@ public class MainGameManager : MonoBehaviour
         if (DamageSource == null) DamageSource = this.gameObject.AddComponent<AudioSource>();
         DamageSource.clip = DamageSE;
         DamageSource.loop = false;
-
-        //120BPMを1倍とした倍数を格納（ビーム攻撃にて使用）
-        BeamSpeed = (float)NoteMana.BPM / (float)120;
     }
 
     void Update()
@@ -137,29 +135,34 @@ public class MainGameManager : MonoBehaviour
         PlayerPrefs.SetInt("ParryCount", ParryCount);
 
         NoteMana.MusicFade();
-        FadeManager.Instance.LoadScene("ResultScene", 1.0f);
+        FadeManager.Instance.LoadScene("ResultScene", 0.6f);
     }
 
     /// <summary>
     /// 敵が攻撃開始時に呼び出し、パリィ可能かどうか判定
     /// </summary>
-    /// <param name="MAXCount">Beatの数</param>
+    /// <param name="MAXCount">攻撃の種類</param>
     /// <param name="lpbbeat">1拍の時間</param>
     /// <returns></returns>
     public IEnumerator EnemmyAttack(int MAXCount,float lpbbeat)
     {
-        panchi=false;
-        beam=false;
+        //120BPMを0.5倍とした倍数を格納（ビーム攻撃にて使用）
+        BeamSpeed = (float)NoteMana.BPM / (float)120;
+
+        bool panchi = false;
+        bool beam = false;
+
+
         BeatFlag = false;
         switch (MAXCount)
         {
             case 1:
-                Debug.Log("1拍攻撃");
+                Debug.Log("パンチ");
                 //アニメーション処理
                 panchi = true;
                 break;
             case 2:
-                Debug.Log("2拍攻撃");
+                Debug.Log("ビーム");
                 //アニメーション処理
                 beam = true;
                 break;
@@ -176,8 +179,9 @@ public class MainGameManager : MonoBehaviour
             //パンチ攻撃
             if (panchi)
             {
-                if (i == (2))
+                if (i == 2)
                 {
+                    panchi=false;
                     if (handType)
                     {
                         enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Right, lpbbeat);
@@ -194,11 +198,13 @@ public class MainGameManager : MonoBehaviour
             //ビーム攻撃
             if (beam)
             {
-                if (i == (1))
+                if (i == 2)
                 {
-                    //120BPMを1倍とした倍数を渡す
-                    BeamMana.ChangeSpeed(BeamSpeed);
-                    robotKnockback.Knockback(BeamSpeed);
+                    Debug.Log("ビーム攻撃入った");
+                    //120BPMを0.5倍（二拍分のため）とした倍数を渡す
+                    BeamMana.SpeedChange(1);
+                    robotKnockback.Knockback(1).Forget();
+                    beam=false;
                 }
             }
             yield return new WaitForSeconds(lpbbeat);
@@ -234,6 +240,7 @@ public class MainGameManager : MonoBehaviour
             //ゲームパッド接続状態で可能になったらパッド振動
             if (MyPad != null)
             {
+                PadVibration=true;
                 MyPad.SetMotorSpeeds(1.0f, 1.0f);
             }
             yield return new WaitForSeconds(lpbbeat);
@@ -241,6 +248,7 @@ public class MainGameManager : MonoBehaviour
             if(MyPad != null)
             {
                 MyPad.SetMotorSpeeds(0.0f, 0.0f);
+                PadVibration = false;
             }
             ParryAttack = false;
             Debug.Log("パリイ終了");

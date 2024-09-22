@@ -14,7 +14,7 @@ public class EnemyNoteManager : MonoBehaviour
 
 
 
-    [SerializeField]MainGameManager mainGameManager;
+    [SerializeField]MainGameManager MainGameObj;
 
     [SerializeField] ScoreBox scoreData;//音源、譜面データ
 
@@ -68,7 +68,7 @@ public class EnemyNoteManager : MonoBehaviour
                 Debug.LogError("ScoreDataがアタッチされてない");
             }
         }
-        if (mainGameManager == null)
+        if (MainGameObj == null)
         {
             Debug.LogError("MainGameManagerがアタッチされていない  by EnemyNoteManager");
         }
@@ -98,7 +98,7 @@ public class EnemyNoteManager : MonoBehaviour
             MusicSource.volume = (float)(1.0 - FadeDeltaTime / 1.0f);
             if(MusicSource.volume<=0)
             {
-                mainGameManager.toResult();
+                if (!MainGameObj.PadVibration) MainGameObj.toResult();
             }
         }
     }
@@ -155,7 +155,7 @@ public class EnemyNoteManager : MonoBehaviour
             }
             else //0以外の時アタック用関数にタイプを渡して実行
             {
-                StartCoroutine(mainGameManager.EnemmyAttack(AttackType[BeatCount], (float)60 / (float)BPM));
+                StartCoroutine(MainGameObj.EnemmyAttack(AttackType[BeatCount], (float)60 / (float)BPM));
             }
 
 
@@ -220,7 +220,7 @@ public class EnemyNoteManager : MonoBehaviour
         }
         BeatSplit = (float)60/(float)BPM/(float)LPB;
 
-        Debug.Log(BeatSplit);
+        Debug.Log("BeatSplit"+BeatSplit*4);
         ScoreLegth = AttackTiming.Length;
         Debug.Log("ScoreLegth" + ScoreLegth);
 

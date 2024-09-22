@@ -175,7 +175,7 @@ public class PlayerManager : MonoBehaviour
         {
             playerlose = true;
             PlayerPrefs.SetInt("IsWin", 0);
-            MainGameObj.toResult();
+            if (!MainGameObj.PadVibration) MainGameObj.toResult();
         }
     }
 

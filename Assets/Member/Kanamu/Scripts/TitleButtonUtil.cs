@@ -36,7 +36,7 @@ public class TitelButtonUtil : ButtonUIUtil
 
             case TaitelButtonType.Strt:
                 if (LicensePanel.activeSelf) return;
-                FadeManager.Instance.LoadScene("StageSelect", 1.0f);
+                FadeManager.Instance.LoadScene("StageSelect", 0.3f);
                 SoundManager.Instance.PlaySE(SESoundData.SE.Select);
                 break;
 

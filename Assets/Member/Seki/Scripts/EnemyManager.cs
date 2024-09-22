@@ -34,12 +34,16 @@ public class EnemyManager : MonoBehaviour
         //HPが０以下でリザルト
         if (EnemyHP <= 0&&EnemySlain)
         {
-            //複数回読み込まないようフラグ
-            EnemySlain = false;
             //勝ち
             PlayerPrefs.SetInt("IsWin", 1);
             //Scene遷移
-            MainGameObj.toResult();
+            if (!MainGameObj.PadVibration)
+            {
+                //複数回読み込まないようフラグ
+                EnemySlain = false;
+                MainGameObj.toResult();
+
+            }
         }
     }
 

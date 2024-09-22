@@ -5682,7 +5682,7 @@ GameObject:
   - component: {fileID: 298197663}
   - component: {fileID: 298197666}
   - component: {fileID: 298197665}
-  - component: {fileID: 298197664}
+  - component: {fileID: 298197667}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -5708,19 +5708,6 @@ Transform:
   - {fileID: 543084026}
   m_Father: {fileID: 809606421}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &298197664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298197662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22bc3e8c3c629ae4480d2e8536be4056, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spped: 0.35
 --- !u!199 &298197665
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -10518,6 +10505,22 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &298197667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298197662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1924ac1854f56bf4993bcb71bf423ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EyeParticle: {fileID: 543084028}
+  WhiteBeam: {fileID: 131988982}
+  RedBeam: {fileID: 819726400}
+  ParentObj: {fileID: 298197666}
 --- !u!1001 &320757439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16313,10 +16316,11 @@ MonoBehaviour:
   ParryReception: 0
   ParryHits: 0
   ParryAttack: 0
+  PadVibration: 0
   guardController: {fileID: 1217443395}
   GuardCost: 25
   enemyHandAnimation: {fileID: 1622015001}
-  BeamMana: {fileID: 298197664}
+  BeamMana: {fileID: 298197667}
   BeatFlag: 1
   NoteMana: {fileID: 1373152870}
   SlashSE: {fileID: 8300000, guid: 774f1385b0d35bd4692769b8e06a3619, type: 3}
@@ -16663,7 +16667,7 @@ MonoBehaviour:
   - {fileID: 819726397}
   - {fileID: 131988979}
   _animator: {fileID: 809606420}
-  _particleSpeed: {fileID: 298197664}
+  _particleSpeed: {fileID: 0}
 --- !u!1 &819726397
 GameObject:
   m_ObjectHideFlags: 0
@@ -22508,7 +22512,7 @@ MonoBehaviour:
   AttackType: 
   BPM: 0
   LPB: 0
-  mainGameManager: {fileID: 724742208}
+  MainGameObj: {fileID: 724742208}
   scoreData: {fileID: 11400000, guid: c19f976a6148f394bba549ae4ba669b8, type: 2}
   MusicSource: {fileID: 0}
   TestMode: 0
