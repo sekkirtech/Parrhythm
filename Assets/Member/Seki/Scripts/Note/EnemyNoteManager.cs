@@ -95,7 +95,7 @@ public class EnemyNoteManager : MonoBehaviour
         if (!EndLoad)
         {
             FadeDeltaTime += Time.deltaTime;
-            MusicSource.volume = (float)(1.0 - FadeDeltaTime / 1.0f);
+            MusicSource.volume = (float)(MusicSource.volume - FadeDeltaTime / 1.0f);
             if(MusicSource.volume<=0)
             {
                 if (!MainGameObj.PadVibration) MainGameObj.toResult();
@@ -149,7 +149,6 @@ public class EnemyNoteManager : MonoBehaviour
             //Type0でBGM再生
             if (AttackType[BeatCount] == 0)
             {
-                MusicSource.volume = 0.5f;
                 //BGM再生
                 MusicSource.Play();
             }
@@ -198,6 +197,8 @@ public class EnemyNoteManager : MonoBehaviour
         //wavセット
         ClipSource=scoreData.GetListInScore(StageNum).GetClip();
         MusicSource.clip = ClipSource;
+        //音量セット
+        MusicSource.volume=scoreData.GetListInScore(StageNum).GetVolume();
         //長さ格納
         ClipLegth=ClipSource.length;
 

@@ -15,7 +15,10 @@ MonoBehaviour:
   scoreInfoList:
   - ScorePath: {fileID: 4900000, guid: d803ecfd0919c36408895d9f86590f3b, type: 3}
     MusicClip: {fileID: 8300000, guid: b5adef5df377a124d8afccc2ae999abf, type: 3}
+    MusicVolume: 1
   - ScorePath: {fileID: 4900000, guid: e8dbda5cd5d77324bbf1c46286aa4397, type: 3}
     MusicClip: {fileID: 8300000, guid: 5c53adeef2a60bf42be1af09ae940c0b, type: 3}
+    MusicVolume: 0.5
   - ScorePath: {fileID: 4900000, guid: 14c0b7fdb8bf12645969c58edc20f040, type: 3}
     MusicClip: {fileID: 8300000, guid: 985f4951a736d5042bd72150dfafd2c1, type: 3}
+    MusicVolume: 0.2

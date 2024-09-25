@@ -28,6 +28,7 @@ public class ScoreInfoList
 {
     [SerializeField, Header("jsonファイルのパス")] public TextAsset ScorePath;
     [SerializeField, Header("wavファイル")] public AudioClip MusicClip;
+    [SerializeField, Header("音量")] public float MusicVolume;
 
     //音源取得
     public AudioClip GetClip()
@@ -38,5 +39,10 @@ public class ScoreInfoList
     public TextAsset GetScore()
     {
         return ScorePath;
+    }
+    //音量取得
+    public float GetVolume()
+    {
+        return MusicVolume;
     }
 }
