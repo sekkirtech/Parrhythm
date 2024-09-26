@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class StageSelectBGMCall : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class StageSelectBGMCall : MonoBehaviour
         {
             SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
         }
+
+        ControllerManager.Instance.StartButtonObservable.Subscribe(_ =>
+        {
+            SoundManager.Instance.StopBGM();
+            FadeManager.Instance.LoadScene("TitleScene", 1.0f);
+        });
     }
 
    

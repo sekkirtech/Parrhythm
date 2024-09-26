@@ -29,6 +29,9 @@ public class TitelButton : MonoBehaviour
     [SerializeField]
     private List<GameObject> Buttons = new List<GameObject>();
 
+    [SerializeField]
+    private ScreenSaverContoroller screenSaverContoroller;
+
     private List<TitelButtonUtil> titleButtonUtils = new List<TitelButtonUtil>();
 
     private Vector2 _tempRStickValue = Vector2.zero;
@@ -132,6 +135,10 @@ public class TitelButton : MonoBehaviour
         .Where(_ => !_isFirstPress)
         .Subscribe(x =>
         {
+            if(screenSaverContoroller.IsActived)
+            {
+                return;
+            }
             _isFirstPress = true;
             _titleButton.SetActive(false);
             _startButtons.SetActive(true);
@@ -146,6 +153,10 @@ public class TitelButton : MonoBehaviour
 
     private void Update()
     {
+        if(screenSaverContoroller.IsActived)
+        {
+            return;
+        }
         if(_tempRStickValue.y > 0.5f)
         {
             if(_scrollbar.value >= 1.0f) return;
