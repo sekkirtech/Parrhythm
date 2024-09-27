@@ -210,18 +210,26 @@ public class MainGameManager : MonoBehaviour
             yield return new WaitForSeconds(lpbbeat);
         }
 
-        AttackCount++;
+        //敵アタックカウント
+        if(GameStart)AttackCount++;
         //ガード判定
         if (!Guardnow)
         {
-            PlayerDamage();
+            //ゲーム中か（倒した後にダメージ受けないために）
+            if (GameStart)
+            {
+                PlayerDamage();
+            }
             BeatFlag = true;
             yield break;
         }
         //スタミナ判定
         if (!guardController.UseGuard(GuardCost))
         {
-            PlayerDamage();
+            if (GameStart)
+            {
+                PlayerDamage();
+            }
             BeatFlag=true;
             yield break;
         }

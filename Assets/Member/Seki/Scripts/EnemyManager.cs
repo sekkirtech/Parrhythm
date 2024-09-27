@@ -36,6 +36,7 @@ public class EnemyManager : MonoBehaviour
         {
             //勝ち
             PlayerPrefs.SetInt("IsWin", 1);
+            MainGameObj.GameStart=false;
             //Scene遷移
             if (!MainGameObj.PadVibration)
             {

@@ -172,6 +172,7 @@ public class PlayerManager : MonoBehaviour
         if (MainGameObj.PlayerHp <= 0 && !playerlose)
         {
             playerlose = true;
+            MainGameObj.GameStart=false;
             PlayerPrefs.SetInt("IsWin", 0);
             if (!MainGameObj.PadVibration) MainGameObj.toResult();
         }
