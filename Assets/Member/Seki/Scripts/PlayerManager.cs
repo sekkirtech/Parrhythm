@@ -102,7 +102,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             //ガード解消時に諸々初期化等
-            if(MainGameObj.Guardnow)
+            if(MainGameObj.Guardnow&& !PlayerAnim.GetBool("Counter"))
             {
                 MainGameObj.Guardnow=false;
                 CancedGuardAnim = false;
@@ -130,43 +130,39 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("ParryHits" + MainGameObj.ParryHits);
             if (MainGameObj.ParryAttack && MainGameObj.ParryHits)
             {
-                //ガード押し続ける
-                if (MainGameObj.Guardnow)
-                {
-                    ParryEffect.Stop();
+                ParryEffect.Stop();
 
 
-                    MainGameObj.ParryHits = false;
-                    MainGameObj.ParryTimingSprite.gameObject.SetActive(true);
-                    HanteiTime = 0.0f;
-                    //アニメーションスピード加速
-                    PlayerAnim.SetFloat("GuardIdleSpeed", 5f);
-                    PlayerAnim.SetFloat("GuardActiveSpeed", 5f);
+                MainGameObj.ParryHits = false;
+                MainGameObj.ParryTimingSprite.gameObject.SetActive(true);
+                HanteiTime = 0.0f;
+                //アニメーションスピード加速
+                PlayerAnim.SetFloat("GuardIdleSpeed", 5f);
+                PlayerAnim.SetFloat("GuardActiveSpeed", 5f);
 
-                    //Animation再生
-                    PlayerAnim.SetBool("GuardCancel", false);
-                    PlayerAnim.SetTrigger("GuardIdle");
-                    PlayerAnim.SetTrigger("Counter");
-                    PlayerAnim.SetBool("Counted", true);
-                    EnemyObj.EnemyDamage(1);
+                //Animation再生
+                PlayerAnim.SetBool("GuardCancel", false);
+                PlayerAnim.SetTrigger("GuardIdle");
+                PlayerAnim.SetTrigger("Counter");
+                PlayerAnim.SetBool("Counted", true);
+                EnemyObj.EnemyDamage(1);
 
-                    //パリィカウント
-                    MainGameObj.ParryCount++;
+                //パリィカウント
+                MainGameObj.ParryCount++;
 
-                    Debug.Log("パリィ成功");
+                Debug.Log("パリィ成功");
 
-                    //斬撃SE挿入
-                    if (SlashSource == null) SlashSource = this.AddComponent<AudioSource>();
-                    SlashSource.volume = 0.5f;
-                    SlashSource.clip = MainGameObj.SlashSE;
-                    SlashSource.loop = false;
-                    SlashSource.Play();
+                //斬撃SE挿入
+                if (SlashSource == null) SlashSource = this.AddComponent<AudioSource>();
+                SlashSource.volume = 0.5f;
+                SlashSource.clip = MainGameObj.SlashSE;
+                SlashSource.loop = false;
+                SlashSource.Play();
 
-                    //エフェクト挿入
-                    ParryEffect.gameObject.SetActive(true);
-                    ParryEffect.Play();
-                    StartCoroutine(SlashCot(DelayFlame));
-                }
+                //エフェクト挿入
+                ParryEffect.gameObject.SetActive(true);
+                ParryEffect.Play();
+                StartCoroutine(SlashCot(DelayFlame));
 
             }
         }
@@ -178,6 +174,17 @@ public class PlayerManager : MonoBehaviour
             playerlose = true;
             PlayerPrefs.SetInt("IsWin", 0);
             if (!MainGameObj.PadVibration) MainGameObj.toResult();
+        }
+
+
+        if (PlayerAnim.GetBool("Counter"))
+        {
+            Debug.Log("カウンター中");
+            PlayerAnim.SetFloat("PlayerIdleSpeed", 3f);
+        }
+        else
+        {
+            PlayerAnim.SetFloat("PlayerIdleSpeed", 1f);
         }
     }
 
@@ -200,5 +207,6 @@ public class PlayerManager : MonoBehaviour
         }
         SlashEffect.gameObject.SetActive(true);
         SlashEffect.Play();
+        PlayerAnim.SetFloat("PlayerIdleSpeed", 1f);
     }
 }
