@@ -70,7 +70,7 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] RobotKnockback robotKnockback;　//ロボ動作制御
 
-    [SerializeField] bool TestMode=false;
+    [SerializeField] public bool TestMode=false;
 
 
     void Start()

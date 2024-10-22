@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     //AnimationFlag
     public bool CancedGuardAnim=false;
 
+    //SE用Source
     AudioSource SlashSource;
 
     private CompositeDisposable disposables_=new CompositeDisposable();

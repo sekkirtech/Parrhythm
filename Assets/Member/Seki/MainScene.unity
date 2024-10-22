@@ -16621,6 +16621,7 @@ MonoBehaviour:
   EnemyHP: 0
   MainGameObj: {fileID: 724742208}
   Bar: {fileID: 2107453683}
+  NoteMana: {fileID: 1373152870}
 --- !u!95 &809606420
 Animator:
   serializedVersion: 5

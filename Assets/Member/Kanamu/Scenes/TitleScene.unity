@@ -2379,7 +2379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c039e54c2778241b683ce65f1dc5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoClip: {fileID: 32900000, guid: e6dad404e5bc5a94fbc50c1eb59e5dd2, type: 3}
+  videoClip: {fileID: 32900000, guid: 97672b011a187c547a3143bf383da797, type: 3}
   screenSaver: {fileID: 346515640}
 --- !u!1 &1911646385
 GameObject:

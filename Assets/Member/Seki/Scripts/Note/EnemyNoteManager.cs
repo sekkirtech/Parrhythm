@@ -16,7 +16,7 @@ public class EnemyNoteManager : MonoBehaviour
 
     [SerializeField]MainGameManager MainGameObj;
 
-    [SerializeField] ScoreBox scoreData;//音源、譜面データ
+    [SerializeField] public ScoreBox scoreData;//音源、譜面データ
 
     [SerializeField] AudioSource MusicSource;//音源再生用
 

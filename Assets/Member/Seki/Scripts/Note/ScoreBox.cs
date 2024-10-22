@@ -29,6 +29,7 @@ public class ScoreInfoList
     [SerializeField, Header("jsonファイルのパス")] public TextAsset ScorePath;
     [SerializeField, Header("wavファイル")] public AudioClip MusicClip;
     [SerializeField, Header("音量")] public float MusicVolume;
+    [SerializeField, Header("敵HP")] public int EnemyHP;
 
     //音源取得
     public AudioClip GetClip()
@@ -44,5 +45,9 @@ public class ScoreInfoList
     public float GetVolume()
     {
         return MusicVolume;
+    }
+    public int GetEnemyHP()
+    {
+        return EnemyHP;
     }
 }
