@@ -16302,10 +16302,8 @@ MonoBehaviour:
   PlayerHp: 3
   PlayerObj: {fileID: 1372795743}
   EnemyObj: {fileID: 809606418}
-  BattleTime: 0
   GameStart: 0
   ParryTimingSprite: {fileID: 341959859}
-  AttackCount: 0
   ParryCount: 0
   Guardnow: 0
   HpSprite:
@@ -22507,8 +22505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efa15ba673e97048a30e0fb4a9711a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BeatSplit: 0
-  EnemyNoteManagerFix: 0
+  EnemyNoteManagerStandby: 0
   AttackTiming: 
   AttackType: 
   BPM: 0

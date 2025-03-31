@@ -3,16 +3,11 @@ using UnityEngine;
 
 public class EnemyNoteManager : MonoBehaviour
 {
-    [SerializeField] private float BeatSplit = 0;//１LPB経過する時間
-    public bool EnemyNoteManagerFix=false; //準備ができたか
+    public bool EnemyNoteManagerStandby=false; //準備ができたか
     [SerializeField] public int[] AttackTiming;//攻撃タイミング格納
     [SerializeField] public int[] AttackType;//攻撃手段格納
-    public int BPM;//そのままの意
+    public int BPM;//曲の速さ、一分間に打たれる伯の数
     public int LPB;//一伯間に何分割されているか
-
-    private int ScoreLegth;
-
-
 
     [SerializeField]MainGameManager MainGameObj;
 
@@ -23,7 +18,7 @@ public class EnemyNoteManager : MonoBehaviour
     [SerializeField] bool TestMode;//デバッグ用
 
     [Serializable]
-    public class InputJson
+    public class NoteJsonClass
     {
         public Notes[] notes;
         //譜面のBPM
@@ -48,12 +43,12 @@ public class EnemyNoteManager : MonoBehaviour
     private float LoadSpan = 0.01f;//何秒ごとに実行するか
     public float NotenowTime;// 音楽再生開始からの経過時間
     private int NowBeatNum;// 譜面上で今何拍目か
-    private int BeatCount;// json配列用(拍数)のカウント
+    private int BeatCount;// 何回攻撃したか
     private bool BeatNow;//攻撃生成用フラグ
-    public float ClipLegth;//音源の時間
-    private AudioClip ClipSource;//音源
+    public float ClipLegth;//音源の長さ
+    private AudioClip ClipSource;//音源ファイル
     [SerializeField, Header("音源終了後何秒後に遷移するか")] float EndWaitTime = 0;
-    private bool EndLoad = true;//動いているか
+    private bool EndLoad = true;//FadeOut中か
     private float EndWaitSumLegth;//遷移までの時間と音源の長さを足して格納
     private float FadeDeltaTime;//音源Fade用
 
@@ -70,7 +65,7 @@ public class EnemyNoteManager : MonoBehaviour
         }
         if (MainGameObj == null)
         {
-            Debug.LogError("MainGameManagerがアタッチされていない  by EnemyNoteManager");
+            Debug.LogError("MainGameManagerがアタッチされていない EnemyNoteManager");
         }
         if(MusicSource == null)
         {
@@ -85,7 +80,7 @@ public class EnemyNoteManager : MonoBehaviour
 
         if (EndLoad)
         {
-            //音源が終了し一定時間経過したら遷移させる
+            //音源が終了し一定時間経過したら遷移を起動
             if (NotenowTime > EndWaitSumLegth)
             {
                 EndLoad = false;
@@ -94,10 +89,13 @@ public class EnemyNoteManager : MonoBehaviour
         }
         if (!EndLoad)
         {
+            //音源FadeOut
             FadeDeltaTime += Time.deltaTime;
             MusicSource.volume = (float)(MusicSource.volume - FadeDeltaTime / 1.0f);
+            //FadeOut終了後シーン遷移させる
             if(MusicSource.volume<=0)
             {
+                //コントローラーがバイブレーション中なら待つ
                 if (!MainGameObj.PadVibration) MainGameObj.toResult();
             }
         }
@@ -190,47 +188,43 @@ public class EnemyNoteManager : MonoBehaviour
         }
 
         //jsonファイルが格納されてる場所のパス取得
-        string inputString = scoreData.GetListInScore(StageNum).GetScore().ToString();
+        string JsonPath = scoreData.GetListInScore(StageNum).GetScore().ToString();
         //jsonファイル取得
-        InputJson inputJson = JsonUtility.FromJson<InputJson>(inputString);
+        NoteJsonClass NoteJson = JsonUtility.FromJson<NoteJsonClass>(JsonPath);
 
-        //wavセット
+        //wav音源取得
         ClipSource=scoreData.GetListInScore(StageNum).GetClip();
+        //音源セット
         MusicSource.clip = ClipSource;
         //音量セット
         MusicSource.volume=scoreData.GetListInScore(StageNum).GetVolume();
-        //長さ格納
+        //音源長さ格納
         ClipLegth=ClipSource.length;
 
-        //音源終わって遷移するまでの時間を算出
+        //音源終わって遷移するまでの時間を格納
         EndWaitSumLegth=ClipLegth+EndWaitTime;
 
         //各サイズ格納
-        AttackTiming = new int[inputJson.notes.Length];
-        AttackType = new int[inputJson.notes.Length];
+        AttackTiming = new int[NoteJson.notes.Length];
+        AttackType = new int[NoteJson.notes.Length];
         //情報格納
-        BPM = inputJson.BPM;
-        LPB = inputJson.notes[0].LPB;
+        BPM = NoteJson.BPM;
+        LPB = NoteJson.notes[0].LPB;
 
-        for (int i = 0; i < inputJson.notes.Length; i++)
+        for (int i = 0; i < NoteJson.notes.Length; i++)
         {
             //攻撃タイミング格納
-            AttackTiming[i] = inputJson.notes[i].num;
+            AttackTiming[i] = NoteJson.notes[i].num;
             //攻撃手段格納
-            AttackType[i] = inputJson.notes[i].block;
+            AttackType[i] = NoteJson.notes[i].block;
         }
-        BeatSplit = (float)60/(float)BPM/(float)LPB;
-
-        Debug.Log("BeatSplit"+BeatSplit*4);
-        ScoreLegth = AttackTiming.Length;
-        Debug.Log("ScoreLegth" + ScoreLegth);
 
         //準備完了
-        EnemyNoteManagerFix = true;
+        EnemyNoteManagerStandby = true;
     }
 
     /// <summary>
-    /// updateにある音楽fadeスクリプトを動かす
+    /// updateにある音楽fadeoutスクリプトを起動
     /// </summary>
     public void MusicFade()
     {

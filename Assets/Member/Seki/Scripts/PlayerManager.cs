@@ -14,8 +14,6 @@ public class PlayerManager : MonoBehaviour
     bool playerlose=false;
     //ガード時間計測用
     float GirdTime = 0.0f;
-    //α版用
-    private float HanteiTime = 0.0f;
     //コントローラー用bool
     private bool GirdButton = false;
     private bool ParryAttackButton = false;
@@ -136,7 +134,6 @@ public class PlayerManager : MonoBehaviour
 
                 MainGameObj.ParryHits = false;
                 MainGameObj.ParryTimingSprite.gameObject.SetActive(true);
-                HanteiTime = 0.0f;
                 //アニメーションスピード加速
                 PlayerAnim.SetFloat("GuardIdleSpeed", 5f);
                 PlayerAnim.SetFloat("GuardActiveSpeed", 5f);
