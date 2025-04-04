@@ -123,7 +123,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         //パリィ可能時間内にP(□)でパリィ成功
-        if (Input.GetKeyDown(KeyCode.P) || ParryAttackButton)
+        if (Input.GetKeyDown(KeyCode.Return) || ParryAttackButton)
         {
             Debug.Log("ParryAttack" + MainGameObj.ParryAttack);
             Debug.Log("ParryHits" + MainGameObj.ParryHits);
