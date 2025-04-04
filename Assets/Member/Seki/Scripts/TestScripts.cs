@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 敵の攻撃をキー操作で発生させるデバッグ用スクリプト
+/// </summary>
 public class TestScripts : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
