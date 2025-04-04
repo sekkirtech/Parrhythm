@@ -50,7 +50,7 @@ public class PlayerManager : MonoBehaviour
             GameObject enemyseki = GameObject.Find("Player");
             EnemyObj = enemyseki.GetComponent<EnemyManager>();
         }
-        //コントローラー処理登録
+        //入力処理登録
         ControllerManager.Instance.L2ButtonObservable.Subscribe(x => GirdButton = true).AddTo(disposables_);
         ControllerManager.Instance.R2ButtonObservable.Subscribe(x => GirdButton = true).AddTo(disposables_);
         ControllerManager.Instance.L2ButtonUpObservable.Subscribe(x => GirdButton = false).AddTo(disposables_);
