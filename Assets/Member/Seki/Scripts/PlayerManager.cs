@@ -11,11 +11,11 @@ public class PlayerManager : MonoBehaviour
     //情報格納用マネージャー
     [SerializeField] MainGameManager MainGameObj;
     //連打防止フラグ
-    bool playerlose=false;
+    bool Playerlose=false;
     //ガード時間計測用
-    float GirdTime = 0.0f;
+    float GuardTime = 0.0f;
     //コントローラー用bool
-    public bool GirdButton = false;
+    public bool GuardButton = false;
     private bool ParryAttackButton = false;
     //Animator
     [SerializeField] public Animator PlayerAnim;
@@ -38,9 +38,9 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         //初期化
-        GirdTime = 0.0f;
+        GuardTime = 0.0f;
         MainGameObj.ParryTimingSprite.gameObject.SetActive(false);
-        playerlose = false;
+        Playerlose = false;
         ParryEffect.gameObject.SetActive(false);
         SlashEffect.gameObject.SetActive(false);
 
@@ -52,10 +52,10 @@ public class PlayerManager : MonoBehaviour
             EnemyObj = enemyseki.GetComponent<EnemyManager>();
         }
         //入力処理登録
-        ControllerManager.Instance.L2ButtonObservable.Subscribe(x => GirdButton = true).AddTo(disposables_);
-        ControllerManager.Instance.R2ButtonObservable.Subscribe(x => GirdButton = true).AddTo(disposables_);
-        ControllerManager.Instance.L2ButtonUpObservable.Subscribe(x => GirdButton = false).AddTo(disposables_);
-        ControllerManager.Instance.R2ButtonUpObservable.Subscribe(x => GirdButton = false).AddTo(disposables_);
+        ControllerManager.Instance.L2ButtonObservable.Subscribe(x => GuardButton = true).AddTo(disposables_);
+        ControllerManager.Instance.R2ButtonObservable.Subscribe(x => GuardButton = true).AddTo(disposables_);
+        ControllerManager.Instance.L2ButtonUpObservable.Subscribe(x => GuardButton = false).AddTo(disposables_);
+        ControllerManager.Instance.R2ButtonUpObservable.Subscribe(x => GuardButton = false).AddTo(disposables_);
         ControllerManager.Instance.WestButtonObservable.Subscribe(x => ParryAttackButton = true).AddTo(disposables_);
         ControllerManager.Instance.WestButtonUpObservable.Subscribe(x=>ParryAttackButton = false).AddTo(disposables_);
     }
@@ -64,7 +64,7 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         //ガード中
-        if (Input.GetKey(KeyCode.Space) || GirdButton)
+        if (Input.GetKey(KeyCode.Space) || GuardButton)
         {
             //Debug.Log("ガード");
 
@@ -88,10 +88,10 @@ public class PlayerManager : MonoBehaviour
             MainGameObj.Guardnow = true;
 
             //タイム計測
-            GirdTime += Time.deltaTime;
+            GuardTime += Time.deltaTime;
 
             //ガード開始してから0.5秒以内に攻撃が来たらパリィ可、超えたら不可に
-            if (GirdTime > 0.5)
+            if (GuardTime > 0.5)
             {
                 MainGameObj.ParryReception = false;
             }
@@ -121,7 +121,7 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetBool("GuardCancel", true);
             }
             //押してなければパリィ判定用カウント初期化
-            GirdTime = 0.0f;
+            GuardTime = 0.0f;
         }
 
         //パリィ可能時間内にP(□)でパリィ成功
@@ -181,10 +181,10 @@ public class PlayerManager : MonoBehaviour
 
 
         //HPが0でリザルトへ
-        if (MainGameObj.PlayerHp <= 0 && !playerlose)
+        if (MainGameObj.PlayerHp <= 0 && !Playerlose)
         {
             //負けフラグ
-            playerlose = true;
+            Playerlose = true;
             //ゲーム停止
             MainGameObj.GameStart=false;
             //リザルトへ渡す情報
@@ -213,7 +213,7 @@ public class PlayerManager : MonoBehaviour
         {
             yield return null;
         }
-        //エフェクト再生
+        //エフェクト再生（遷移時の誤爆防止でfalseにしてある）
         SlashEffect.gameObject.SetActive(true);
         SlashEffect.Play();
     }

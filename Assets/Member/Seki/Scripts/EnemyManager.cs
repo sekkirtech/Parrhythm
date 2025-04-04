@@ -54,6 +54,8 @@ public class EnemyManager : MonoBehaviour
 
             }
         }
+
+        //デバッグ用
         if (MainGameObj.TestMode)
         {
             EnemyHP=EnemyMaxHP;

@@ -13,20 +13,27 @@ public class BeamParticleSpeed : MonoBehaviour
 
     void Awake()
     {
-        //停止
+        //遷移時の誤爆防止
         ParentObj.Stop();
     }
 
+    /// <summary>
+    /// ビームの再生
+    /// </summary>
+    /// <param name="multiplication">再生スピード倍率</param>
     public void SpeedChange(float multiplication)
     {
-        Debug.Log("でたよー");
+        //Debug.Log("う〇びーむ");
+        //パーティクル分割アタッチ
         ParticleSystem.MainModule eye = EyeParticle.main;
         ParticleSystem.MainModule white = WhiteBeam.main;
         ParticleSystem.MainModule red = RedBeam.main;
+        //スピード設定
         eye.simulationSpeed = multiplication;
         white.simulationSpeed = multiplication;
         red.simulationSpeed = multiplication;
 
+        //再生
         ParentObj.Play();
     }
 }

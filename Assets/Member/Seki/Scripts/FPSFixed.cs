@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// FPSŒÅ’è
+/// </summary>
 public class FPSFixed : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = 60;

@@ -185,7 +185,9 @@ public class MainGameManager : MonoBehaviour
                 if (i == 2)
                 {
                     Debug.Log("ビーム攻撃入った");
+                    //ビーム再生
                     BeamMana.SpeedChange(1);
+                    //撃った時のノックバックアニメーション
                     robotKnockback.Knockback(1).Forget();
                 }
             }
