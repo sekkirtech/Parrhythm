@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     //ガード時間計測用
     float GirdTime = 0.0f;
     //コントローラー用bool
-    private bool GirdButton = false;
+    public bool GirdButton = false;
     private bool ParryAttackButton = false;
     //Animator
     [SerializeField] public Animator PlayerAnim;
@@ -31,6 +31,7 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField, Header("スラッシュエフェクト")] ParticleSystem SlashEffect;
 
+    //斬撃エフェクトを何コマ遅らせて再生するか
     [SerializeField] int DelayFlame = 20;
 
 
@@ -65,7 +66,7 @@ public class PlayerManager : MonoBehaviour
         //ガード中
         if (Input.GetKey(KeyCode.Space) || GirdButton)
         {
-            Debug.Log("ガード");
+            //Debug.Log("ガード");
 
             //ガード中ではないとき
             if (!MainGameObj.Guardnow)
@@ -83,12 +84,13 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetBool("GuardCancel", false);
             }
             CancedGuardAnim = true;
+            //MainGamaManagerに状態を渡す
             MainGameObj.Guardnow = true;
 
             //タイム計測
             GirdTime += Time.deltaTime;
 
-            //ガード開始してから0.5秒以内でパリィ可、超えたら不可に
+            //ガード開始してから0.5秒以内に攻撃が来たらパリィ可、超えたら不可に
             if (GirdTime > 0.5)
             {
                 MainGameObj.ParryReception = false;
@@ -118,21 +120,26 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetBool("Counted", false);
                 PlayerAnim.SetBool("GuardCancel", true);
             }
-            //押してなければ初期化
+            //押してなければパリィ判定用カウント初期化
             GirdTime = 0.0f;
         }
 
         //パリィ可能時間内にP(□)でパリィ成功
         if (Input.GetKeyDown(KeyCode.Return) || ParryAttackButton)
         {
-            Debug.Log("ParryAttack" + MainGameObj.ParryAttack);
-            Debug.Log("ParryHits" + MainGameObj.ParryHits);
+            //Debug.Log("ParryAttack" + MainGameObj.ParryAttack);
+            //Debug.Log("ParryHits" + MainGameObj.ParryHits);
+
+            //MainGameManagerの判定状況取得
             if (MainGameObj.ParryAttack && MainGameObj.ParryHits)
             {
+                //エフェクト停止
                 ParryEffect.Stop();
+                SlashEffect.Stop();
 
-
+                //判定を下げる
                 MainGameObj.ParryHits = false;
+                //今だ！画像非表示
                 MainGameObj.ParryTimingSprite.gameObject.SetActive(true);
                 //アニメーションスピード加速
                 PlayerAnim.SetFloat("GuardIdleSpeed", 5f);
@@ -143,23 +150,30 @@ public class PlayerManager : MonoBehaviour
                 PlayerAnim.SetTrigger("GuardIdle");
                 PlayerAnim.SetTrigger("Counter");
                 PlayerAnim.SetBool("Counted", true);
+
+                //敵にダメージ
                 EnemyObj.EnemyDamage(1);
 
                 //パリィカウント
                 MainGameObj.ParryCount++;
 
-                Debug.Log("パリィ成功");
+                //Debug.Log("パリィ成功");
 
                 //斬撃SE挿入
                 if (SlashSource == null) SlashSource = this.AddComponent<AudioSource>();
+                //音量
                 SlashSource.volume = 0.5f;
+                //音源セット
                 SlashSource.clip = MainGameObj.SlashSE;
+                //ループ設定
                 SlashSource.loop = false;
+                //再生
                 SlashSource.Play();
 
-                //エフェクト挿入
+                //エフェクト挿入（シーン遷移時に再生されないようfalseにしてある）
                 ParryEffect.gameObject.SetActive(true);
                 ParryEffect.Play();
+                //斬撃エフェクト再生
                 StartCoroutine(SlashCot(DelayFlame));
 
             }
@@ -169,43 +183,38 @@ public class PlayerManager : MonoBehaviour
         //HPが0でリザルトへ
         if (MainGameObj.PlayerHp <= 0 && !playerlose)
         {
+            //負けフラグ
             playerlose = true;
+            //ゲーム停止
             MainGameObj.GameStart=false;
+            //リザルトへ渡す情報
             PlayerPrefs.SetInt("IsWin", 0);
+            //リザルト遷移
             if (!MainGameObj.PadVibration) MainGameObj.toResult();
-        }
-
-
-        if (PlayerAnim.GetBool("Counter"))
-        {
-            Debug.Log("カウンター中");
-            PlayerAnim.SetFloat("PlayerIdleSpeed", 3f);
-        }
-        else
-        {
-            PlayerAnim.SetFloat("PlayerIdleSpeed", 1f);
         }
     }
 
-    //Subscribe削除
+    //入力処理削除
     private void OnDestroy()
     {
         disposables_.Dispose();
     }
 
     /// <summary>
-    /// アニメーションとエフェクトのタイミングを合わせるために再生するフレームを遅らせる
+    /// 斬撃におけるアニメーションとエフェクトのタイミングを合わせるために再生するフレームを遅らせる
+    /// フレームレートは60であらかじめ固定済
     /// </summary>
     /// <param name="flame">遅らせるフレーム数</param>
     /// <returns></returns>
     IEnumerator SlashCot(int flame)
     {
+        //指定コマ数待つ
         for (var i = 0; i < flame; i++)
         {
             yield return null;
         }
+        //エフェクト再生
         SlashEffect.gameObject.SetActive(true);
         SlashEffect.Play();
-        PlayerAnim.SetFloat("PlayerIdleSpeed", 1f);
     }
 }
