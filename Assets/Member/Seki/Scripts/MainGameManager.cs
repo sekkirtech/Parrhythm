@@ -9,26 +9,24 @@ public class MainGameManager : MonoBehaviour
 {
     public int PlayerHp = 3;//プレイヤーのHP
     
-    [SerializeField] PlayerManager PlayerObj;//プレイヤー
+    [SerializeField] PlayerManager PlayerObj;//プレイヤー格納
     
-    [SerializeField] EnemyManager EnemyObj;//敵
+    [SerializeField] EnemyManager EnemyObj;//敵格納
     
-    private float BattleTime = 0.0f;//経過時間測定
+    public float BattleTime = 0.0f;//経過時間測定
     
     public bool GameStart=false;//ゲームが開始してるか
     
     [SerializeField] public GameObject ParryTimingSprite ;//いまだ！画像
     
-    private int AttackCount = 0;//敵が攻撃した回数（パリィ率表記用）
+    public int AttackCount = 0;//敵が攻撃した回数（パリィ率表記用）
     
     public int ParryCount = 0;//パリィ成功回数
     
     public bool Guardnow = false;//ガード中フラグ
+
+    [SerializeField] private HpManager _hpMana;
     
-    [SerializeField] private Image[] HpSprite;//プレイヤーHP画像格納
-   
-    [SerializeField] private Sprite DamageHp; //HPダメージ画像格納
-                                      
     public bool ParryReception = false;//パリィ受付フラグ
     
     public bool ParryHits = false;//パリィ成功時用連打対策
@@ -36,34 +34,38 @@ public class MainGameManager : MonoBehaviour
     public bool ParryAttack = false;//パリィ可能フラグ
 
     
-    private Gamepad MyPad;//コントローラー格納
+    Gamepad MyPad;//コントローラー格納
 
     public bool PadVibration=false; //コントローラーがバイブレーション中か
 
-    [SerializeField,Header("スタミナ")] private GuardController guardController;
+    [SerializeField,Header("スタミナ")] GuardController guardController;
 
-    [SerializeField, Header("ガードコスト")] private int GuardCost = 25;
+    [SerializeField, Header("ガードコスト")] float GuardCost = 25.0f;
 
     
-    [SerializeField] private EnemyHandAnimation enemyHandAnimation;//パンチアニメーションスクリプト
+    [SerializeField] EnemyHandAnimation enemyHandAnimation;//パンチアニメーション
     
     private bool handType=false;//パンチアニメーション左右制御用
     
-    [SerializeField] private BeamParticleSpeed BeamMana;//ビームエフェクト制御
+    [SerializeField] BeamParticleSpeed BeamMana;//ビームエフェクト制御
 
+
+    
     public bool BeatFlag=true;//Beatフラグ
     
-    [SerializeField, Header("NoteManager")] private EnemyNoteManager NoteMana;
+    [SerializeField, Header("NoteManager")] EnemyNoteManager NoteMana;
 
 
     //SE用諸々
-    private AudioSource DamageSource;
-    private AudioSource GirdSource;
+    AudioSource DamageSource;
+    AudioSource GirdSource;
     [SerializeField, Header("斬撃SE")] public AudioClip SlashSE;
-    [SerializeField, Header("ダメージSE")] private AudioClip DamageSE;
-    [SerializeField, Header("盾ガードSE")] private AudioClip GirdSE;
+    [SerializeField, Header("ダメージSE")] AudioClip DamageSE;
+    [SerializeField, Header("盾ガードSE")] AudioClip GirdSE;
 
-    [SerializeField] private RobotKnockback robotKnockback;　//ロボノックバックアニメーション
+    private float BeamSpeed;//ビーム攻撃発生時に渡す引数格納枠
+
+    [SerializeField] RobotKnockback robotKnockback;　//ロボ動作制御
 
     [SerializeField] public bool TestMode=false;
 
@@ -78,25 +80,17 @@ public class MainGameManager : MonoBehaviour
         AttackCount = 0;
         ParryCount = 0;
         ParryReception = false;
-        //Pad情報格納
         MyPad = Gamepad.current;
 
         //盾ガードSEセットアップ
-        //nullチェック
         if (GirdSource == null) GirdSource = this.gameObject.AddComponent<AudioSource>();
-        //音量
         GirdSource.volume = 0.5f;
-        //音源
         GirdSource.clip = GirdSE;
-        //ループさせない
         GirdSource.loop = false;
 
         //ダメージSEセットアップ
-        //nullチェック
         if (DamageSource == null) DamageSource = this.gameObject.AddComponent<AudioSource>();
-        //音源
         DamageSource.clip = DamageSE;
-        //ループさせない
         DamageSource.loop = false;
     }
 
@@ -109,25 +103,20 @@ public class MainGameManager : MonoBehaviour
         }
        
 
-        //ゲームが開始していない時の処理
+        //ゲームが開始していないか
         if (GameStart == false)
         {
             //譜面の読み込みが完了しているか
             if (NoteMana.EnemyNoteManagerStandby == true)
             {
-                //スタートさせる
                 GameStart=true;
                 NoteMana.EnemyAttackStart();
             }
         }
-
-        //デバッグ用
-        //if (TestMode) PlayerHp = 3;
+        if (TestMode) PlayerHp = 3;
     }
 
-    /// <summary>
-    /// リザルトへの遷移
-    /// </summary>
+    //勝敗が決したときに呼び出す
     public void toResult()
     {
         GameStart = false;
@@ -142,30 +131,54 @@ public class MainGameManager : MonoBehaviour
         //パリィ成功回数
         PlayerPrefs.SetInt("ParryCount", ParryCount);
 
-        //音源FadeOut
         NoteMana.MusicFade();
-        //シーン遷移
         FadeManager.Instance.LoadScene("ResultScene", 0.6f);
     }
 
     /// <summary>
     /// 敵が攻撃開始時に呼び出し、パリィ可能かどうか判定
     /// </summary>
-    /// <param name="EnemyAttackType">攻撃の種類</param>
+    /// <param name="MAXCount">攻撃の種類</param>
     /// <param name="lpbbeat">1拍の時間</param>
     /// <returns></returns>
-    public IEnumerator EnemmyAttack(int EnemyAttackType,float lpbbeat)
+    public IEnumerator EnemmyAttack(int MAXCount,float lpbbeat)
     {
+        //120BPMを0.5倍とした倍数を格納（ビーム攻撃にて使用）
+        BeamSpeed = (float)NoteMana.BPM / (float)120;
+
+        bool panchi = false;
+        bool beam = false;
+
+
         BeatFlag = false;
+        switch (MAXCount)
+        {
+            case 1:
+                Debug.Log("パンチ");
+                //アニメーション処理
+                panchi = true;
+                break;
+            case 2:
+                Debug.Log("ビーム");
+                //アニメーション処理
+                beam = true;
+                break;
+            case 3:
+                Debug.Log("3拍攻撃");
+                //アニメーション処理
+                break;
+        }
+        Debug.Log("break抜けた");
 
         for (int i = 0; i < 3; i++)
         {
             Debug.Log(i);
             //パンチ攻撃
-            if (EnemyAttackType==1)
+            if (panchi)
             {
                 if (i == 2)
                 {
+                    panchi=false;
                     if (handType)
                     {
                         enemyHandAnimation.MoveHand(EnemyHandAnimation.HandType.Right, lpbbeat);
@@ -180,36 +193,34 @@ public class MainGameManager : MonoBehaviour
             }
 
             //ビーム攻撃
-            if (EnemyAttackType == 2)
+            if (beam)
             {
                 if (i == 2)
                 {
                     Debug.Log("ビーム攻撃入った");
-                    //ビーム再生
+                    //120BPMを0.5倍（二拍分のため）とした倍数を渡す
                     BeamMana.SpeedChange(1);
-                    //撃った時のノックバックアニメーション
                     robotKnockback.Knockback(1).Forget();
+                    beam=false;
                 }
             }
-            //一伯空ける
             yield return new WaitForSeconds(lpbbeat);
         }
 
         //敵アタックカウント
         if(GameStart)AttackCount++;
-        //ガード判定(ガードしてなかったら終了)
+        //ガード判定
         if (!Guardnow)
         {
             //ゲーム中か（倒した後にダメージ受けないために）
             if (GameStart)
             {
-                //プレイヤーダメージ
                 PlayerDamage();
             }
             BeatFlag = true;
             yield break;
         }
-        //スタミナ判定(不可なら終了)
+        //スタミナ判定
         if (!guardController.UseGuard(GuardCost))
         {
             if (GameStart)
@@ -222,15 +233,14 @@ public class MainGameManager : MonoBehaviour
         //盾ガードSE挿入
         GirdSource.Play();
 
-        //PlayerManager側でパリィ可能とフラグを立てている場合
+
         if (ParryReception)
         {
-            //Debug.Log("パリィ可能！");
+            Debug.Log("パリィ可能！");
             //連打防止用フラグ
             ParryHits = true;
             //パリィ可能か
             ParryAttack = true;
-            //いまだ！画像表示
             ParryTimingSprite.gameObject.SetActive(true);
             //ゲームパッド接続状態で可能になったらパッド振動
             if (MyPad != null)
@@ -238,7 +248,6 @@ public class MainGameManager : MonoBehaviour
                 PadVibration=true;
                 MyPad.SetMotorSpeeds(1.0f, 1.0f);
             }
-            //一伯分振動
             yield return new WaitForSeconds(lpbbeat);
             //ゲームパッド振動停止
             if(MyPad != null)
@@ -246,36 +255,26 @@ public class MainGameManager : MonoBehaviour
                 MyPad.SetMotorSpeeds(0.0f, 0.0f);
                 PadVibration = false;
             }
-            //アタック終了
             ParryAttack = false;
-            //Debug.Log("パリイ終了");
-            //いまだ！画像非表示
+            Debug.Log("パリイ終了");
             ParryTimingSprite.gameObject.SetActive(false);
         }
         BeatFlag = true;
     }
 
-    /// <summary>
-    /// プレイヤーにダメージを与える
-    /// </summary>
     void PlayerDamage()
     {
-        //ダメージSE再生
+        //ダメージSE
         DamageSource.Play();
 
-        //Debug.Log("ダメージを受けた！");
-        //HP減少
+        Debug.Log("ダメージを受けた！");
         PlayerHp--;
-        //プレイヤーダメージAnimation
+        //Animation
         PlayerObj.PlayerAnim.SetTrigger("Damage");
 
-        //HP画像をブランクに差し替え
-        if (!TestMode)
-        {
-            //HP減少
-            PlayerHp--;
-            //HP画像をブランクに差し替え
-            HpSprite[PlayerHp].sprite = DamageHp;
-        }
+        //HP画像差し替え
+        //myimage = HpSprite[PlayerHp].GetComponent<Image>();
+        //myimage.sprite = DamageHp;
+        _hpMana.SetDamage(PlayerHp);
     }
 }

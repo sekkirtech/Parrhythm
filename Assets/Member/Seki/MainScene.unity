@@ -10712,6 +10712,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 368273518}
+  - component: {fileID: 368273519}
   m_Layer: 5
   m_Name: PlayerHPUI
   m_TagString: Untagged
@@ -10741,6 +10742,22 @@ RectTransform:
   m_AnchoredPosition: {x: -1129.51, y: -557}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &368273519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368273517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e956bcabc24af641a57315c7c30f875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteMane:
+  - {fileID: 912659438}
+  - {fileID: 535654645}
+  - {fileID: 1588078401}
 --- !u!1 &434911249 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b027a433831f02d40915a2af3ecfdfa5,
@@ -10862,6 +10879,7 @@ GameObject:
   - component: {fileID: 535654641}
   - component: {fileID: 535654643}
   - component: {fileID: 535654644}
+  - component: {fileID: 535654645}
   m_Layer: 5
   m_Name: PlayerHP (1)
   m_TagString: Untagged
@@ -10926,6 +10944,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &535654645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535654640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761d340e31792454db12c7a01930e147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 535654644}
+  _damageSprite: {fileID: 21300000, guid: 44c2fd6e423f8a4498468db8c749fccd, type: 3}
 --- !u!1 &543084025
 GameObject:
   m_ObjectHideFlags: 0
@@ -16306,11 +16338,7 @@ MonoBehaviour:
   ParryTimingSprite: {fileID: 341959859}
   ParryCount: 0
   Guardnow: 0
-  HpSprite:
-  - {fileID: 912659433}
-  - {fileID: 535654640}
-  - {fileID: 1588078396}
-  DamageHp: {fileID: 21300000, guid: 44c2fd6e423f8a4498468db8c749fccd, type: 3}
+  _hpMana: {fileID: 368273519}
   ParryReception: 0
   ParryHits: 0
   ParryAttack: 0
@@ -21776,6 +21804,7 @@ GameObject:
   - component: {fileID: 912659434}
   - component: {fileID: 912659436}
   - component: {fileID: 912659437}
+  - component: {fileID: 912659438}
   m_Layer: 5
   m_Name: PlayerHP
   m_TagString: Untagged
@@ -21840,6 +21869,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &912659438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912659433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761d340e31792454db12c7a01930e147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 912659437}
+  _damageSprite: {fileID: 21300000, guid: 44c2fd6e423f8a4498468db8c749fccd, type: 3}
 --- !u!1001 &928127777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22996,6 +23039,7 @@ GameObject:
   - component: {fileID: 1588078397}
   - component: {fileID: 1588078399}
   - component: {fileID: 1588078400}
+  - component: {fileID: 1588078401}
   m_Layer: 5
   m_Name: PlayerHP (2)
   m_TagString: Untagged
@@ -23060,6 +23104,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1588078401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588078396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761d340e31792454db12c7a01930e147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 1588078400}
+  _damageSprite: {fileID: 21300000, guid: 44c2fd6e423f8a4498468db8c749fccd, type: 3}
 --- !u!1 &1609655895
 GameObject:
   m_ObjectHideFlags: 0
