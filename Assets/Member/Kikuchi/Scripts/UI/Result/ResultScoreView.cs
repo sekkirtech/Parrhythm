@@ -128,7 +128,7 @@ public class ResultSceneView : MonoBehaviour
         _time.text = PlayerPrefs.GetFloat("Time", 0).ToString("F2");
         var percentage = CalculatePercentage(
                     isWin ? PlayerPrefs.GetInt("EnemyAttackCount", 100) : PlayerPrefs.GetInt("MaxHP", 100),
-                    isWin ? PlayerPrefs.GetInt("ParryCount", 1) : PlayerPrefs.GetInt("CurrentHP", 1)
+                    isWin ? PlayerPrefs.GetInt("_parryCount", 1) : PlayerPrefs.GetInt("CurrentHP", 1)
                     );
         _percentage.text = percentage.ToString("F2") + "%";
         SetClearRank(CalculateClearRank(isWin, percentage, PlayerPrefs.GetFloat("Time", 0)));

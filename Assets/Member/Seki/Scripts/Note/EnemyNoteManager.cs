@@ -3,19 +3,30 @@ using UnityEngine;
 
 public class EnemyNoteManager : MonoBehaviour
 {
-    public bool EnemyNoteManagerStandby=false; //準備ができたか
-    [SerializeField] public int[] AttackTiming;//攻撃タイミング格納
-    [SerializeField] public int[] AttackType;//攻撃手段格納
-    public int BPM;//曲の速さ、一分間に打たれる伯の数
-    public int LPB;//一伯間に何分割されているか
+    private bool _standby=false;
+    [SerializeField] private int[] _attackTiming;
+    [SerializeField] private int[] _attackType;
 
-    [SerializeField]MainGameManager MainGameObj;
+    /// <summary>
+    /// 一分間に発生する拍の数（要はリズムの速さ）
+    /// </summary>
+    private int _BPM;
 
-    [SerializeField] public ScoreBox scoreData;//音源、譜面データ
+    /// <summary>
+    /// 譜面上で1BPM何分割されているか
+    /// </summary>
+    private int _LPB;
 
-    [SerializeField] AudioSource MusicSource;//音源再生用
+    [SerializeField] private MainGameManager _mainGameObj;
 
-    [SerializeField] bool TestMode;//デバッグ用
+    /// <summary>
+    /// 譜面データオブジェクト
+    /// </summary>
+    [SerializeField] private ScoreBox _scoreData;
+
+    [SerializeField] private AudioSource _musicSource;
+
+    [SerializeField] private bool _testMode;
 
     [Serializable]
     public class NoteJsonClass
@@ -40,63 +51,66 @@ public class EnemyNoteManager : MonoBehaviour
 
 
 
-    private float LoadSpan = 0.01f;//何秒ごとに実行するか
-    public float NotenowTime;// 音楽再生開始からの経過時間
-    private int NowBeatNum;// 譜面上で今何拍目か
-    private int BeatCount;// 何回攻撃したか
-    private bool BeatNow;//攻撃生成用フラグ
-    public float ClipLegth;//音源の長さ
-    private AudioClip ClipSource;//音源ファイル
-    [SerializeField, Header("音源終了後何秒後に遷移するか")] float EndWaitTime = 0;
-    private bool EndLoad = true;//FadeOut中か
-    private float EndWaitSumLegth;//遷移までの時間と音源の長さを足して格納
-    private float FadeDeltaTime;//音源Fade用
+    private const float _loadSpan = 0.01f;//何秒ごとに実行するか
+    private float _noteNowTime;// 音楽再生開始からの経過時間
+    private int _nowBeatNum;// 譜面上で今何拍目か
+    private int _beatCount;// 何回攻撃したか
+    private bool _beatNow;//攻撃生成用フラグ
+    private float _clipLegth;//音源の長さ
+    private AudioClip _clipSource;//音源ファイル
+    [SerializeField, Header("音源終了後何秒後に遷移するか")] private float _endWaitTime = 0;
+    private bool _endLoad = true;//FadeOut中か
+    private float _endWaitSumLegth;//遷移までの時間と音源の長さを足して格納
+    private float _fadeDeltaTime;//音源Fade用
 
 
     void Awake()
     {
+        _standby = false;
         //nullチェック
-        if (scoreData == null)
+        if (_scoreData == null)
         {
-            if (!TestMode)
+            if (!_testMode)
             {
                 Debug.LogError("ScoreDataがアタッチされてない");
             }
         }
-        if (MainGameObj == null)
+        if (_mainGameObj == null)
         {
-            Debug.LogError("MainGameManagerがアタッチされていない EnemyNoteManager");
+            Debug.LogError("MainGameManagerがアタッチされていない");
         }
-        if(MusicSource == null)
+        if(_musicSource == null)
         {
-            MusicSource=this.GetComponent<AudioSource>();
+            _musicSource=this.GetComponent<AudioSource>();
         }
         //譜面読み込み
         MusicReading();
+
+        Debug.Log(_endWaitTime);
     }
 
     private void Update()
     {
 
-        if (EndLoad)
+        if (_endLoad)
         {
             //音源が終了し一定時間経過したら遷移を起動
-            if (NotenowTime > EndWaitSumLegth)
+            if (_noteNowTime > _endWaitSumLegth)
             {
-                EndLoad = false;
+                _endLoad = false;
                 PlayerPrefs.SetInt("IsWin", 0);
             }
         }
-        if (!EndLoad)
+        if (!_endLoad)
         {
             //音源FadeOut
-            FadeDeltaTime += Time.deltaTime;
-            MusicSource.volume = (float)(MusicSource.volume - FadeDeltaTime / 1.0f);
+            _fadeDeltaTime += Time.deltaTime;
+            _musicSource.volume = (float)(_musicSource.volume - _fadeDeltaTime / 1.0f);
             //FadeOut終了後シーン遷移させる
-            if(MusicSource.volume<=0)
+            if(_musicSource.volume<=0)
             {
                 //コントローラーがバイブレーション中なら待つ
-                if (!MainGameObj.PadVibration) MainGameObj.toResult();
+                if (!_mainGameObj._padVibration) _mainGameObj.toResult();
             }
         }
     }
@@ -107,7 +121,7 @@ public class EnemyNoteManager : MonoBehaviour
     public void EnemyAttackStart()
     {
         //第二引数時間後に第三引数間隔で第一引数関数を実行
-        InvokeRepeating("EnemyAttackIns", 1f, LoadSpan);
+        InvokeRepeating("EnemyAttackIns", 1f, _loadSpan);
     }
 
 
@@ -117,13 +131,13 @@ public class EnemyNoteManager : MonoBehaviour
     void GetScoreTime()
     {
         //今の音楽の時間の取得
-        NotenowTime += LoadSpan;
+        _noteNowTime += _loadSpan;
 
         //ノーツがないなら終了(アウトロの存在も考えfadeはしない)
-        if (BeatCount > AttackTiming.Length) return;
+        if (_beatCount > _attackTiming.Length) return;
 
         //楽譜上で今どこなのかの取得
-        NowBeatNum = (int)(NotenowTime * BPM / 60 * LPB);
+        _nowBeatNum = (int)(_noteNowTime * _BPM / 60 * _LPB);
     }
 
 
@@ -136,28 +150,28 @@ public class EnemyNoteManager : MonoBehaviour
         GetScoreTime();
 
         //カウントの一致でisBeatをtrueに
-        if (BeatCount < AttackTiming.Length)
+        if (_beatCount < _attackTiming.Length)
         {
-            BeatNow = (AttackTiming[BeatCount] == NowBeatNum);
+            _beatNow = (_attackTiming[_beatCount] == _nowBeatNum);
         }
 
         //生成のタイミングなら
-        if (BeatNow)
+        if (_beatNow)
         {
             //Type0でBGM再生
-            if (AttackType[BeatCount] == 0)
+            if (_attackType[_beatCount] == 0)
             {
                 //BGM再生
-                MusicSource.Play();
+                _musicSource.Play();
             }
             else //0以外の時アタック用関数にタイプを渡して実行
             {
-                StartCoroutine(MainGameObj.EnemmyAttack(AttackType[BeatCount], (float)60 / (float)BPM));
+                StartCoroutine(_mainGameObj.EnemmyAttack(_attackType[_beatCount], (float)60 / (float)_BPM));
             }
 
 
-            BeatCount++;
-            BeatNow = false;
+            _beatCount++;
+            _beatNow = false;
         }
     }
 
@@ -173,7 +187,7 @@ public class EnemyNoteManager : MonoBehaviour
         //ステージ番号が格納されてるか確認
         if (StageNum == 555)
         {
-            if (TestMode)
+            if (_testMode)
             {
                 StageNum = 0;
             }
@@ -188,39 +202,39 @@ public class EnemyNoteManager : MonoBehaviour
         }
 
         //jsonファイルが格納されてる場所のパス取得
-        string JsonPath = scoreData.GetListInScore(StageNum).GetScore().ToString();
+        string JsonPath = _scoreData.GetListInScore(StageNum).GetScore().ToString();
         //jsonファイル取得
         NoteJsonClass NoteJson = JsonUtility.FromJson<NoteJsonClass>(JsonPath);
 
         //wav音源取得
-        ClipSource=scoreData.GetListInScore(StageNum).GetClip();
+        _clipSource=_scoreData.GetListInScore(StageNum).GetClip();
         //音源セット
-        MusicSource.clip = ClipSource;
+        _musicSource.clip = _clipSource;
         //音量セット
-        MusicSource.volume=scoreData.GetListInScore(StageNum).GetVolume();
+        _musicSource.volume=_scoreData.GetListInScore(StageNum).GetVolume();
         //音源長さ格納
-        ClipLegth=ClipSource.length;
+        _clipLegth=_clipSource.length;
 
         //音源終わって遷移するまでの時間を格納
-        EndWaitSumLegth=ClipLegth+EndWaitTime;
+        _endWaitSumLegth=_clipLegth+_endWaitTime;
 
         //各サイズ格納
-        AttackTiming = new int[NoteJson.notes.Length];
-        AttackType = new int[NoteJson.notes.Length];
+        _attackTiming = new int[NoteJson.notes.Length];
+        _attackType = new int[NoteJson.notes.Length];
         //情報格納
-        BPM = NoteJson.BPM;
-        LPB = NoteJson.notes[0].LPB;
+        _BPM = NoteJson.BPM;
+        _LPB = NoteJson.notes[0].LPB;
 
         for (int i = 0; i < NoteJson.notes.Length; i++)
         {
             //攻撃タイミング格納
-            AttackTiming[i] = NoteJson.notes[i].num;
+            _attackTiming[i] = NoteJson.notes[i].num;
             //攻撃手段格納
-            AttackType[i] = NoteJson.notes[i].block;
+            _attackType[i] = NoteJson.notes[i].block;
         }
 
         //準備完了
-        EnemyNoteManagerStandby = true;
+        _standby = true;
     }
 
     /// <summary>
@@ -228,6 +242,34 @@ public class EnemyNoteManager : MonoBehaviour
     /// </summary>
     public void MusicFade()
     {
-        EndLoad=false;
+        _endLoad=false;
+    }
+
+    /// <summary>
+    /// BPMの取得
+    /// </summary>
+    /// <returns></returns>
+    public float GetBPM()
+    {
+        return _BPM;
+    }
+
+    /// <summary>
+    /// 準備完了状態取得
+    /// </summary>
+    /// <returns></returns>
+    public bool GetStandby()
+    {
+        return _standby; 
+    }
+
+    public int GetEnemyHp(int x)
+    {
+        return _scoreData.GetListInScore(x).GetEnemyHP();
+    }
+
+    public float GetNowTime()
+    {
+        return _noteNowTime;
     }
 }

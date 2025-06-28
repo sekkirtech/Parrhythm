@@ -3,35 +3,35 @@
 public class EnemyManager : MonoBehaviour
 {
     //プレイヤー格納
-    [SerializeField] PlayerManager PlayerObj;
+    [SerializeField] private PlayerManager _playerObj;
     //敵のHP
-    [SerializeField]public int EnemyMaxHP = 3;
-    public int EnemyHP = 0;
+    [SerializeField]private int _enemyMaxHP;
+    private int _enemyHP = 0;
     //メインゲームマネージャー
-    [SerializeField] MainGameManager MainGameObj;
+    [SerializeField] private MainGameManager _mainGameObj;
     //討伐されてるか
-    bool EnemySlain=false;
+    private bool _enemySlain=false;
     //メンバーが作成したHPバーscript格納
-    [SerializeField] HpBar Bar;
+    [SerializeField] private HpBar _hpbar;
     //HP設定のためスコアデータが格納されてるスクリプトへアクセス
-    [SerializeField] EnemyNoteManager NoteMana;
+    [SerializeField] private EnemyNoteManager _noteMana;
 
 
     void Start()
     {
         //初期化
-        EnemySlain=true;
+        _enemySlain=true;
 
-        //敵HP調性用24/10/23
-        int StageNum = PlayerPrefs.GetInt("StageNum", 1);
-        EnemyMaxHP = NoteMana.scoreData.GetListInScore(StageNum).GetEnemyHP();
+        //敵HP調整
+        int _stageNum = PlayerPrefs.GetInt("StageNum", 1);
+        _enemyMaxHP = _noteMana.GetEnemyHp(_stageNum);
 
         //HP表示
-        Bar.Init(EnemyMaxHP);
-        EnemyHP = EnemyMaxHP;
+        _hpbar.Init(_enemyMaxHP);
+        _enemyHP = _enemyMaxHP;
 
         //nullチェック
-        if (PlayerObj == null)
+        if (_playerObj == null)
         {
             Debug.LogError("PlayerManagerがアタッチされてません。");
         }
@@ -40,35 +40,34 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         //HPが０以下でリザルト
-        if (EnemyHP <= 0&&EnemySlain)
+        if (_enemyHP <= 0 && _enemySlain)
         {
             //勝ち
             PlayerPrefs.SetInt("IsWin", 1);
-            MainGameObj.GameStart=false;
+            _mainGameObj.SetGameEnd();
             //Scene遷移
-            if (!MainGameObj.PadVibration)
+            if (!_mainGameObj._padVibration)
             {
                 //複数回読み込まないようフラグ
-                EnemySlain = false;
-                MainGameObj.toResult();
+                _enemySlain = false;
+                _mainGameObj.toResult();
 
             }
-        }
-
-        //デバッグ用
-        if (MainGameObj.TestMode)
-        {
-            EnemyHP=EnemyMaxHP;
         }
     }
 
     /// <summary>
     /// エネミー側がダメージを受けた時に使用
     /// </summary>
-    /// <param name="Damage">受けたダメージ</param>
-    public void EnemyDamage(int Damage)
+    /// <param name="x">受けたダメージ</param>
+    public void EnemyDamage(int x)
     {
-        EnemyHP-=Damage;
-        Bar.SetHp(Damage);
+        _enemyHP-=x;
+        _hpbar.SetHp(x);
+    }
+
+    public int[] GetEnemyEndHp()
+    {
+        return new int [] {_enemyHP,_enemyMaxHP};
     }
 }

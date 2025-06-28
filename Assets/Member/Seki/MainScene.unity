@@ -10601,7 +10601,7 @@ GameObject:
   - component: {fileID: 341959862}
   - component: {fileID: 341959861}
   m_Layer: 5
-  m_Name: Imada
+  m_Name: TimingSp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16331,29 +16331,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90ecf2ae8b522c4e97e488d91fa2f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHp: 3
-  PlayerObj: {fileID: 1372795743}
-  EnemyObj: {fileID: 809606418}
-  GameStart: 0
-  ParryTimingSprite: {fileID: 341959859}
-  ParryCount: 0
-  Guardnow: 0
+  _playerObj: {fileID: 1372795743}
+  _enemyObj: {fileID: 809606418}
+  _parryTimingSprite: {fileID: 341959859}
+  _guardnow: 0
   _hpMana: {fileID: 368273519}
-  ParryReception: 0
-  ParryHits: 0
-  ParryAttack: 0
-  PadVibration: 0
-  guardController: {fileID: 1217443395}
-  GuardCost: 25
-  enemyHandAnimation: {fileID: 1622015001}
-  BeamMana: {fileID: 298197667}
-  BeatFlag: 1
-  NoteMana: {fileID: 1373152870}
-  SlashSE: {fileID: 8300000, guid: 774f1385b0d35bd4692769b8e06a3619, type: 3}
-  DamageSE: {fileID: 8300000, guid: 0d9101e44e6a3754faa670738eb25117, type: 3}
-  GirdSE: {fileID: 8300000, guid: 38ef536956b3f6542b0fcef880d72bd4, type: 3}
-  robotKnockback: {fileID: 809606422}
-  TestMode: 0
+  _padVibration: 0
+  _guardController: {fileID: 1217443395}
+  _guardCost: 25
+  _enemyHandAnimation: {fileID: 1622015001}
+  _beamMana: {fileID: 298197667}
+  _noteMana: {fileID: 1373152870}
+  _damageSE: {fileID: 8300000, guid: 0d9101e44e6a3754faa670738eb25117, type: 3}
+  _girdSE: {fileID: 8300000, guid: 38ef536956b3f6542b0fcef880d72bd4, type: 3}
+  _robotKnockback: {fileID: 809606422}
+  _testMode: 0
 --- !u!4 &724742209
 Transform:
   m_ObjectHideFlags: 0
@@ -16642,12 +16634,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d6fad0583fbf1498805616250650ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerObj: {fileID: 1372795743}
-  EnemyMaxHP: 3
-  EnemyHP: 0
-  MainGameObj: {fileID: 724742208}
-  Bar: {fileID: 2107453683}
-  NoteMana: {fileID: 1373152870}
+  _playerObj: {fileID: 1372795743}
+  _enemyMaxHP: 3
+  _mainGameObj: {fileID: 724742208}
+  _hpbar: {fileID: 2107453683}
+  _noteMana: {fileID: 1373152870}
 --- !u!95 &809606420
 Animator:
   serializedVersion: 5
@@ -22400,14 +22391,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd294af1b3d901419b27aec8bc6fc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyObj: {fileID: 809606418}
-  MainGameObj: {fileID: 724742208}
-  GuardButton: 0
-  PlayerAnim: {fileID: 434911251}
-  CancedGuardAnim: 0
-  ParryEffect: {fileID: 1978380917}
-  SlashEffect: {fileID: 1405451463}
-  DelayFlame: 20
+  _enemyObj: {fileID: 809606418}
+  _mainGameObj: {fileID: 724742208}
+  _playerAnim: {fileID: 434911251}
+  _slashClip: {fileID: 8300000, guid: 774f1385b0d35bd4692769b8e06a3619, type: 3}
+  _parryEffect: {fileID: 1978380917}
+  _slashEffect: {fileID: 1405451463}
 --- !u!82 &1372795744
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22549,18 +22538,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efa15ba673e97048a30e0fb4a9711a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyNoteManagerStandby: 0
-  AttackTiming: 
-  AttackType: 
-  BPM: 0
-  LPB: 0
-  MainGameObj: {fileID: 724742208}
-  scoreData: {fileID: 11400000, guid: c19f976a6148f394bba549ae4ba669b8, type: 2}
-  MusicSource: {fileID: 0}
-  TestMode: 0
-  NotenowTime: 0
-  ClipLegth: 0
-  EndWaitTime: 0
+  _attackTiming: 
+  _attackType: 
+  _mainGameObj: {fileID: 724742208}
+  _scoreData: {fileID: 11400000, guid: c19f976a6148f394bba549ae4ba669b8, type: 2}
+  _musicSource: {fileID: 1373152871}
+  _testMode: 0
+  _endWaitTime: 0
 --- !u!82 &1373152871
 AudioSource:
   m_ObjectHideFlags: 0
